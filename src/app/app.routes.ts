@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { ProfileComponent } from './profile/components/profile/profile.component';
-import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -8,5 +7,25 @@ export const routes: Routes = [
     path: 'profile',
     title: 'My Profile Page',
     component: ProfileComponent
+  },
+  {
+    path: 'forgot-password',
+    title: 'Forgot Password Page',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'new-password',
+    title: 'New Password Page',
+    component: NewPasswordComponent,
+  },
+  {
+    path: 'forgot-password',
+    title: 'Forgot Password Page',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'new-password',
+    title: 'New Password Page',
+    component: NewPasswordComponent,
   },
 ];
