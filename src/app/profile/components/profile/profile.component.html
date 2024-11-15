@@ -1,1 +1,25 @@
-<p>profile works!</p>
+<div class="profile-header">
+    
+</div>
+<button class="back"><img src="assets/back-button.svg" alt="back button"></button>
+    <img src="assets/avatar-default.png" alt="Avatar" height="150" width="150">
+
+<div class="info">
+    <span class="title">Nombre y Appellido</span>
+    <span>{{user.fullname || 'no disponible'}}</span>
+    <span class="title">DNI/NIF/NIE</span>
+    <span>{{user.dni || 'no disponible'}}</span>
+    <span class="title">Fecha de nacimiento</span>
+    <span>{{user.birth_date || 'no disponible'}}</span>
+    <span class="title">Mail</span>
+    <span>{{user.email || 'no disponible'}}</span>
+    <span class="title">Contraseña</span>
+    <span>************</span>
+    <span class="title">Direction</span>
+    <span>{{user.address || 'no disponible'}}</span>
+</div>
+<div class="button">
+<button class="editar">Editar Perfil</button>
+<button class="cerrar">Cerrar Session</button>
+</div>
+  

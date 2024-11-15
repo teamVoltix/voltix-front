@@ -1,0 +1,55 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+}
+.back{
+    align-self: flex-start;
+}
+.profile-header{
+    position:fixed;
+    z-index: -1;
+    top:0;
+    background-color: #0072CE;
+    width: 100%;
+    height: 169px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 14px 28px 14px;
+    width: 100%;
+    gap:16px;
+}
+.title{
+    font-size: 16px;
+    font-weight: 600;
+    color: #111928;
+}
+.button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 28px 14px 28px 14px;
+    gap: 28px;
+    border:10px;
+}
+.editar{
+    width: 100%;
+    height: 52px;
+    border-radius: 8px;
+    background-color: #0072CE;
+    color: #ffffff;
+}
+.cerrar{
+    width: 100%;
+    height: 52px;
+    border-radius: 8px;
+    background-color: #F0F7FF;
+    color: #0072CE;
+}
