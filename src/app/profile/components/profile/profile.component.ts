@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
     private flowBite: FlowbiteService
   ) {}
 
+
   ngOnInit(): void {
     this.service.getUser().subscribe((data) => {
       console.log(data);
