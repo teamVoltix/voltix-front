@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { OnInit } from '@angular/core';
+import { initFlowbite } from 'flowbite';
+import { RouterModule } from '@angular/router';
+import { LogoutComponent } from './auth/components/logout/logout.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterModule, LogoutComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'template-angular-ts';
+export class AppComponent implements OnInit {
+  title = 'web-app';
+
+  ngOnInit() {
+    initFlowbite();
+  }
 }
