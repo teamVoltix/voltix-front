@@ -7,18 +7,17 @@ import { FlowbiteService } from './core/services/flowbite.service';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   title = 'template-angular-ts';
 
-  constructor(private flowbiteService: FlowbiteService){}
+  constructor(private flowbiteService: FlowbiteService) {}
 
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite(flowbite => {
+    this.flowbiteService.loadFlowbite((flowbite) => {
       // Your custom code here
       console.log('Flowbite loaded', flowbite);
     });
   }
-
 }
