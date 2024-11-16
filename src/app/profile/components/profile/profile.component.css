@@ -10,12 +10,12 @@
     align-self: flex-start;
 }
 .profile-header{
-    position:fixed;
+    position:absolute;
     z-index: -1;
     top:0;
     background-color: #0072CE;
     width: 100%;
-    height: 169px;
+    height: 130px;
 }
 
 .info {
@@ -45,6 +45,14 @@
     border-radius: 8px;
     background-color: #0072CE;
     color: #ffffff;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.editar:hover {
+    background-color: #005bb5;
+}
+
+.editar:active {
+    transform: scale(0.95); 
 }
 .cerrar{
     width: 100%;
@@ -52,4 +60,12 @@
     border-radius: 8px;
     background-color: #F0F7FF;
     color: #0072CE;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.cerrar:hover {
+    background-color: #d9e6ff;
+}
+
+.cerrar:active {
+    transform: scale(0.95); 
 }
