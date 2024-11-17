@@ -1,0 +1,68 @@
+
+.background {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    overflow: hidden;
+    margin: 0 auto; 
+    width: 100%;
+    min-height: 100vh; 
+    overflow: auto;
+    background: linear-gradient(182deg, #0072CE 1.27%, #80B8E6 29.26%, #FFF 47.35%);
+}
+
+/* imagen */
+.logo {
+    object-fit: contain;
+    align-self: center;
+    margin-top: 24rem; 
+    max-width: 100%;
+    aspect-ratio: 3.97;
+    width: 254px;
+}
+
+/* botones */
+.button-section {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    padding: 1.25rem; 
+    margin-top: 14rem; 
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 500; 
+    text-align: center;
+}
+
+/* iniciar sesión */
+.btn-login {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    width: 100%;
+    color: white;
+    background-color: #007ACC; 
+    border-radius: 0.5rem;
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+}
+
+/* registrarse */
+.btn-register {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    margin-top: 1.25rem; 
+    width: 100%;
+    color: #007ACC; 
+    white-space: nowrap; 
+    background-color: white; 
+    border-radius: 0.5rem; 
+    border: 1px solid #007ACC; 
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+}
