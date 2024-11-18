@@ -26,11 +26,11 @@
           <input [type]="passwordVisible ? 'text' : 'password'" id="password" placeholder="Ingresar contraseña"
             class="password-input" />
           <button type="button" (click)="togglePasswordVisibility()" class="toggle-password">
-            <img [src]="passwordVisible ? 'icons/eye-slash.svg' : 'icons/eye-alt.svg'" alt="Toggle Password Visibility"
+            <img [src]="passwordVisible ? '/assets/icons/eye-slash.svg' : '/assets/icons/eye-alt.svg'" alt="Toggle Password Visibility"
               class="eye-icon" />
           </button>
         </div>
-        <button type="button" class="forgot-password">¿Olvidaste la contraseña?</button>
+        <button type="button" class="forgot-password" routerLink="/forgot-password">¿Olvidaste la contraseña?</button>
       </div>
       <button type="submit" class="submit-button mb-5">Aceptar</button>
     </form>
