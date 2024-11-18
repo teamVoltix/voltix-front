@@ -26,6 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
   showSuccessSection: boolean = false;
 
   fb = inject(FormBuilder);
+
   ngOnInit(): void {
     this.buildForm();
   }
@@ -43,6 +44,9 @@ export class ForgotPasswordComponent implements OnInit {
       // Lógica para enviar el correo de restablecimiento de contraseña
       //Si se ha enviado todo ok, mostrar sección de se ha enviado el correo para restablecer contraseña
       this.showSuccessSection = true;
+    } else{
+      this.resetPasswordForm.markAllAsTouched();
+      return;
     }
   }
 
