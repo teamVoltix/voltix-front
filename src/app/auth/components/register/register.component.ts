@@ -65,7 +65,7 @@ export class RegisterComponent {
     this.hasUpperCase = /[A-Z]/.test(password);
     this.hasLowerCase = /[a-z]/.test(password);
     this.hasNumber = /\d/.test(password);
-    this.hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    this.hasSpecialChar = /[!@#$%^&*(),.?":{}|<>/_·]/.test(password);
   
     return password.length >= minLength && password.length <= maxLength && this.hasUpperCase && this.hasLowerCase && this.hasNumber && this.hasSpecialChar;
   }
