@@ -1,25 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { FlowbiteService } from './core/services/flowbite.service';
-import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { initFlowbite } from 'flowbite';
+
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProfileSettingsComponent],
+  imports: [RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   title = 'template-angular-ts';
 
-  constructor(private flowbiteService: FlowbiteService){}
-
-  ngOnInit(): void {
-    this.flowbiteService.loadFlowbite(flowbite => {
-      // Your custom code here
-      console.log('Flowbite loaded', flowbite);
-    });
+  ngOnInit() {
+    initFlowbite();
   }
-
 }
