@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../model/user';
 import { RouterLink } from '@angular/router';
-import { FlowbiteService } from '../../../core/services/flowbite.service';
 
 const mockUser = {
   iprofile_id: 1,
@@ -24,11 +23,7 @@ const mockUser = {
 })
 export class ProfileComponent implements OnInit {
   user: User = mockUser;
-  constructor(
-    private service: ProfileService,
-    private flowBite: FlowbiteService
-  ) {}
-
+  constructor(private service: ProfileService) {}
 
   ngOnInit(): void {
     this.service.getUser().subscribe((data) => {
