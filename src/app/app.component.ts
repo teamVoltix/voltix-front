@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FlowbiteService } from './core/services/flowbite.service';
+import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ProfileSettingsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

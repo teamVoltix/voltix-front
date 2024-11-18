@@ -1,40 +1,83 @@
 
+<!-- Cargar foto: -->
+
+  <!-- <form name="subida-imagenes" type="POST" enctype="multipart/formdata">
+    <input type="file" name="imagen1" />
+    <input type="submit" name="subir-imagen" #input1 value="Enviar imagen" />
+  </form> -->
+  <div class="place-self-center">
+    <div class="mt-2 flex justify-center rounded-full h-48 w-48 border border-dashed border-gray-900/25 px-6 py-10">
+      <div class="text-center">
+        <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+          <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+        </svg>
+        <div class="mt-4 flex text-sm/6 text-gray-600">
+          <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+            <span>CAMBIAR FOTO DE PERFIL</span>
+            <input id="file-upload" name="file-upload" type="file" #input1 class="sr-only">
+          </label>
+          <p class="pl-1"></p>
+        </div>
+        <p class="text-xs/5 text-gray-600"></p>
+      </div>
+    </div>
+  </div>
 
 
-<form class="max-w-sm mx-auto">
-    <div class="mb-5">
-      <label for="fullName" #input1 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Apellido</label>
-      <input type="text" id="fullName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-    </div>
-    <div class="mb-5">
-      <label for="dni" #input2 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/CIF</label>
-      <input type="text" id="dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-    </div>
-    <div class="mb-5">
-        <label for="birth_date" #input3  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
-        <input type="date" id="birth_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+<!-- Editar datos -->
+
+
+  <form class="max-w-sm mx-auto border-b border-gray-900/10 pb-12">
+
+    <div class="sm:col-span-3 mb-5">
+      <label for="fullname" class="block text-sm/6 font-medium text-gray-900">Nombre completo</label>
+      <div class="mt-2">
+        <input type="text" name="fullname" id="fullname" #input2 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
       </div>
-    <div class="mb-5">
-        <label for="email" #input4 email class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail</label>
-        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
-        
-      </div>
-    <div class="mb-5">
-        <label for="password" #input5 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-        <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
     </div>
-    <div class="mb-5">
-        <label for="password2" #input6 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repetir contraseña</label>
-        <input type="password" id="password2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        
-      </div>
-    <div class="mb-5">
-        <label for="address" #input7 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Direción</label>
-        <input type="text" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-    <div class="place-content-stretch">
-      <button type="submit" class="text-white bg-red-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
-      <button type="submit" class="text-white bg-green-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>
-    </div>
-  </form>
   
+    <div class="sm:col-span-3 mb-5">
+      <label for="dni" class="block text-sm/6 font-medium text-gray-900">DNI/NIF/CIF</label>
+      <div class="mt-2">
+        <input type="text" name="dni" id="dni" #input3 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+      </div>
+    </div>
+  
+    <div class="sm:col-span-3 mb-5">
+      <label for="birth_date" class="block text-sm/6 font-medium text-gray-900">Fecha de Nacimiento</label>
+      <div class="mt-2">
+        <input type="date" name="birth_date" id="birth_date" #input4 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+      </div>
+    </div>
+  
+    <div class="sm:col-span-3 mb-5">
+      <label for="email" class="block text-sm/6 font-medium text-gray-900">Mail</label>
+      <div class="mt-2">
+        <input type="email" name="email" id="email" #input5 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+      </div>
+    </div>
+  
+    <div class="sm:col-span-3 mb-5">
+      <label for="password" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
+      <div class="mt-2">
+        <input type="password" name="password" id="password" #input6 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+      </div>
+    </div>
+    <div class="sm:col-span-3 mb-5">
+      <label for="password2" class="block text-sm/6 font-medium text-gray-900">Repita contraseña</label>
+      <div class="mt-2">
+        <input type="password" name="password2" id="password2" #input7 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+      </div>
+    </div>
+    <div class="sm:col-span-3 mb-5">
+      <label for="address" class="block text-sm/6 font-medium text-gray-900">Dirección</label>
+      <div class="mt-2">
+        <input type="text" name="address" id="address" #input8 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+      </div>
+    </div>
+      <div class="flex place-content-stretch">
+        <button type="submit"   class="text-white bg-red-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+        <button type="button" (click)="editar(input1.value, input2.value, input3.value, input4.value, input5.value, input6.value, input7.value, input8.value)" class="text-white bg-green-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>
+      </div>
+    
+  </form>
