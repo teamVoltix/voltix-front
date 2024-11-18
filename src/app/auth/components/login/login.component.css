@@ -21,8 +21,6 @@
     
 }
 
-
-
 .header-section {
     display: flex;
     flex-direction: column;
@@ -35,8 +33,7 @@
     color: white; 
     max-width: 19rem; 
     position: relative; 
-    z-index: 2; 
-    
+    z-index: 2;   
 }
 
 .custom-button {
@@ -54,7 +51,6 @@
 .greet {
     margin-top: 9rem; 
 }
-
 
 .form-section {
     display: flex;

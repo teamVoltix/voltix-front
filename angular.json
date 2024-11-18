@@ -20,21 +20,19 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
-                "glob": "**/*",
-                "input": "public",
-                "output": "assets"
-              }
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              },
+              "src/favicon.ico",
+              "src/assets",
+              "src/_redirects"      
             ],
-
             "styles": [
               "src/styles.css",
               "node_modules/flowbite/dist/flowbite.min.css"
             ],
-            "scripts": ["node_modules/flowbite/dist/flowbite.min.js"],
-
-            "server": "src/main.server.ts",
-            "prerender": false,
-            "ssr": false
+            "scripts": ["node_modules/flowbite/dist/flowbite.min.js"]
           },
           "configurations": {
             "production": {
@@ -83,7 +81,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "/assets"
               }
             ],
             "styles": ["src/styles.css"],

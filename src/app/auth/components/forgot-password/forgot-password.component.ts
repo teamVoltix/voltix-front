@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ButtonComponent } from '../../../core/components/button/button.component';
 import { HeaderComponent } from '../../../core/components/header/header.component';
-
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, HeaderComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    HeaderComponent,
+  ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
-export class ForgotPasswordComponent implements OnInit{
+export class ForgotPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   showSuccessSection: boolean = false;
 
-
-  constructor(private fb: FormBuilder) {}
-
+  fb = inject(FormBuilder);
   ngOnInit(): void {
     this.buildForm();
   }
 
-  buildForm(){
+  buildForm() {
     this.resetPasswordForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
