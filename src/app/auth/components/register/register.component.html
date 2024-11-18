@@ -1,102 +1,135 @@
-<form class="max-w-sm mx-auto" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div class="my-5">
-    <h1 class="text-2xl font-semibold">Registro</h1>
-  </div>
-  <div class="mb-5">
-    <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Apellido</label>
-    <input type="text" id="fullname" formControlName="fullname" [ngClass]="{
+<div class="background">
+  <img src="/assets/images/rayoAzulLogin.svg" class="background-image" alt="Voltix Logo" />
+  <section class="header-section">
+    <button class="custom-button" routerLink="/home">
+      <img src="/assets/icons/backButton.svg" class="button-icon" alt="Back" />
+    </button>
+
+  </section>
+
+    <section class="title-section max-w-sm mx-auto ">
+    <img src="/assets/images/VoltixLoginBlanco.svg" alt="Logo" class="logo" />
+    <h1 class="greet">¡Hola! Regístrate</h1>
+    </section>
+
+  <section class="form-section">
+    <form class="max-w-sm mx-auto mb-4" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="my-3">
+        <h1 class="text-2xl tracking-wide">Registro</h1>
+      </div>
+      <div class="mb-4">
+        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y
+          Apellido</label>
+        <input type="text" id="fullname" formControlName="fullname" (input)="isAllInputsValid()" [ngClass]="{
       'border-red-500': registerForm.get('fullname')?.invalid && (registerForm.get('fullname')?.touched || errorFieldsEmpty),
       'border-gray-300': !(registerForm.get('fullname')?.invalid && (registerForm.get('fullname')?.touched || errorFieldsEmpty)),
       'border-green-500': registerForm.get('fullname')?.touched
-    }"
-      class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-      placeholder="Juan Ríos" required />
-  </div>
-  <div class="mb-5">
-    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-    <input type="email" id="email" formControlName="email" [ngClass]="{
-      'border-red-500': (registerForm.get('email')?.touched && !isEmailValid()) || errorFieldsEmpty,
-      'border-green-500': registerForm.get('email')?.touched && isEmailValid(),
-  }"
-  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-  placeholder="ejemplo@email.com" required />
-    <p *ngIf="errorEmail" class="mt-2 text-sm text-red-600 dark:text-red-500">
-        <span>{{ errorEmail }}</span>
-    </p>
-</div>
-  <div class="mb-5">
-    <label for="usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Usuario</label>
-    <input type="text" id="usuario" formControlName="usuario" [ngClass]="{
+    }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          placeholder="Juan Ríos" required />
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+        <input type="email" id="email" formControlName="email" (input)="isAllInputsValid()" 
+            [ngClass]="{
+                'border-red-500': !isEmailValid() && (registerForm.get('email')?.touched || errorFieldsEmpty),
+                'border-green-500': registerForm.get('email')?.touched && isEmailValid(),
+            }" 
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            placeholder="ejemplo@email.com" required />
+        <p *ngIf="!isEmailValid() && registerForm.get('email')?.touched" class="mt-2 text-sm text-red-600 dark:text-red-500">
+            ¡Error! El email no es válido.
+        </p>
+    </div>
+      <div class="mb-4">
+        <label for="usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Usuario</label>
+        <input type="text" id="usuario" formControlName="usuario" (input)="isAllInputsValid()" [ngClass]="{
       'border-red-500': registerForm.get('usuario')?.invalid && (registerForm.get('usuario')?.touched || errorFieldsEmpty),
       'border-gray-300': !(registerForm.get('usuario')?.invalid && (registerForm.get('usuario')?.touched || errorFieldsEmpty)),
       'border-green-500': registerForm.get('usuario')?.touched
-    }"
-      class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-      placeholder="DNI/NIF/CIF" required />
-  </div>
-  <div class="mb-5">
-    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-    <div class="relative">
-      <input type="password" id="password" formControlName="password" [type]="isPasswordVisible ? 'text' : 'password'"
-      [ngClass]="{
+    }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          placeholder="DNI/NIF/CIF" required />
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+        <div class="relative">
+          <input type="password" id="password" formControlName="password" (input)="isAllInputsValid()"
+            [type]="isPasswordVisible ? 'text' : 'password'" [ngClass]="{
         'border-red-500': (registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || errorFieldsEmpty)) || !isPasswordValid() && passwordTouched,
         'border-green-500': isPasswordValid() && passwordTouched,
-      }"
-        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-        placeholder="Ingresar contraseña" (input)="passwordTouched = true" required />
-      <button type="button" (click)="togglePasswordVisibility()"
-        class="absolute inset-y-0 right-0 flex items-center pr-3">
-        <i class="fas" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
-      </button>
+      }" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Ingresar contraseña" (input)="passwordTouched = true" required />
+          <button type="button" (click)="togglePasswordVisibility()"
+            class="absolute inset-y-0 right-0 flex items-center pr-3">
+            <i class="fas" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+        <p *ngIf="errorPassword" class="mt-2 text-sm text-red-600 dark:text-red-500">
+          <span>{{ errorPassword }}</span>
+        </p>
+        <div class="flex flex-col mt-2 text-xs text-gray-600 dark:text-gray-400">
+            <span>
+              <i [ngClass]="isPasswordValid() ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              La contraseña debe tener entre 8 y 15 caracteres.
+            </span>
+            <span>
+              <i [ngClass]="hasUpperCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              Debe contener al menos una letra mayúscula.
+            </span>
+            <span>
+              <i [ngClass]="hasLowerCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              Debe contener al menos una letra minúscula.
+            </span>
+            <span>
+              <i [ngClass]="hasNumber ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              Debe incluir al menos un número.
+            </span>
+            <span>
+              <i [ngClass]="hasSpecialChar ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              Debe incluir al menos un carácter especial.
+            </span>
+
+          </div>
+      </div>
+      <div class="mb-4">
+        <label for="repeat-password" class="block mb-2 text-sm font-medium">Repita la contraseña</label>
+        <div class="relative">
+            <input type="password" id="repeat-password" formControlName="repeatPassword" (input)="isAllInputsValid()"
+                [type]="isRepeatPasswordVisible ? 'text' : 'password'" [ngClass]="{
+                'border-red-500': (!passwordsMatch() && repeatPasswordTouched) || (registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)),
+                'border-gray-300': !(registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)) && passwordsMatch(),
+                'border-green-500': passwordsMatch() && repeatPasswordTouched,
+            }" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Repetir contraseña" (input)="repeatPasswordTouched = true" required />
+            <button type="button" (click)="toggleRepeatPasswordVisibility()"
+                class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <i class="fas" [ngClass]="isRepeatPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+        </div>
+        <p *ngIf="!passwordsMatch() && repeatPasswordTouched" class="mt-2 text-sm text-red-600 dark:text-red-500">
+            ¡Error! Las contraseñas no coinciden.
+        </p>
     </div>
-    <p *ngIf="errorPassword" class="mt-2 text-sm text-red-600 dark:text-red-500">
-      <span>{{ errorPassword }}</span>
-    </p>
-    <span class="mt-2 text-xs text-gray-600 dark:text-gray-400">
-      La contraseña debe incluir:
-      <ul class="list-disc pl-5">
-        <li>Un mín de 8 caracteres y un máx de 15 caracteres.</li>
-        <li>Al menos 1 mayúscula y 1 minúscula.</li>
-        <li>Al menos 1 caracter especial y al menos 1 número.</li>
-      </ul>
-    </span>
-  </div>
-  <div class="mb-5">
-    <label for="repeat-password" class="block mb-2 text-sm font-medium">Repita la contraseña</label>
-    <div class="relative">
-      <input type="password" id="repeat-password" formControlName="repeatPassword"
-        [type]="isRepeatPasswordVisible ? 'text' : 'password'" 
-        [ngClass]="{
-          'border-red-500': (registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)) || (!passwordsMatch() && repeatPasswordTouched && registerForm.get('repeatPassword')?.value !== ''),          'border-gray-300': !(registerForm.get('repeat-password')?.invalid && (registerForm.get('repeat-password')?.touched || errorFieldsEmpty)) && passwordsMatch(),
-          'border-green-500': passwordsMatch() && repeatPasswordTouched,
-        }"
-        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-        placeholder="Repetir contraseña" (input)="repeatPasswordTouched = true" required />
-      <button type="button" (click)="toggleRepeatPasswordVisibility()"
-        class="absolute inset-y-0 right-0 flex items-center pr-3">
-        <i class="fas" [ngClass]="isRepeatPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
-      </button>
-    </div>
-    <p *ngIf="errorPasswordCheck" class="mt-2 text-sm text-red-600 dark:text-red-500">
-      <span>{{ errorPasswordCheck }}</span>
-    </p>
-  </div>
-  <div class="flex items-start mb-5">
-    <div class="flex items-center h-5">
-      <input id="terms" type="checkbox" formControlName="terms"
-  [ngClass]="{
+      <!-- <div class="flex items-start mb-5">
+        <div class="flex items-center h-5">
+          <input id="terms" type="checkbox" formControlName="terms" [ngClass]="{
     'border-red-500': !registerForm.get('terms')?.value && (registerForm.invalid && errorFieldsEmpty),
     'border-gray-300': registerForm.get('terms')?.value || !(registerForm.invalid && errorFieldsEmpty)
-  }"
-  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
-        required />
-    </div>
-    <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Acepto los <a href="#"
-        class="text-blue-600 hover:underline dark:text-blue-500">términos y condiciones de uso</a></label>
-  </div>
-  <p *ngIf="errorFieldsEmpty" class="my-2 text-sm text-red-600 dark:text-red-500">
-    <span>{{ errorFieldsEmpty }}</span>
-  </p>
-  <button type="submit"
-    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Aceptar</button>
-</form>
+  }" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+            required />
+        </div>
+        <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Acepto los <a href="#"
+            class="text-blue-600 hover:underline dark:text-blue-500">términos y condiciones de uso</a></label>
+      </div> -->
+      <p *ngIf="errorFieldsEmpty" class="my-2 text-sm text-red-600 dark:text-red-500">
+        <span>{{ errorFieldsEmpty }}</span>
+      </p>
+      <button type="submit"
+      [ngClass]="{
+          'bg-custom': isAllInputsValid(),
+          'bg-disabled': !isAllInputsValid()
+      }"
+      class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      [disabled]="!isAllInputsValid()">Aceptar</button>
+    </form>
+  </section>
+</div>
