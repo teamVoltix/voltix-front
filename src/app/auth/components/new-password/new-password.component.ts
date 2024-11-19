@@ -29,6 +29,7 @@ import { InputPasswordComponent } from '../../../core/components/inputs/input-pa
 })
 export class NewPasswordComponent {
   newPasswordForm!: FormGroup;
+  showSuccessSection: boolean = false;
 
   constructor(private fb: FormBuilder) {}
 
@@ -85,8 +86,8 @@ export class NewPasswordComponent {
   onSubmit() {
     debugger;
     if (this.newPasswordForm.valid) {
-      console.log('Datos nueva contraseña:', this.newPasswordForm.value);
-      // Lógica para enviar la nueva contraseña
+      console.log('formulrio enviado correctamente');
+      this.showSuccessSection = true;
     } else {
       this.newPasswordForm.markAllAsTouched();
       return;
