@@ -14,11 +14,11 @@
 
   <section class="form-section">
     <form class="max-w-sm mx-auto mb-4" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="my-3">
-        <h1 class="text-2xl tracking-wide">Registro</h1>
+      <div class="my-1">
+        <h1 class="title-form">Registro</h1>
       </div>
       <div class="mb-4">
-        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y
+        <label for="fullname" class="block mb-2 text-sm text-gray-900 dark:text-white">Nombre y
           Apellido</label>
         <input type="text" id="fullname" formControlName="fullname" (input)="isAllInputsValid()" [ngClass]="{
       'border-red-500': registerForm.get('fullname')?.invalid && (registerForm.get('fullname')?.touched || errorFieldsEmpty),
@@ -28,7 +28,7 @@
           placeholder="Juan Ríos" required />
       </div>
       <div class="mb-4">
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+        <label for="email" class="block mb-2 text-sm text-gray-900 dark:text-white">Email</label>
         <input type="email" id="email" formControlName="email" (input)="isAllInputsValid()" 
             [ngClass]="{
                 'border-red-500': !isEmailValid() && (registerForm.get('email')?.touched || errorFieldsEmpty),
@@ -41,7 +41,7 @@
         </p>
     </div>
       <div class="mb-4">
-        <label for="usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Usuario</label>
+        <label for="usuario" class="block mb-2 text-sm text-gray-900 dark:text-white">Usuario</label>
         <input type="text" id="usuario" formControlName="usuario" (input)="isAllInputsValid()" [ngClass]="{
       'border-red-500': registerForm.get('usuario')?.invalid && (registerForm.get('usuario')?.touched || errorFieldsEmpty),
       'border-gray-300': !(registerForm.get('usuario')?.invalid && (registerForm.get('usuario')?.touched || errorFieldsEmpty)),
@@ -50,7 +50,7 @@
           placeholder="DNI/NIF/CIF" required />
       </div>
       <div class="mb-4">
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+        <label for="password" class="block mb-2 text-sm text-gray-900 dark:text-white">Contraseña</label>
         <div class="relative">
           <input type="password" id="password" formControlName="password" (input)="isAllInputsValid()"
             [type]="isPasswordVisible ? 'text' : 'password'" [ngClass]="{
@@ -69,29 +69,25 @@
         <div class="flex flex-col mt-2 text-xs text-gray-600 dark:text-gray-400">
             <span>
               <i [ngClass]="isPasswordValid() ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              La contraseña debe tener entre 8 y 15 caracteres.
+              Mínimo 8 caracteres y máximo 15 caracteres.
             </span>
             <span>
-              <i [ngClass]="hasUpperCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Debe contener al menos una letra mayúscula.
-            </span>
+              <i [ngClass]="hasUpperCaseAndLowerCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              Al menos 1 mayúscula y 1 minúscula.
+          </span>
             <span>
-              <i [ngClass]="hasLowerCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Debe contener al menos una letra minúscula.
+              <i [ngClass]="hasSpecialChar ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+              Al menos 1 carácter especial.
             </span>
             <span>
               <i [ngClass]="hasNumber ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Debe incluir al menos un número.
-            </span>
-            <span>
-              <i [ngClass]="hasSpecialChar ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Debe incluir al menos un carácter especial.
+              Al menos 1 número.
             </span>
 
           </div>
       </div>
       <div class="mb-4">
-        <label for="repeat-password" class="block mb-2 text-sm font-medium">Repita la contraseña</label>
+        <label for="repeat-password" class="block mb-2 text-sm">Repita la contraseña</label>
         <div class="relative">
             <input type="password" id="repeat-password" formControlName="repeatPassword" (input)="isAllInputsValid()"
                 [type]="isRepeatPasswordVisible ? 'text' : 'password'" [ngClass]="{
@@ -117,7 +113,7 @@
   }" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
             required />
         </div>
-        <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Acepto los <a href="#"
+        <label for="terms" class="ms-2 text-sm text-gray-900 dark:text-gray-300">Acepto los <a href="#"
             class="text-blue-600 hover:underline dark:text-blue-500">términos y condiciones de uso</a></label>
       </div> -->
       <p *ngIf="errorFieldsEmpty" class="my-2 text-sm text-red-600 dark:text-red-500">
@@ -128,7 +124,7 @@
           'bg-custom': isAllInputsValid(),
           'bg-disabled': !isAllInputsValid()
       }"
-      class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       [disabled]="!isAllInputsValid()">Aceptar</button>
     </form>
   </section>
