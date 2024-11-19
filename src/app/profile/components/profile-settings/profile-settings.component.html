@@ -27,7 +27,7 @@
 <!-- Editar datos -->
 
 
-  <form class="max-w-sm mx-auto border-b border-gray-900/10 pb-12">
+  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" class="max-w-sm mx-auto border-b border-gray-900/10 pb-12">
 
     <div class="sm:col-span-3 mb-5">
       <label for="fullname" class="block text-sm/6 font-medium text-gray-900">Nombre completo</label>
@@ -53,30 +53,76 @@
     <div class="sm:col-span-3 mb-5">
       <label for="email" class="block text-sm/6 font-medium text-gray-900">Mail</label>
       <div class="mt-2">
-        <input type="email" name="email" id="email" #input5 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+        <input type="email" formControlName="email"  id='email' #input5 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 "
+        [ngClass]="{'border-red-500': email?.invalid && email?.touched}"
+        />
+        <p
+        *ngIf="email?.invalid && email?.touched"
+        class="text-red-600 text-sm mt-2"
+        >
+        <span *ngIf="email?.errors?.['email']">Email en formato inválido</span>  
       </div>
     </div>
   
     <div class="sm:col-span-3 mb-5">
       <label for="password" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
       <div class="mt-2">
-        <input type="password" name="password" id="password" #input6 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+        <input type="password" formControlName="password" id="password" #input6 
+        [type]="isPasswordVisible ? 'text' : 'password'" 
+        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+        [ngClass]="{'border-red-500': password?.invalid && password?.touched}"
+        >
+        <button type="button" (click)="togglePasswordVisibility()"
+        class="absolute inset-y-0 right-0 flex items-center pr-3">
+        <i class="fas" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </button>
+        
+        <ul class="text-sm mt-2 text-red-600">
+          <li *ngIf="password?.errors?.['minlength'] && password?.touched">
+            Mínimo 8 caracteres y máximo 15 caracteres.
+          </li>
+          <li *ngIf="settingsForm.get('password')?.errors?.['pattern']">  
+            <p>Al menos 1 mayúscula y 1 minúscula. Al menos 1 caracter especial. Al menos 1 número.</p>
+          </li>
+        </ul>
       </div>
     </div>
+
     <div class="sm:col-span-3 mb-5">
       <label for="password2" class="block text-sm/6 font-medium text-gray-900">Repita contraseña</label>
       <div class="mt-2">
-        <input type="password" name="password2" id="password2" #input7 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+        <input type="password" forControlName="password2" id="password2" #input7 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+        [type]="isPassword2Visible ? 'text' : 'password'" 
+        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+        [ngClass]="{'border-red-500': password2?.invalid && password2?.touched}"
+
+        >
+        <button type="button" (click)="togglePassword2Visibility()"
+        class="absolute inset-y-5 right-5 flex items-start pr-3">
+        <i class="fas" [ngClass]="isPassword2Visible ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </button>
+
+        <ul class="text-sm mt-2 text-red-600">
+          <li *ngIf="password2?.errors?.['required'] && password2?.touched"> 
+            Confirmar contraseña es obligatorio.
+          </li>
+          <li *ngIf="settingsForm.get('password2')?.errors?.['passwordsMismatch']">
+            Las contraseñas no coinciden.
+          </li>
+        </ul>
+      
       </div>
     </div>
+
+
     <div class="sm:col-span-3 mb-5">
       <label for="address" class="block text-sm/6 font-medium text-gray-900">Dirección</label>
       <div class="mt-2">
         <input type="text" name="address" id="address" #input8 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
       </div>
     </div>
-      <div class="flex flex space-x-20">
-        <button type="submit"   class="hover:bg-red-500 text-white bg-red-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+      <div class="flex flex space-x-28">
+        <button type="submit"   class="w-52 h-12 hover:bg-red-500 text-white bg-red-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
         <button type="button" (click)="editar(input1.value, input2.value, input3.value, input4.value, input5.value, input6.value, input7.value, input8.value)" class=" hover:bg-green-400 text-white bg-green-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>
       </div>
     
