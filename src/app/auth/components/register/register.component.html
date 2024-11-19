@@ -58,11 +58,11 @@
         'border-green-500': isPasswordValid() && passwordTouched,
       }" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             placeholder="Ingresar contraseña" (input)="passwordTouched = true" required />
-          <button type="button" (click)="togglePasswordVisibility()"
+            <button type="button" (click)="togglePasswordVisibility()"
             class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <i class="fas" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
-          </button>
-        </div>
+            <img [src]="isPasswordVisible ? '/assets/icons/eye-alt.svg' : '/assets/icons/eye-slash.svg'" alt="Toggle Password Visibility" class="w-5 h-5" />
+        </button>
+    </div>
         <p *ngIf="errorPassword" class="mt-2 text-sm text-red-600 dark:text-red-500">
           <span>{{ errorPassword }}</span>
         </p>
@@ -98,7 +98,7 @@
                 placeholder="Repetir contraseña" (input)="repeatPasswordTouched = true" required />
             <button type="button" (click)="toggleRepeatPasswordVisibility()"
                 class="absolute inset-y-0 right-0 flex items-center pr-3">
-                <i class="fas" [ngClass]="isRepeatPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+                <img [src]="isRepeatPasswordVisible ? '/assets/icons/eye-alt.svg' : '/assets/icons/eye-slash.svg'" alt="Toggle Password Visibility" class="w-5 h-5" />
             </button>
         </div>
         <p *ngIf="!passwordsMatch() && repeatPasswordTouched" class="mt-2 text-sm text-red-600 dark:text-red-500">
