@@ -7,9 +7,6 @@ module.exports = {
     "./src/**/*.{html,ts}",
 
     "./node_modules/flowbite/**/*.js", // Esto es necesario para que Flowbite funcione con Tailwind.
-
-    "./node_modules/flowbite/**/*.js"
-
   ],
   theme: {
     colors: {
@@ -21,7 +18,8 @@ module.exports = {
       black: "#000b14",
       "dark-text": "#25272c",
       error: '#fc0606',
-      success: '#3db500'
+      success: '#3db500',
+      "input-border": "#c7cbd1",
     },
     extend: {},
   },
