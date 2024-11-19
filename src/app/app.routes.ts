@@ -7,9 +7,16 @@ import { NewPasswordComponent } from './auth/components/new-password/new-passwor
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
+import { StartComponent } from './start/start.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'start', pathMatch: 'full' },
+  {
+    path: 'start',
+    title: 'My Start Page',
+    component: StartComponent,
+  },
+
   {
     path: 'home',
     title: 'My Home Page',
