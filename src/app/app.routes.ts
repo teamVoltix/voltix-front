@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './auth/components/forgot-password/forgo
 import { NewPasswordComponent } from './auth/components/new-password/new-password.component';
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
+import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
 
 export const routes: Routes = [
@@ -50,5 +51,10 @@ export const routes: Routes = [
     path: 'register',
     title: 'User Register',
     component: RegisterComponent,
+  },
+  {
+    path: 'log-out',
+    title: 'logout',
+    component: LogoutComponent,
   },
 ];
