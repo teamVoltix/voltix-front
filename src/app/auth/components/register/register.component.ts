@@ -24,6 +24,7 @@ export class RegisterComponent {
   hasLowerCase: boolean = false;
   hasNumber: boolean = false;
   hasSpecialChar: boolean = false;
+  hasUpperCaseAndLowerCase: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -46,11 +47,16 @@ export class RegisterComponent {
     }
   }
 
+  checkUpperAndLowerCase(): void {
+    const password = this.registerForm.value.password;
+    this.hasUpperCaseAndLowerCase = /[A-Z]/.test(password) && /[a-z]/.test(password);
+  }
+
   // Llama a este método en cada input
   onInputChange(): void {
     this.checkEmptyFields();
+    this.checkUpperAndLowerCase(); 
   }
-
 
   isEmailValid(): boolean {
     const email = this.registerForm.value.email;
@@ -62,10 +68,11 @@ export class RegisterComponent {
     const password = this.registerForm.value.password;
     const minLength = 8;
     const maxLength = 15;
+    this.checkUpperAndLowerCase();
     this.hasUpperCase = /[A-Z]/.test(password);
     this.hasLowerCase = /[a-z]/.test(password);
     this.hasNumber = /\d/.test(password);
-    this.hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    this.hasSpecialChar = /[!@#$%^&*(),.?":{}|<>/_·]/.test(password);
   
     return password.length >= minLength && password.length <= maxLength && this.hasUpperCase && this.hasLowerCase && this.hasNumber && this.hasSpecialChar;
   }

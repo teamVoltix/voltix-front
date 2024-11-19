@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './auth/components/forgot-password/forgo
 import { NewPasswordComponent } from './auth/components/new-password/new-password.component';
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
+import { LogoutComponent } from './auth/components/logout/logout.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -43,5 +44,10 @@ export const routes: Routes = [
     path: 'register',
     title: 'User Register',
     component: RegisterComponent,
+  },
+  {
+    path: 'log-out',
+    title: 'logout',
+    component: LogoutComponent,
   },
 ];
