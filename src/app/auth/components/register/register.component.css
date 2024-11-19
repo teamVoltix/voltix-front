@@ -84,7 +84,7 @@
     margin-top: auto;
     position: relative; 
     z-index: 2; 
-    overflow-y: auto; /* Permite el desplazamiento vertical */
+    overflow-y: auto; 
     max-height: calc(100vh - 200px);
     
 }
@@ -99,7 +99,7 @@ input:focus {
     background-color: #0158A3;
 }
 
-.hover\:bg-custom:hover {
+.bg-custom:hover  {
     background-color: #013d70; 
 }
 
