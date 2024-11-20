@@ -29,6 +29,7 @@ import { InputPasswordComponent } from '../../../core/components/inputs/input-pa
 })
 export class NewPasswordComponent {
   newPasswordForm!: FormGroup;
+  showSuccessSection: boolean = false;
 
   constructor(private fb: FormBuilder) {}
 
@@ -50,9 +51,9 @@ export class NewPasswordComponent {
           [
             Validators.required,
             this.passwordLengthValidator,
-            this.uppercaseLowercaseValidator,
+            this.uppercaseValidator,
             this.numberValidator,
-            this.specialCharacterValidator
+            this.specialCharacterValidator,
           ],
         ],
         repeatPassword: ['', [Validators.required]],
@@ -85,54 +86,49 @@ export class NewPasswordComponent {
   onSubmit() {
     debugger;
     if (this.newPasswordForm.valid) {
-      console.log('Datos nueva contraseña:', this.newPasswordForm.value);
-      // Lógica para enviar la nueva contraseña
+      console.log('formulrio enviado correctamente');
+      this.showSuccessSection = true;
     } else {
       this.newPasswordForm.markAllAsTouched();
       return;
     }
   }
 
-
   //Validadores
   // Validador para la longitud mínima y máxima
- passwordLengthValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value;
-  if (value && (value.length < 8 || value.length > 15)) {
-    return { 'lengthError': true };
+  passwordLengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value && (value.length < 8 || value.length > 15)) {
+      return { lengthError: true };
+    }
+    return null;
   }
-  return null;
-}
 
-uppercaseLowercaseValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
+  uppercaseValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     const hasUppercase = /[A-Z]/.test(value); // Verificar si contiene al menos una mayúscula
-    const hasLowercase = /[a-z]/.test(value); // Verificar si contiene al menos una minúscula
 
-    // Si no tiene mayúscula o minúscula, se retorna el error
-    if (value && (!hasUppercase || !hasLowercase)) {
-      return { uppercaseLowercaseError: true }; // Error si falta mayúscula o minúscula
+    if (value && !hasUppercase) {
+      return { uppercaseError: true }; // Error si no contiene mayúscula
     }
 
-    return null; 
-  };
-}
-// Validador para números
- numberValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value;
-  if (value && !/\d/.test(value)) {
-    return { 'numberError': true };
+    return null; // Si pasa la validación, no hay error
   }
-  return null;
-}
+  // Validador para números
+  numberValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value && !/\d/.test(value)) {
+      return { numberError: true };
+    }
+    return null;
+  }
 
-// Validador para caracteres especiales
-specialCharacterValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value;
-  if (value && !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-    return { 'specialCharacterError': true };
+  // Validador para caracteres especiales
+  specialCharacterValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value && !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+      return { specialCharacterError: true };
+    }
+    return null;
   }
-  return null;
-}
 }
