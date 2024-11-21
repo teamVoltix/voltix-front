@@ -1,4 +1,3 @@
-//logica con validacion con el boton aceptar
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,89 +11,104 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  passwordVisible: boolean = false; // visibilidad de la contraseña
+  // Controla la visibilidad de la contraseña
+  passwordVisible: boolean = false;
+  .
+
+  
   login: FormGroup;
-  // control de datos
+
+  // Estados para validación del formulario
   usuarioCorrecto: boolean = false; 
   passwordCorrecta: boolean = false;
   userNotFound: boolean = false; 
   passwordNotFound: boolean = false; 
-  camposIncompletos: boolean = false; 
+  camposIncompletos: boolean = false;
+
+  // Base de datos simulada
+  private baseDeDatos = [
+    { usuario: '12345678A', password: 'password123' },
+    { usuario: '87654321B', password: 'qwerty456' },
+    { usuario: '13579246C', password: 'pass7890' },
+  ];
 
   constructor(private fb: FormBuilder) {
+    // Inicializa el formulario
     this.login = this.fb.group({
-      usuario: ['', Validators.required],
-      password: ['', Validators.required],
+      usuario: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
-    // Escucha los cambios en el campo de contraseña
-    this.login.get('password')?.valueChanges.subscribe((passwordValue) => {
-      if (passwordValue === '') {
-        this.passwordNotFound = false; 
+    // Suscripciones para manejo dinámico de validaciones
+    this.login.get('usuario')?.valueChanges.subscribe((value) => {
+      if (value === '') {
+        this.userNotFound = false;
+        this.usuarioCorrecto = false;
+      }
+      this.actualizarEstadoCampos();
+    });
+
+    this.login.get('password')?.valueChanges.subscribe((value) => {
+      if (value === '') {
+        this.passwordNotFound = false;
         this.passwordCorrecta = false;
       }
       this.actualizarEstadoCampos();
     });
-
-    // Escucha los cambios en el campo de usuario
-    this.login.get('usuario')?.valueChanges.subscribe((usuarioValue) => {
-      if (usuarioValue === '') {
-        this.userNotFound = false;
-        this.usuarioCorrecto = false; 
-      }
-      this.actualizarEstadoCampos();
-    });
   }
 
-  togglePasswordVisibility() {
-    this.passwordVisible = !this.passwordVisible; // Alterna la visibilidad
+  // Alterna la visibilidad del campo de contraseña
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
   }
 
-  actualizarEstadoCampos() {
-    // Verifica si hay campos incompletos
-    const usuarioIngresado = this.login.get('usuario')?.value;
-    const passwordIngresada = this.login.get('password')?.value;
-    this.camposIncompletos = !usuarioIngresado || !passwordIngresada;
+  // Actualiza el estado general de los campos
+  actualizarEstadoCampos(): void {
+    const usuario = this.login.get('usuario')?.value;
+    const password = this.login.get('password')?.value;
+
+    this.camposIncompletos = !usuario || !password;
   }
 
-  // Lógica de validación
-  onSubmit() {
-    // Verifica si hay campos incompletos antes de validar usuario/contraseña
+  // Manejo del evento de envío del formulario
+  onSubmit(): void {
+    // Verifica primero si los campos están completos
     this.actualizarEstadoCampos();
     if (this.camposIncompletos) {
-      this.passwordNotFound = false; 
-      this.userNotFound = false; 
-      return; // Corrige la lógica aquí, cerrando correctamente el if
+      this.userNotFound = false;
+      this.passwordNotFound = false;
+      console.log('Faltan campos por completar.');
+      return;
     }
 
+    // Extraemos los valores ingresados
     const usuarioIngresado = this.login.get('usuario')?.value;
     const passwordIngresada = this.login.get('password')?.value;
 
-    // Simulamos una base de datos con usuarios y contraseñas
-    const baseDeDatos = [
-      { usuario: '12345678A', password: 'password123' },
-      { usuario: '87654321B', password: 'qwerty456' },
-    ];
+    // Verifica si el usuario existe en la base de datos
+    const usuarioEncontrado = this.baseDeDatos.find(
+      (user) => user.usuario === usuarioIngresado
+    );
 
-    // Verificamos si el usuario existe
-    const usuarioEncontrado = baseDeDatos.find(user => user.usuario === usuarioIngresado);
+    this.userNotFound = !usuarioEncontrado;
+    this.usuarioCorrecto = !!usuarioEncontrado;
 
-    this.userNotFound = !usuarioEncontrado; 
-    this.usuarioCorrecto = !!usuarioEncontrado; 
-
-    if (!this.userNotFound) {      
+    if (!this.userNotFound) {
+      // Si el usuario existe, verifica la contraseña
       this.passwordNotFound = usuarioEncontrado?.password !== passwordIngresada;
-      this.passwordCorrecta = !this.passwordNotFound; 
+      this.passwordCorrecta = !this.passwordNotFound;
 
       if (this.passwordCorrecta) {
-        console.log('Inicio de sesión exitoso. Redirigiendo...');
-        // Aquí puedes añadir la lógica para redirigir al usuario
+        console.log('Inicio de sesión exitoso.');
+        // Aquí podrías redirigir al usuario a otra página
       } else {
         console.log('Contraseña incorrecta.');
       }
     } else {
-      this.passwordCorrecta = false; 
+      this.passwordCorrecta = false;
       console.log('Usuario no encontrado.');
     }
   }
+
+  
 }
