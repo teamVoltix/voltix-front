@@ -1,0 +1,44 @@
+<div class="profile-header">
+    <div class="sub-header">
+         <button class="back"><img src="assets/back-button.svg" alt="back button" (click)="goBack()"></button>
+         <img class="logo" src="/assets/images/VoltixLoginBlanco.svg" alt="" width="144" height="44">
+         <img class="rayoAzul" src="assets/images/rayo-cortado.svg" alt="boh" width="180" height="239">
+    </div>
+    <div class="sub-header-gris"></div>
+    <img class="avatar" src="assets/avatar-default.png" alt="Avatar" height="128" width="128">
+    <button class="modificar-pics"><img src="assets/icons/pics.svg" alt=""></button>
+    
+</div>
+
+    
+
+<div class="info">
+    <div class="mb-6">
+        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Appellido</label>
+        <input placeholder={{user.fullname}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+    <div class="mb-6">
+        <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
+        <input placeholder={{user.dni}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+    <div class="mb-6">
+        <label for="birth_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Nacimiento</label>
+        <input placeholder={{user.birth_date}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+    <div class="mb-6">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail</label>
+        <input placeholder={{user.email}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+    <div class="mb-6">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+        <input placeholder={{user.password}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+    <div class="mb-6">
+        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Direccion</label>
+        <input placeholder={{user.address}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+</div>
+<div class="button">
+    <button class="cerrar">Cerrar Session</button> 
+    <button class="editar" routerLink="/profile-settings">Editar Perfil</button>
+</div>

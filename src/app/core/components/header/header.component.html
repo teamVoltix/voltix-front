@@ -1,0 +1,15 @@
+<header class="flex items-center justify-between p-3 bg-white">
+
+  <button type="button"
+    (click)="goBack()">
+    <img src="/assets/icons/blackBackButton.svg" alt="">
+  </button>
+
+  <div class="text-center">
+    <img src="/assets/images/voltixLogo.svg" alt="Voltix logo">
+  </div>
+
+  <!-- TODO: saber en qué pantallas se verá el avatar del user (solo cuando esté logeado?) -->
+  <div  [ngClass]="{'invisible': !isLoggedIn}" class="user-avatar w-[44px] h-[44px]"></div>
+
+</header>

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   // Controla la visibilidad de la contraseña
   passwordVisible: boolean = false;
-  .
+  
 
   
   login: FormGroup;

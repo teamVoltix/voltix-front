@@ -1,0 +1,110 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh; 
+    background-color: #0072CE; 
+    position: relative;
+}
+
+.background-image {
+    position: absolute; 
+    top: 7%; 
+    right: 0%; 
+    z-index: 1; 
+    max-width: 60%; 
+    width: auto; 
+    height: auto; 
+    min-width: 100px;
+    
+}
+
+.header-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5rem; 
+    margin-left: 1.25rem; 
+    width: 100%;
+    font-size: 1.875rem; 
+    font-weight: bold;
+    line-height: 2.5rem; 
+    color: white; 
+    max-width: 19rem; 
+    position: relative; 
+    z-index: 2;   
+}
+
+.title-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem; 
+    width: 100%;
+    font-size: 1.5rem; 
+    font-weight: 500;
+    line-height: 2.5rem; 
+    color: white; 
+    max-width: 19rem; 
+    z-index: 2;   
+}
+
+.title-form {
+    font-size: 1.2rem; 
+    font-weight: 500;
+    line-height: 2.5rem; 
+}
+.custom-button {
+    margin: -10px; 
+    padding-bottom: 1.25rem; 
+}
+
+.logo {
+    object-fit: contain;
+    max-width: 100%;
+    aspect-ratio: 3.95; 
+    width: 174px; 
+}    
+
+.greet {
+    margin-top: 2rem;
+    margin-bottom: 1rem; 
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem; 
+    padding-top: 0.5rem;
+    height: auto;
+    width: 100%;
+    background-color: white; 
+    border-top-left-radius: 1.875rem; 
+    border-top-right-radius: 1.875rem; 
+    margin-top: auto;
+    position: relative; 
+    z-index: 2; 
+    overflow-y: auto; 
+    max-height: calc(100vh - 200px);
+    
+}
+
+input:focus {
+    outline: none; 
+    box-shadow: none; 
+    border-color: inherit;
+}
+
+.bg-custom {
+    background-color: #0158A3;
+}
+
+.bg-custom:hover  {
+    background-color: #013d70; 
+}
+
+.bg-disabled {
+    background-color: #E8E9ED; 
+    cursor: not-allowed; 
+    color: #8E95A2;
+}
