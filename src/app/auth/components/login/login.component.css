@@ -1,12 +1,14 @@
+/* Estilos básicos para pantallas más grandes */
 .background {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin: 0 auto;
+    margin: auto;
     width: 100%;
     height: 100vh; 
-    background-color: #0ea5e9; 
+    background-color: #0072ce; 
     position: relative;
+    
 }
 
 .background-image {
@@ -14,11 +16,11 @@
     top: 15%; 
     right: 0%; 
     z-index: 1; 
-    max-width: 60%; 
-    width: auto; 
+     
+    width: 500px; 
     height: auto; 
     min-width: 100px;
-    
+    object-fit: contain; 
 }
 
 .header-section {
@@ -28,12 +30,12 @@
     margin-left: 1.25rem; 
     width: 100%;
     font-size: 1.875rem; 
-    font-weight: bold;
+    
     line-height: 2.5rem; 
-    color: white; 
-    max-width: 19rem; 
+     
+     
     position: relative; 
-    z-index: 2;   
+    z-index: 2; 
 }
 
 .custom-button {
@@ -43,13 +45,34 @@
 
 .logo {
     object-fit: contain;
-    max-width: 100%;
+    width: 500px; 
+    height: auto;
+    width: 400%;
     aspect-ratio: 3.95; 
     width: 174px; 
 }    
 
 .greet {
-    margin-top: 9rem; 
+    font-weight: bold;
+    
+    color: white;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5rem; 
+    margin-left: 1.25rem; 
+    width: 100%;
+    font-size: 4rem; 
+    padding-bottom: 40px;
+    line-height: 5rem; 
+     
+    
+}
+
+/* Formulario responsivo */
+.form {
+    margin-top: auto;
 }
 
 .form-section {
@@ -64,10 +87,11 @@
     position: relative; 
     z-index: 2; 
     
+    
 }
 
 .form-title {
-    font-size: 1.5rem; 
+    font-size: 1.8rem; 
     font-weight:  semibold; 
     line-height: 1; 
     color: #27272a; 
@@ -78,7 +102,7 @@
     flex-direction: column;
     margin-top: 1.5rem; 
     width: 100%;
-    font-size: 1rem; 
+    font-size: 1.5rem; 
 }
 
 .form-group {
@@ -89,13 +113,12 @@
 
 .label {
     gap: 0.625rem; 
-    max-width: 100%;
     font-weight: medium; 
     color: #27272a; 
-    width: 250px; 
+    width: 100%; /* Cambiar a 100% para pantallas pequeñas */
 }    
 
-.input {
+.input, .password-container {
     display: flex;
     flex: 1;
     gap: 0.625rem; 
@@ -106,19 +129,7 @@
     background-color: white; 
     border: 1px solid #e5e7eb; 
     border-radius: 0.375rem; 
-}
-
-.password-container {
-    display: flex;
-    flex: 1;
-    gap: 0.625rem; 
-    align-items: center;
-    padding: 0.75rem 1rem; 
-    margin-top: 0.5rem; 
-    color: #6b7280; 
-    background-color: white; 
-    border: 1px solid #e5e7eb; 
-    border-radius: 0.375rem; 
+    width: 100%; /* Asegura que los campos ocupen todo el ancho */
 }
 
 .password-input {
@@ -127,8 +138,6 @@
     border: none; 
     outline: none; 
 }
-
-
 
 .forgot-password {
     margin-top: 0.75rem; 
@@ -148,4 +157,126 @@
     background-color: #e5e7eb; 
     border-radius: 0.5rem; 
     min-height: 3.25rem;
+    cursor: not-allowed; /* Evita interacción cuando está deshabilitado */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submit-button.button-active {
+    background-color: #0058a3; /* Color azul */
+    color: white; /* Cambia el texto a blanco */
+    cursor: pointer; /* Habilita interacción */
+}
+
+/* logica validacion usuario */
+.border-red {
+    border: 2px solid #d94040; 
+}
+
+.border-green {
+    border: 2px solid #7db661;
+}
+
+.error-message {
+    color: red; 
+    margin-top: 0.5rem; 
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .background-image {
+        max-width: 200%;
+        top: 5%;
+    }
+
+    .header-section {
+        margin-left: 1rem; 
+        
+    }
+
+    .logo {
+        width: 500px;
+    }
+
+    .greet {
+        line-height: 4rem; 
+        font-size: 3rem;
+    }
+
+    .form-section {
+        padding: 1rem;    
+        border-top-left-radius: 1.25rem; 
+        border-top-right-radius: 1.25rem; 
+    }
+
+    .form-title {
+        font-size: 1.25rem; 
+    }
+
+    .label {
+        font-size: 0.875rem; 
+    }
+
+    .input, .password-container {
+        padding: 0.5rem 0.75rem; 
+        font-size: 0.875rem; 
+    }
+
+    .submit-button {
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .background-image {
+        width: 80%;
+        top: 10%; 
+    }
+
+    .header-section {
+        font-size: 1.25rem;
+    }
+
+    .logo {
+        width: 200px;
+    }
+
+    .greet {
+        line-height: 3rem;
+        font-size: 2rem; 
+    }
+
+    .form-section {
+        padding: 0.75rem; 
+    }
+
+    .input, .password-container {
+        font-size: 0.75rem; 
+    }
+
+    .submit-button {
+        padding: 0.75rem 1.25rem; 
+    }
+
+    .login-form {
+            
+        margin-top: 1.2rem; 
+        
+        font-size: 1.2rem; 
+    }
+@media (max-width: 380px) {
+        .greet {
+            line-height: 2rem;
+            font-size: 1.5rem;
+        }
+        .logo {
+            width: 150px;
+        }
+        .login-form {
+            
+            margin-top: 1rem; 
+            
+            font-size: 1rem; 
+        }
+
+    }
 }
