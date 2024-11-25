@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Measurement } from '../../../model/measurement';
+import { Router } from '@angular/router';
+import { MeasurementService } from '../../services/measurement-service/measurement.service';
 
 @Component({
   selector: 'app-measurement-search',
@@ -10,102 +12,19 @@ import { Measurement } from '../../../model/measurement';
   styleUrl: './measurement-search.component.css',
 })
 export class MeasurementSearchComponent {
-  // TODO: quitarlo cuando venga del backend
-  measurementList: Measurement [] = [
-    {
-      checked: true,
-      id: 664705,
-      date: '08/05/2024',
-      compare: 'Sin comparar',
-    },
-    {
-      checked: false,
-      id: 565644,
-      date: '09/05/2024',
-      compare: 'Con discrepancias',
-    },
-    {
-      checked: true,
-      id: 584846,
-      date: '10/05/2024',
-      compare: 'Sin discrepancias',
-    },
-    {
-      checked: false,
-      id: 565656,
-      date: '11/05/2024',
-      compare: 'Sin comparar',
-    },
-    {
-      checked: true,
-      id: 565644,
-      date: '12/05/2024',
-      compare: 'Con discrepancias',
-    },
-    {
-      checked: true,
-      id: 664705,
-      date: '08/05/2024',
-      compare: 'Sin comparar',
-    },
-    {
-      checked: false,
-      id: 565644,
-      date: '09/05/2024',
-      compare: 'Con discrepancias',
-    },
-    {
-      checked: true,
-      id: 584846,
-      date: '10/05/2024',
-      compare: 'Sin discrepancias',
-    },
-    {
-      checked: false,
-      id: 565656,
-      date: '11/05/2024',
-      compare: 'Sin comparar',
-    },
-    {
-      checked: true,
-      id: 565644,
-      date: '12/05/2024',
-      compare: 'Con discrepancias',
-    },
-    {
-      checked: true,
-      id: 664705,
-      date: '08/05/2024',
-      compare: 'Sin comparar',
-    },
-    {
-      checked: false,
-      id: 565644,
-      date: '09/05/2024',
-      compare: 'Con discrepancias',
-    },
-    {
-      checked: true,
-      id: 584846,
-      date: '10/05/2024',
-      compare: 'Sin discrepancias',
-    },
-    {
-      checked: false,
-      id: 565656,
-      date: '11/05/2024',
-      compare: 'Sin comparar',
-    },
-    {
-      checked: true,
-      id: 565644,
-      date: '12/05/2024',
-      compare: 'Con discrepancias',
-    },
-  ];
-
   isHoverPrevious = false;
   isHoverNext = false;
+  measurementList: Measurement[] = [];
+
+
+  router = inject(Router);
+  measurementService = inject(MeasurementService);
+
+  ngOnInit() {
+    this.measurementService.getAllMeasurements().subscribe(measurements => {
+      this.measurementList = measurements;
+    });
+  }
 
 
   isAllChecked(): boolean {
@@ -148,5 +67,10 @@ export class MeasurementSearchComponent {
     event.preventDefault();
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
+  }
+
+
+  goToDetail(measurementId: number) {
+    this.router.navigate([`measurement-search/${measurementId.toString()}`]);
   }
 }

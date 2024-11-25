@@ -53,7 +53,7 @@
           }" class="text-xs font-medium">{{measurement.compare}}</p>
         </div>
 
-        <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="flecha para ir a medición">
+        <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="flecha para ir a medición" (click)="goToDetail(measurement.id)">
       </sextion>
       }
     </section>
