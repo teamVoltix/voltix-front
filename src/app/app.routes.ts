@@ -8,6 +8,8 @@ import { ProfileSettingsComponent } from './profile/components/profile-settings/
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
+import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
+import { MeasurementCompareComponent } from './internal-measurements/components/measurement-compare/measurement-compare.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -56,5 +58,15 @@ export const routes: Routes = [
     path: 'log-out',
     title: 'logout',
     component: LogoutComponent,
+  },
+  {
+    path: 'measurement-search',
+    title: 'Measurement search',
+    component: MeasurementSearchComponent,
+  },
+  {
+    path: 'measurement-compare',
+    title: 'Measurement compare',
+    component: MeasurementCompareComponent,
   },
 ];
