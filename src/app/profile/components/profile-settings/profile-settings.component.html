@@ -1,4 +1,5 @@
 
+<!-- Edición de datos -->
 
   <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" class="max-w-sm mx-auto border-b border-gray-900/10 pb-12">
 
@@ -9,7 +10,7 @@
             <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
           </svg>
           <div class="mt-4 flex text-sm/6 text-gray-600 ">
-            <label for="photo" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+            <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
               <span>CAMBIAR FOTO DE PERFIL</span>  
             </label>
             <input id="photo" formControlName="photo" type="file" #input1 class="sr-only">
@@ -38,13 +39,9 @@
       <label for="email" class="block text-sm/6 font-medium text-gray-900">Mail</label>
       <div class="mt-2">
         <input type="email" formControlName="email"  id='email' #input4 class="appearance-none block w-full rounded-md border-gray-100 h-9 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm/6 border border-red-500 rounded mb-3 leading-tight"
-        [ngClass]="{'border-red-500': email?.invalid && email?.touched}"
-        />
-        <p
-        *ngIf="email?.invalid && email?.touched"
-        class="text-red-600 text-sm mt-2"
-        >
-        <span *ngIf="email?.errors?.['email']">Email en formato inválido</span>  
+        [ngClass]="{'border-red-500': email?.invalid && email?.touched}"/>
+        <p *ngIf="email?.invalid && email?.touched" class="text-red-600 text-sm mt-2">
+        <span *ngIf="email?.errors?.['pattern'] && email?.touched">Email en formato inválido</span>  
       </div>
     </div>
   
@@ -54,8 +51,7 @@
         <input type="password" formControlName="password" id="password" #input5 
         [type]="isPasswordVisible ? 'text' : 'password'" 
         class="appearance-none block w-full rounded-md border-gray-100 h-9 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm/6 border border-red-500 rounded mb-3 leading-tight"
-        [ngClass]="{'border-red-500': password?.invalid}"
-        >
+        [ngClass]="{'border-red-500': password?.invalid}">
         <button type="button" id="buttonPassword" (click)="togglePasswordVisibility()"
         class="absolute inset-y-0 right-0 flex items-start mt-3 pr-3">
         <i class="fas" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
@@ -78,19 +74,16 @@
         <input type="password" formControlName="password2" id="password2" #input6 
         [type]="isPassword2Visible ? 'text' : 'password'" 
         class="appearance-none block w-full rounded-md border-gray-100 h-9 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm/6 border border-red-500 rounded mb-3 leading-tight"
-        [ngClass]="{'border-red-500': settingsForm.errors?.['passwordMismatch']}"
-        >
+        [ngClass]="{'border-red-500': settingsForm.errors?.['passwordMismatch']}">
         <button type="button" id="buttonRepeatPassword" (click)="togglePassword2Visibility()"
         class="absolute inset-y-0 right-0 flex items-start mt-3 pr-3">
         <i class="fas" [ngClass]="isPassword2Visible ? 'fa-eye-slash' : 'fa-eye'"></i>
-        </button>
-
+      </button>
         <ul class="text-sm mt-2 text-red-600">
           <li *ngIf="settingsForm.errors?.['passwordMismatch']">
             Las contraseñas no coinciden.
           </li>
         </ul>
-      
       </div>
     </div>
 
@@ -100,14 +93,37 @@
         <input type="text" formControlName="address" id="address" #input7 class="block w-full rounded-md border-gray-100 h-9 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
       </div>
     </div>
-    <div class= "formGroup" class="flex flex space-x-28">
-      <button type="submit" class="w-52 h-12 hover:bg-red-500 text-white bg-red-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
-      <button type="submit" 
-      
-      (click)="editar(input1.value, input2.value, input3.value, input4.value, input5.value, input6.value, input7.value)" 
-      class=" hover:bg-green-400 text-white bg-green-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>
+
+    <div *ngIf="settingsForm.errors?.['atLeastOneRequired']" class="text-red-600">
     </div>
-    
+
+    <div class= "formGroup" class="flex flex space-x-28">
+      <button type="submit" (click)="goBack()" class="w-52 h-12 hover:bg-red-500 text-white bg-red-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+      <button type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+      class=" hover:bg-green-400 text-white bg-green-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      [disabled]="settingsForm.invalid" [ngClass]="{'bg-gray-400 cursor-not-allowed': settingsForm.invalid}"
+      >Guardar</button>  
+    </div>  
+
+  <!-- Modal confirmar datos -->
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div class="relative p-4 w-full max-w-md max-h-full">
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div class="p-4 md:p-5 text-center">
+                  <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Estás seguro de guardar los cambios?</h3>
+                  <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                  (click)="editUser(input1.value, input2.value, input3.value, input4.value, input5.value, input6.value, input7.value)"
+                  >Guardar cambios </button>
+                  <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900  bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700  dark:hover:bg-gray-700">Cancelar</button>
+              </div>
+          </div>
+      </div>
+    </div>
+
   </form>
 
-  <!-- [ngClass]="{'bg-gray-400 cursor-not-allowed': settingsForm.invalid}" -->
+
+

@@ -1,8 +1,9 @@
 import { HttpUserEvent } from '@angular/common/http';
+import { User } from '../../../model/user';
+import { ProfileService } from '../../service/profile.service';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-// import { User } from '/src/app/model/user.ts'
+import { CommonModule, Location } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 
 
 @Component({
@@ -14,26 +15,31 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 })
 export class ProfileSettingsComponent {
   
-  settingsForm: FormGroup;
-  isPasswordVisible: boolean = false;
-  isPassword2Visible: boolean = false;
-
+  public settingsForm: FormGroup;
+  public isPasswordVisible: boolean = false;
+  public isPassword2Visible: boolean = false;
+  
  
   constructor (
-    private formBuilder: FormBuilder){
-
+    private formBuilder: FormBuilder, 
+    private location: Location,
+    public profileService: ProfileService,
+    // public user: User
+   
+  ){
+      
       this.settingsForm = this.formBuilder.group({
         
         photo: [],
         fullname: [],
         birth_date: [],
-        email: ['', [,Validators.email]],
+        email: ['', [,Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
         password: ['', [Validators.minLength(8), Validators.maxLength(15), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$')]],
         password2: ['', [, this.passwordsMatch]],
         address: []
       },
       {
-        validators: this.passwordsMatch,
+        validators: [this.passwordsMatch, this.atLeastOneFieldRequired()]
       }
     )
   }
@@ -57,6 +63,13 @@ export class ProfileSettingsComponent {
     const password2 = group.get('password2')?.value;
     return password === password2 ? null : { passwordMismatch: true };
   }
+  atLeastOneFieldRequired() {
+    return (group: AbstractControl) => {
+      const controls = group.value;
+      const atLeastOneFilled = Object.values(controls).some(value => value && value.toString().trim() !== '');
+      return atLeastOneFilled ? null : { atLeastOneRequired: true };
+    };
+  }
   onSubmit(){
     if (this.settingsForm.valid) {
       console.log('El formulario es válido.', this.settingsForm.value);
@@ -65,8 +78,11 @@ export class ProfileSettingsComponent {
     console.log('El formulario no es válido')
    }
   }
-  public editar(photo: String, fullname: String , birth_date: String, email: String, password: String, password2: String, address: String){
+  goBack(): void {
+    this.location.back();
+  }
 
+  public editUser(photo: String, fullname: String , birth_date: String, email: String, password: String, password2: String, address: String){
     console.log(photo, fullname, birth_date, email, password, address)
   }
 
