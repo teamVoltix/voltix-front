@@ -5,10 +5,6 @@
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/develop
     "./node_modules/flowbite/**/*.js", // Esto es necesario para que Flowbite funcione con Tailwind.
   ],
   theme: {
