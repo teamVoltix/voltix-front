@@ -44,19 +44,24 @@
             <td class="p-4 text-center">{{ invoiceData.loadDate }}</td>
             <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.loadDate }}</td>
             <td class="p-4">
-              <img class="w-6 min-w-6 h-6 min-h-6" [src]="invoiceData.loadDate === measurementData.loadDate ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'" alt="check o cross">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.loadDate === measurementData.loadDate ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
             </td>
           </tr>
 
           <tr class="bg-neutral-100 border border-neutral-200">
-            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Período de medición</td>
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Período de medición
+            </td>
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
             <td class="p-4 text-center">{{ invoiceData.measurementPeriod }}</td>
             <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.measurementPeriod }}</td>
             <td class="p-4">
-              <img class="w-6 min-w-6 h-6 min-h-6" [src]="invoiceData.measurementPeriod === measurementData.measurementPeriod ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'" alt="check o cross">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.measurementPeriod === measurementData.measurementPeriod ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
             </td>
           </tr>
 
@@ -68,7 +73,9 @@
             <td class="p-4 text-center">{{ invoiceData.measuredDays }}</td>
             <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.measuredDays }}</td>
             <td class="p-4">
-              <img class="w-6 min-w-6 h-6 min-h-6" [src]="invoiceData.measuredDays === measurementData.measuredDays ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'" alt="check o cross">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.measuredDays === measurementData.measuredDays ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
             </td>
           </tr>
 
@@ -80,7 +87,9 @@
             <td class="p-4 text-center">{{ invoiceData.consumption }}</td>
             <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.consumption }}</td>
             <td class="p-4">
-              <img class="w-6 min-w-6 h-6 min-h-6" [src]="invoiceData.consumption === measurementData.consumption ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'" alt="check o cross">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.consumption === measurementData.consumption ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
             </td>
           </tr>
 
@@ -92,14 +101,19 @@
             <td class="p-4 text-center">{{ invoiceData.amount }}</td>
             <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.amount }}</td>
             <td class="p-4">
-              <img class="w-6 min-w-6 h-6 min-h-6" [src]="invoiceData.amount === measurementData.amount ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'" alt="check o cross">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.amount === measurementData.amount ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <app-button class="block mt-[60px]" text="Descargar" (click)="showModal()"></app-button>
+    <button
+      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]"
+      (click)="showModal()">Descargar
+      PDF</button>
     <app-report-download></app-report-download>
 
   </section>
