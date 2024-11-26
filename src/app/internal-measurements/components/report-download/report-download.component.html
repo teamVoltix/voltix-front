@@ -1,1 +1,19 @@
-<p>report-download works!</p>
+<div id="reportDownloadModal" tabindex="-1"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow p-6 text-center">
+
+      <h3 class="mb-4 text-2xl font-semibold text-dark-text">Descargar archivo</h3>
+
+      <p class="text-[#637381] text-base mb-8">¿Estás seguro de querer descargar el archivo de la comparación?</p>
+
+      <div class="w-full flex items-center justify-center gap-4">
+        <button (click)="hideModal()"
+          class="w-full max-w-[163px] h-[50px] py-2.5 px-5 text-base font-medium text-dark-text focus:outline-none bg-white rounded-lg border border-[#DFE4EA]">Cancelar</button>
+
+        <button  (click)="downloadReport()"
+          class="w-full max-w-[163px] h-[50px] py-2.5 px-5 text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none ">Descargar</button>
+      </div>
+    </div>
+  </div>
+</div>
