@@ -23,34 +23,35 @@
       <input readonly type="text" id="id" [value]="measurement?.id"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
 
-      <label for="id" class="block mb-[10px] text-base font-medium text-dark-text">Fecha de carga</label>
-      <input readonly type="text" id="id" [value]="measurement?.date"
+      <label for="date" class="block mb-[10px] text-base font-medium text-dark-text">Fecha de carga</label>
+      <input readonly type="text" id="date" [value]="measurement?.date"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
 
-      <label for="id" class="block mb-[10px] text-base font-medium text-dark-text">Período de medición</label>
+      <label for="initialDate" class="block mb-[10px] text-base font-medium text-dark-text">Período de medición</label>
       <div class="flex items-center gap-3 mb-[14px]">
-              <input readonly type="text" id="id" [value]="measurement?.initialDate"
-        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
+        <input readonly type="text" id="initialDate" [value]="measurement?.initialDate"
+          class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
         <p>al</p>
-        <input readonly type="text" id="id" [value]="measurement?.endDate"
-        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
+        <input readonly type="text" id="endDate" [value]="measurement?.endDate"
+          class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
 
       </div>
 
-      <label for="id" class="block mb-[10px] text-base font-medium text-dark-text">Días medidos</label>
-      <input readonly type="text" id="id" [value]="measurement?.measuredDays"
+      <label for="measuredDays" class="block mb-[10px] text-base font-medium text-dark-text">Días medidos</label>
+      <input readonly type="text" id="measuredDays" [value]="measurement?.measuredDays"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
 
-      <label for="id" class="block mb-[10px] text-base font-medium text-dark-text">Consumo (kWh)</label>
-      <input readonly type="text" id="id" [value]="measurement?.consumption"
+      <label for="consumption" class="block mb-[10px] text-base font-medium text-dark-text">Consumo (kWh)</label>
+      <input readonly type="text" id="consumption" [value]="measurement?.consumption"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
 
-      <label for="id" class="block mb-[10px] text-base font-medium text-dark-text">Importe estimado (€)</label>
-      <input readonly type="text" id="id" [value]="measurement?.estimatedAmount"
+      <label for="estimatedAmount" class="block mb-[10px] text-base font-medium text-dark-text">Importe estimado (€)</label>
+      <input readonly type="text" id="estimatedAmount" [value]="measurement?.estimatedAmount"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
     </section>
 
-    <app-button class="block mt-[60px]" text="Comparar"></app-button>
+    <button
+      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]">Comparar</button>
 
   </section>
 </div>
