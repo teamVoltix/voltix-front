@@ -3,11 +3,13 @@ import { Component, inject } from '@angular/core';
 import { Measurement } from '../../../model/measurement';
 import { Router } from '@angular/router';
 import { MeasurementService } from '../../services/measurement-service/measurement.service';
+import { ReportService } from '../../services/report-service/report.service';
+import { ReportDownloadComponent } from '../report-download/report-download.component';
 
 @Component({
   selector: 'app-measurement-search',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReportDownloadComponent],
   templateUrl: './measurement-search.component.html',
   styleUrl: './measurement-search.component.css',
 })
@@ -19,6 +21,7 @@ export class MeasurementSearchComponent {
 
   router = inject(Router);
   measurementService = inject(MeasurementService);
+  reportService = inject(ReportService);
 
   ngOnInit() {
     this.measurementService.getAllMeasurements().subscribe(measurements => {
@@ -75,5 +78,10 @@ export class MeasurementSearchComponent {
 
   goToDetail(measurementId: number) {
     this.router.navigate([`measurement-search/${measurementId.toString()}`]);
+  }
+
+
+  showModal(){
+    this.reportService.showModal();
   }
 }

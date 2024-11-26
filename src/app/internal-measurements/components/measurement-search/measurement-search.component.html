@@ -21,11 +21,12 @@
       <section class="flex items-center justify-between bg-neutral-100 rounded px-4 py-[10px] mb-3">
         <input id="measurement.id" type="checkbox" value="" [checked]="isAllChecked()" (change)="checkedAll()"
           class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2" (click)="showModal()">
           <img src="/assets/icons/download.svg" alt="icono para descargar">
           <p class="text-dark-text text-base font-medium">Descargar</p>
         </div>
       </section>
+      <app-report-download></app-report-download>
 
       @for (measurement of paginatedItems; track $index) {
       <sextion class="flex items-center justify-between py-2 px-4 mb-[10px] rounded" [ngClass]="{
@@ -53,7 +54,8 @@
           }" class="text-xs font-medium">{{measurement.compare}}</p>
         </div>
 
-        <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="flecha para ir a medición" (click)="goToDetail(measurement.id)">
+        <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="flecha para ir a medición"
+          (click)="goToDetail(measurement.id)">
       </sextion>
       }
     </section>
@@ -78,7 +80,8 @@
         @for (page of pageNumbers; track $index) {
         <li>
           <a href="#" (click)="goToPage($event, page)"
-            class="w-6 h-6 rounded flex items-center justify-center text-base text-neutral-500" [ngClass]="{'bg-primary text-white': currentPage === page}">
+            class="w-6 h-6 rounded flex items-center justify-center text-base text-neutral-500"
+            [ngClass]="{'bg-primary text-white': currentPage === page}">
             {{ page }}
           </a>
         </li>
@@ -98,5 +101,4 @@
       </ul>
     </nav>
   </section>
-
 </div>
