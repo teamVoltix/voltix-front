@@ -17,7 +17,6 @@ export const routes: Routes = [
     title: 'My Start Page',
     component: StartComponent,
   },
-
   {
     path: 'home',
     title: 'My Home Page',

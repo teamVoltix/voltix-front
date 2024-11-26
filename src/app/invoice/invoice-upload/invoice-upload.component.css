@@ -1,0 +1,115 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh; 
+    background-color: #0072CE; 
+    position: relative;
+}
+
+.background-image {
+    position: absolute; 
+    bottom: 80%; 
+    right: 0%; 
+    z-index: 1; 
+    max-width: 35%; 
+    width: auto; 
+    height: auto; 
+    min-width: 100px;
+    z-index: 1;
+    
+}
+.header-section {
+    margin-top: 3rem; 
+    width: 100%;
+    color: white; 
+    position: relative; 
+    z-index: 2;   
+}
+
+.body-section {
+    z-index: 3;
+    flex: 1; 
+    background-color: white; 
+    height: 100%;
+}
+
+.bg-custom {
+    background-color: #0158A3;
+}
+
+.bg-custom:hover  {
+    background-color: #013d70; 
+}
+
+
+.buttons-section {
+    position: absolute;
+    bottom: 20px; /* Espacio desde la parte inferior */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+    width: 100%; /* O ajusta el ancho según sea necesario */
+}
+
+.btn-upload {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    width: 100%;
+    color: white;
+    background-color: #0158A3; 
+    border-radius: 0.5rem;
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.btn-upload:hover {
+    background-color: #013d70; 
+}
+
+.btn-return {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    margin-top: 1.25rem; 
+    width: 100%;
+    color: #0158A3; 
+    white-space: nowrap; 
+    background-color: white; 
+    border-radius: 0.5rem; 
+    border: 1px solid #0158A3; 
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.btn-return:hover {
+    background-color: white; 
+    color: #013d70;
+    border: 1px solid #013d70; 
+}
+
+.bg-disabled {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    width: 100%;
+    color: #8E95A2;
+    white-space: nowrap; 
+    background-color: #E8E9ED; 
+    border-radius: 0.5rem; 
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+    cursor: not-allowed; 
+}

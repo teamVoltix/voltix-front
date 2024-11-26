@@ -1,1 +1,60 @@
-<p>invoice-upload works!</p>
+<div class="background">
+    <img src="/assets/images/rayoAzulLogin.svg" class="background-image" alt="Voltix Logo" />
+    <section class="header-section flex items-center justify-between px-1 max-w-sm mx-auto">
+
+        <button type="button" (click)="goBack()">
+            <img src="/assets/icons/backButton.svg" alt="Volver">
+        </button>
+
+        <div class="text-center">
+            <img src="/assets/images/VoltixLoginBlanco.svg" alt="Voltix logo" class="w-28">
+        </div>
+
+        <div
+            class="user-avatar w-[34px] h-[34px] flex iustify-end overflow-hidden rounded-full border-2 border-gray-300 mb-1 me-3">
+            <img src="/assets/avatar-default.png" alt="Avatar" class="w-full h-full object-cover" />
+        </div>
+    </section>
+    <section class="body-section px-4 py-6">
+        <div class="max-w-sm mx-auto">
+            <h1 class="text-xl font-medium mb-4">Carga tu factura de luz</h1>
+            <p>Aquí podrás adjuntar tu última factura de luz en formato PDF o como imagen (JPG o PNG) para luego compararla con los datos del medidor.</p>
+
+            <div (click)="fileInput.click()" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+                (drop)="onDrop($event)"
+                class="border-dashed border-2 border-gray-300 p-4 text-center my-12 cursor-pointer">
+
+                <!-- Mostrar el ícono y el mensaje de carga si no hay archivo seleccionado -->
+                <ng-container *ngIf="!selectedFile; else fileAttached">
+                    <img src="/assets/icons/inboxUpload.svg" alt="Inbox" class="inbox mb-2 mx-auto" />
+                    <p class="text-gray-600">Haga clic o arrastre para subir archivos</p>
+                </ng-container>
+
+                <!-- Mostrar el contenido del archivo adjunto si hay un archivo seleccionado -->
+                <ng-template #fileAttached>
+                    <img src="/assets/icons/checkCircle.svg" alt="Check" class="inbox mb-2 mx-auto" />
+                    <p class="text-gray-600 mt-2">Archivo adjunto:</p>
+                    <p class="text-gray-600 italic mt-2">{{ selectedFile?.name }}</p>
+                </ng-template>
+
+                <input type="file" #fileInput accept="application/pdf, image/jpeg, image/png" (change)="onFileSelected($event)" class="hidden">
+            </div>
+
+        </div>
+    </section>
+    <section class="buttons-section max-w-sm mx-auto px-3">
+        <button [ngClass]="{
+            'btn-upload': isInvoiceUpload(),
+            'bg-disabled': !isInvoiceUpload()
+        }" class="mt-4" [disabled]="!isInvoiceUpload()" (click)="uploadFile()">
+            Cargar factura
+        </button>
+
+        <button [ngClass]="{
+            'btn-return': isInvoiceUpload(),
+            'bg-disabled': !isInvoiceUpload()
+        }" class="mt-2 mb-5" [disabled]="!isInvoiceUpload()" (click)="resetFile()">
+            Volver a cargar
+        </button>
+    </section>
+</div>
