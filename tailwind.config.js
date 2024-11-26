@@ -13,6 +13,8 @@ module.exports = {
       "primary-hover": "#064b86",
       "primary-focus": "#0b3f6f",
       "primary-bg": "#f0f7ff",
+      "primary-darkBg": "#e0effe",
+      "primary-br": "#b9dffe",
       secondary: "#00d8ab",
       white: "#fff",
       black: "#000b14",
