@@ -44,7 +44,10 @@ export class MeasurementSearchComponent {
 
   itemsPerPage = 6; // Número de elementos por página
   currentPage = 1; // Página actual
-  totalPages = Math.ceil(this.measurementList.length / this.itemsPerPage); // Total de páginas
+
+  get totalPages() {
+    return Math.ceil(this.measurementList.length / this.itemsPerPage);
+  }
 
   // Obtener los elementos de la página actual
   get paginatedItems() {
