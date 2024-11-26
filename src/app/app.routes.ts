@@ -8,6 +8,7 @@ import { ProfileSettingsComponent } from './profile/components/profile-settings/
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
+import { InvoiceUploadComponent } from './invoice/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -56,5 +57,10 @@ export const routes: Routes = [
     path: 'log-out',
     title: 'logout',
     component: LogoutComponent,
+  },
+  {
+    path: 'invoice-upload',
+    title: 'Upload Invoice',
+    component: InvoiceUploadComponent,
   },
 ];
