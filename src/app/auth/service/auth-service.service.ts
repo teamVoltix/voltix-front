@@ -17,10 +17,7 @@ export class AuthService {
   login(credentials: Login) {
     return this.service.login(credentials);
   }
-  logout(): void {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
-  }
+  
   profile() {
     return this.service.profile();
   }
