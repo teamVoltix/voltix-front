@@ -1,0 +1,121 @@
+<div class="w-full">
+  <!-- TODO: agregar el header general cuando esté hecho -->
+  <div class="bg-primary h-44"></div>
+
+  <section class="bg-neutral-50 px-5 pt-5 pb-14">
+    <h2 class="text-dark-text text-2xl font-semibold mb-4">Comparación</h2>
+
+    <div class="relative overflow-x-auto rounded-lg">
+      <table class="w-full text-sm text-dark-text">
+        <thead class="text-base bg-primary-darkBg border border-primary-br">
+          <tr>
+            <th class="p-4 text-primary border-r border-primary-br">
+              <div class="flex items-center justify-center gap-2">
+                <img src="/assets/icons/invoiceCompare.svg" alt="Factura">
+                Factura
+              </div>
+            </th>
+            <th class="p-4 text-primary  border-r border-primary-br">
+              <div class="flex items-center justify-center gap-2">
+                <img src="/assets/icons/measurementCompare.svg" alt="Medición">
+                Medición
+              </div>
+            </th>
+            <th class="w-14 p-4"></th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white">
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">ID</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceData.id }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.id }}</td>
+            <td></td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Fecha de carga</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceData.loadDate }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.loadDate }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.loadDate === measurementData.loadDate ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Período de medición
+            </td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceData.measurementPeriod }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.measurementPeriod }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.measurementPeriod === measurementData.measurementPeriod ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Días medidos</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceData.measuredDays }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.measuredDays }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.measuredDays === measurementData.measuredDays ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Consumo</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceData.consumption }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.consumption }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.consumption === measurementData.consumption ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Importe</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceData.amount }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.amount }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoiceData.amount === measurementData.amount ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button
+      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]"
+      (click)="showModal()">Descargar
+      PDF</button>
+    <app-report-download></app-report-download>
+
+  </section>
+
+</div>
