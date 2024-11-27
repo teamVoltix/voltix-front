@@ -1,0 +1,57 @@
+<div class="w-full">
+  <!-- TODO: agregar el header general cuando esté hecho -->
+  <div class="bg-primary h-28"></div>
+
+  <section class="bg-neutral-50 p-5">
+    <section class="bg-white border border-neutral-100 rounded-lg p-5">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-dark-text text-lg font-semibold">Medición #{{measurementId}}</h2>
+        <div [ngClass]="{
+          'bg-neutral-50': measurement?.compare === 'Sin comparar',
+          'bg-success-50': measurement?.compare === 'Sin discrepancias',
+          'bg-error-50': measurement?.compare === 'Con discrepancias'
+        }" class="rounded py-[3px] px-[10px]">
+          <p [ngClass]="{
+            'text-neutral-900': measurement?.compare === 'Sin comparar',
+            'text-success-900': measurement?.compare === 'Sin discrepancias',
+            'text-error-900': measurement?.compare === 'Con discrepancias'
+          }" class="text-xs font-medium">{{measurement?.compare}}</p>
+        </div>
+      </div>
+
+      <label for="id" class="block mb-[10px] text-base font-medium text-dark-text">ID</label>
+      <input readonly type="text" id="id" [value]="measurement?.id"
+        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
+
+      <label for="date" class="block mb-[10px] text-base font-medium text-dark-text">Fecha de carga</label>
+      <input readonly type="text" id="date" [value]="measurement?.date"
+        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
+
+      <label for="initialDate" class="block mb-[10px] text-base font-medium text-dark-text">Período de medición</label>
+      <div class="flex items-center gap-3 mb-[14px]">
+        <input readonly type="text" id="initialDate" [value]="measurement?.initialDate"
+          class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
+        <p>al</p>
+        <input readonly type="text" id="endDate" [value]="measurement?.endDate"
+          class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
+
+      </div>
+
+      <label for="measuredDays" class="block mb-[10px] text-base font-medium text-dark-text">Días medidos</label>
+      <input readonly type="text" id="measuredDays" [value]="measurement?.measuredDays"
+        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
+
+      <label for="consumption" class="block mb-[10px] text-base font-medium text-dark-text">Consumo (kWh)</label>
+      <input readonly type="text" id="consumption" [value]="measurement?.consumption"
+        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
+
+      <label for="estimatedAmount" class="block mb-[10px] text-base font-medium text-dark-text">Importe estimado (€)</label>
+      <input readonly type="text" id="estimatedAmount" [value]="measurement?.estimatedAmount"
+        class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
+    </section>
+
+    <button
+      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]">Comparar</button>
+
+  </section>
+</div>
