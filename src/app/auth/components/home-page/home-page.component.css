@@ -100,11 +100,11 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px; /* Ajusta el tamaño del texto */
+  font-size: 18px;
 }
 
 .icon {
   width: 24px;
   height: 24px;
-  color: #0072ce; /* El mismo color que el texto */
+  color: #0072ce;
 }
