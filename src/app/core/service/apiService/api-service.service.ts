@@ -18,7 +18,7 @@ export class ApiService {
     return this.http.get(this.url + 'users');
   }
   getUserById(id: string): Observable<User> {
-    return this.http.get(this.url + '/user' + '/' + id) as Observable<User>;
+    return this.http.get(this.url + 'users' + '/' + id) as Observable<User>;
   }
 
   getAllUser(): Observable<UserResponse> {
@@ -29,5 +29,8 @@ export class ApiService {
   }
   login(credentials: { dni: string; password: string }): Observable<any> {
     return this.http.post<any>(this.url + 'api/auth/login/', credentials);
+  }
+  profile(): Observable<User> {
+    return this.http.get<User>(this.url + 'api/profile/');
   }
 }

@@ -6,7 +6,7 @@ import { User } from '../../../model/user';
 import { ApiService } from '../apiService/api-service.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StateService {
   private apiServer = inject(ApiService);
@@ -24,15 +24,7 @@ export class StateService {
   setLogin(token: string) {
     const currentPayload: Payload = this.jwt(token);
 
-    localStorage.setItem('voltix', JSON.stringify({ token }));
-    this.apiServer.getUserById(currentPayload.id).subscribe((data) => {
-      this.state$.next({
-        ...this.state$.value,
-        loginState: 'logged',
-        token,
-        currentPayload,
-        currentUser: data,
-      });
-    });
+    localStorage.setItem('token', JSON.stringify({ token }));
+    
   }
 }
