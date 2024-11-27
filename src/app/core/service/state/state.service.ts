@@ -22,9 +22,6 @@ export class StateService {
   getToken = (): string | null => this.state$.value.token;
 
   setLogin(token: string) {
-    const currentPayload: Payload = this.jwt(token);
-
     localStorage.setItem('token', JSON.stringify({ token }));
-    
   }
 }
