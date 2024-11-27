@@ -1,20 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { ApiService } from '../../core/service/apiService/api-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  public url = 'http://localhost:3000/user';
-  constructor(private http: HttpClient) {}
+  private service = inject(ApiService);
 
   getUser() {
-    return this.http.get(this.url);
+    return this.service.getAllUser();
   }
-
-
   // editUser(photo: String, fullname: String , birth_date: String, email: String, password: String, password2: String, address: String){
   //   let editedUser = {photo, fullname, birth_date, email, password, address}
-
- 
 }
