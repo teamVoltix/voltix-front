@@ -8,6 +8,7 @@ import { ProfileSettingsComponent } from './profile/components/profile-settings/
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
+import { HomePageComponent } from './auth/components/home-page/home-page.component';
 import { InvoiceListingComponent } from './invoice/invoice-listing/invoice-listing.component';
 import { InvoiceHeaderComponent } from './invoice/invoice-header/invoice-header.component';
 import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
@@ -63,6 +64,9 @@ export const routes: Routes = [
     component: LogoutComponent,
   },
   {
+    path: 'home-page',
+    title: 'Home Page',
+    component: HomePageComponent,
     path: 'invoce-listing',
     title: 'invoce listing',
     component: InvoiceListingComponent
@@ -71,7 +75,6 @@ export const routes: Routes = [
     path: 'invoce-header',
     title: 'invoce header',
     component: InvoiceHeaderComponent
-    
   },
   {
     path: 'measurement-search',
