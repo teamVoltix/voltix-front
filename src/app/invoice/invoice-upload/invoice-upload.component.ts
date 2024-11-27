@@ -1,5 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-upload',
@@ -10,14 +11,25 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 })
 export class InvoiceUploadComponent {
   selectedFile: File | null = null;
+  isFileUploaded: boolean = false;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private router: Router) {}
 
   // Método para ir a la vista anterior
   goBack(): void {
     this.location.back();
+  }
+
+  // Método para ir a la ruta de las facturas adjuntas
+  goToAttachedInvoices(): void {
+    this.router.navigate(['/ruta-de-facturas-adjuntas']); // Cambiar a la ruta real cuando exista
+  }
+
+  // Método para ir al inicio
+  goToHome(): void {
+    this.router.navigate(['/home-page']); 
   }
 
   // Método para manejar la selección de un archivo
@@ -35,7 +47,6 @@ export class InvoiceUploadComponent {
         }
     }
 }
-
 
   // Método para reiniciar el archivo seleccionado
 resetFile() {
@@ -65,11 +76,13 @@ resetFile() {
   uploadFile() {
     if (this.selectedFile) {
       console.log('Cargando archivo:', this.selectedFile);
+      this.isFileUploaded = true; // Cambia el estado a verdadero después de la carga
       // Implementa tu lógica del post cuando tengamos el endpoint del backend
     } else {
       console.error('No se ha seleccionado ningún archivo');
     }
   }
+
 
   // Método para verificar si se ha subido un archivo
   isInvoiceUpload(): boolean {

@@ -113,3 +113,44 @@
     align-items: center; 
     cursor: not-allowed; 
 }
+
+.btn-view-invoices {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    width: 100%;
+    color: white;
+    background-color: #0158A3; 
+    border-radius: 0.5rem;
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.btn-view-invoices:hover {
+    background-color: #013d70; 
+}
+
+.btn-return-home {
+    display: flex;
+    gap: 0.625rem; 
+    align-self: stretch;
+    padding: 0.875rem 1.75rem; 
+    margin-top: 1.25rem; 
+    width: 100%;
+    color: #0158A3; 
+    white-space: nowrap; 
+    background-color: white; 
+    border-radius: 0.5rem; 
+    border: 1px solid #0158A3; 
+    min-height: 52px;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.btn-return-home:hover {
+    background-color: white; 
+    color: #013d70;
+    border: 1px solid #013d70; 
+}
