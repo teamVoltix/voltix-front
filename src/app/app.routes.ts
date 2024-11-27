@@ -8,6 +8,8 @@ import { ProfileSettingsComponent } from './profile/components/profile-settings/
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
+import { InvoiceListingComponent } from './invoice/invoice-listing/invoice-listing.component';
+import { InvoiceHeaderComponent } from './invoice/invoice-header/invoice-header.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -57,4 +59,15 @@ export const routes: Routes = [
     title: 'logout',
     component: LogoutComponent,
   },
+  {
+    path: 'invoce-listing',
+    title: 'invoce listing',
+    component: InvoiceListingComponent
+  },
+  {
+    path: 'invoce-header',
+    title: 'invoce header',
+    component: InvoiceHeaderComponent
+    
+  }
 ];
