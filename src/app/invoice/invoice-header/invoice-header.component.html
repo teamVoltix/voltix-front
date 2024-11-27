@@ -1,0 +1,39 @@
+<div class="flex overflow-hidden flex-col max-w-[430px] header relative">
+    <img loading="lazy" src="assets/images/rayoAzulLogin.svg" alt="ray" class="ray absolute" />
+  
+    <nav class="flex overflow-hidden flex-col mt-[60px] w-full icons z-10">
+      <div class="flex overflow-hidden gap-10 justify-between items-center px-4 py-1 w-full">
+        <div class="flex overflow-hidden gap-1.5 justify-center items-center self-stretch px-2 py-1.5 my-auto w-36 min-h-[44px]">
+          <img loading="lazy" src="assets/images/VoltixLoginBlanco.svg" class="object-contain self-stretch my-auto w-32 aspect-[4]" alt="Company logo" />
+        </div>
+        <div class="flex gap-2 items-center self-stretch my-auto w-11">
+          <button class="flex overflow-hidden gap-1.5 justify-center items-center self-stretch my-auto w-11 min-h-[44px]" aria-label="User profile">
+            <img loading="lazy" src="assets/images/imgUser.svg" class="object-contain self-stretch my-auto w-8 rounded-full aspect-square" alt="User profile picture" />
+          </button>
+        </div>
+      </div>
+      <div class="flex gap-10 justify-center items-center px-5 mt-2 w-full text-base text-center whitespace-nowrap" role="tablist">
+        <button
+  class="tab-button"
+  [ngClass]="{ 'active': selectedTab === 'facturas' }"
+  (click)="selectTab('facturas')"
+  attr.aria-selected="{{ selectedTab === 'facturas' }}"
+  tabindex="0">
+  <span [ngStyle]="{ color: selectedTab === 'facturas' ? '#0058a3' : 'white' }">
+    Facturas
+  </span>
+</button>
+<button
+  class="tab-button"
+  [ngClass]="{ 'active': selectedTab === 'mediciones' }"
+  (click)="selectTab('mediciones')"
+  attr.aria-selected="{{ selectedTab === 'mediciones' }}"
+  tabindex="0">
+  <span [ngStyle]="{ color: selectedTab === 'mediciones' ? '#0058a3' : 'white' }">
+    Mediciones
+  </span>
+</button>
+      </div>
+    </nav>
+  </div>
+  
