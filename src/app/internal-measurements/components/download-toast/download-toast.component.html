@@ -1,0 +1,17 @@
+<article
+  class="download-toast flex items-center gap-5 py-4 px-7 bg-white shadow-[0px_1px_4px_0px_rgba(37,39,44,0.24)] rounded-lg relative bottom-16"
+  [ngClass]="{'animate-toastIn': !isToastExiting, 'animate-toastOut': isToastExiting}">
+
+  <button
+    class="absolute top-4 end-6"
+    (click)="closeToast()">
+    <img src="/assets/icons/closeGray.svg" alt="Icono de cerrar">
+  </button>
+
+  <img src="/assets/icons/downloadFinish.svg" alt="Descarga completa" aria-hidden="true">
+
+  <div class="text">
+    <h3 class="text-lg text-dark-text font-semibold">Descarga completa</h3>
+    <p class="text-sm text-neutral-600">{{pdfName}}</p>
+  </div>
+</article>
