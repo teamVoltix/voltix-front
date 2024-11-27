@@ -8,6 +8,10 @@ import { ProfileSettingsComponent } from './profile/components/profile-settings/
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
+import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
+import { MeasurementCompareComponent } from './internal-measurements/components/measurement-compare/measurement-compare.component';
+import { MeasurementDetailComponent } from './internal-measurements/components/measurement-search/measurement-detail/measurement-detail.component';
+import { InvoiceUploadComponent } from './invoice/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -16,7 +20,6 @@ export const routes: Routes = [
     title: 'My Start Page',
     component: StartComponent,
   },
-
   {
     path: 'home',
     title: 'My Home Page',
@@ -56,5 +59,25 @@ export const routes: Routes = [
     path: 'log-out',
     title: 'logout',
     component: LogoutComponent,
+  },
+  {
+    path: 'measurement-search',
+    title: 'Measurement search',
+    component: MeasurementSearchComponent,
+  },
+  {
+    path: 'measurement-search/:id',
+    title: 'Measurement Detail',
+    component: MeasurementDetailComponent,
+  },
+  {
+    path: 'measurement-compare',
+    title: 'Measurement compare',
+    component: MeasurementCompareComponent,
+  },
+  {
+    path: 'invoice-upload',
+    title: 'Upload Invoice',
+    component: InvoiceUploadComponent,
   },
 ];
