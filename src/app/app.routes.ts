@@ -9,6 +9,10 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
 import { HomePageComponent } from './auth/components/home-page/home-page.component';
+import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
+import { MeasurementCompareComponent } from './internal-measurements/components/measurement-compare/measurement-compare.component';
+import { MeasurementDetailComponent } from './internal-measurements/components/measurement-search/measurement-detail/measurement-detail.component';
+import { InvoiceUploadComponent } from './invoice/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -17,10 +21,9 @@ export const routes: Routes = [
     title: 'My Start Page',
     component: StartComponent,
   },
-
   {
-    path: 'home',
-    title: 'My Home Page',
+    path: 'inicio',
+    title: 'Welcome to Voltix',
     component: HomeComponent,
   },
   {
@@ -58,10 +61,29 @@ export const routes: Routes = [
     title: 'logout',
     component: LogoutComponent,
   },
-
   {
     path: 'home-page',
     title: 'Home Page',
     component: HomePageComponent,
+  },
+  {
+    path: 'measurement-search',
+    title: 'Measurement search',
+    component: MeasurementSearchComponent,
+  },
+  {
+    path: 'measurement-search/:id',
+    title: 'Measurement Detail',
+    component: MeasurementDetailComponent,
+  },
+  {
+    path: 'measurement-compare',
+    title: 'Measurement compare',
+    component: MeasurementCompareComponent,
+  },
+  {
+    path: 'invoice-upload',
+    title: 'Upload Invoice',
+    component: InvoiceUploadComponent,
   },
 ];

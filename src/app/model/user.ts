@@ -17,10 +17,10 @@ email:string
 password:string 
 */
 
-/* login */
-/* 
-email, password 
-*/
+export interface Login {
+  dni: string;
+  password: string;
+}
 
 /* class Perfil
     profile_id
