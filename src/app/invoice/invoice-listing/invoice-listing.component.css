@@ -1,0 +1,40 @@
+
+input[type="text"] {
+    border: 1px solid #e5e5e5; /* Misma propiedad que el listado */
+    
+    
+}
+.factura-section {
+    background-color: #f4f4f6; /* Color de fondo */
+   
+}
+
+.mark {
+    background-color: #e8e9ed;
+    border-radius: 8px;
+}
+.selected-invoice {
+    background-color: #f0f7ff; /* Fondo para facturas seleccionadas */
+   
+    transition: background-color 0.3s ease; /* Efecto de transición */
+}
+
+/* Estado deshabilitado */
+.pagination-disabled {
+    color: #6b7280; /* Gris para el texto */
+    background-color: transparent; /* Fondo transparente */
+    cursor: not-allowed; /* Cursor no permitido */
+    pointer-events: none; /* Desactiva los clics */
+}
+
+/* Estado activo */
+.pagination-active {
+    color: #26272c; /* Texto negro */
+    background-color: #e8e9ed; /* Fondo activo */
+    cursor: pointer; /* Cursor de clic */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Efecto de transición */
+}
+
+.pagination-active:hover {
+    background-color: #dcdce0; /* Fondo ligeramente más oscuro al pasar el cursor */
+}
