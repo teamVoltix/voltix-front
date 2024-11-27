@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { ReportDownloadComponent } from '../report-download/report-download.component';
-import { ButtonComponent } from '../../../core/components/button/button.component';
 import { ReportService } from '../../services/report-service/report.service';
+import { DownloadToastComponent } from '../download-toast/download-toast.component';
+import { DownloadingToastComponent } from '../downloading-toast/downloading-toast.component';
 
 @Component({
   selector: 'app-measurement-compare',
   standalone: true,
-  imports: [ButtonComponent, ReportDownloadComponent],
+  imports: [ReportDownloadComponent, DownloadToastComponent, DownloadingToastComponent],
   templateUrl: './measurement-compare.component.html',
   styleUrl: './measurement-compare.component.css',
 })
 export class MeasurementCompareComponent {
-  
-  constructor(private reportService: ReportService){}
+
+  constructor(protected reportService: ReportService){}
 
   showModal(){
     this.reportService.showModal();
