@@ -21,8 +21,8 @@ export const routes: Routes = [
     component: StartComponent,
   },
   {
-    path: 'home',
-    title: 'My Home Page',
+    path: 'inicio',
+    title: 'Welcome to Voltix',
     component: HomeComponent,
   },
   {
