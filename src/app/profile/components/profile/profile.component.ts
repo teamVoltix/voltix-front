@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../model/user';
 import { RouterLink } from '@angular/router';
@@ -20,8 +20,11 @@ export class ProfileComponent implements OnInit {
   public edit: Boolean = true;
   public save: Boolean = false;
 
+  // user: User = mockUser;
+  private service = inject(ProfileService);
+  private location = inject(Location);
 
-  constructor(private service: ProfileService, private location: Location, private fb: FormBuilder ) {
+  constructor(private fb: FormBuilder ) {
     this.userTest = {
       iprofile_id: 1,
       user: 'user',
