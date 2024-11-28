@@ -1,46 +1,49 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../service/auth-service.service';
+import { StateService } from '../../../core/service/state/state.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  // Controla la visibilidad de la contraseña
-  passwordVisible: boolean = false;
-  
+export class LoginComponent implements OnInit {
+  private service = inject(AuthService);
+  private stateService = inject(StateService);
+  privateAllUserList: any; //da quitar una vez que funciona el backend
+  private router = inject(Router);
 
-  
+  passwordVisible: boolean = false;
+
   login: FormGroup;
 
   // Estados para validación del formulario
-  usuarioCorrecto: boolean = false; 
+  usuarioCorrecto: boolean = false;
   passwordCorrecta: boolean = false;
-  userNotFound: boolean = false; 
-  passwordNotFound: boolean = false; 
+  userNotFound: boolean = false;
+  passwordNotFound: boolean = false;
   camposIncompletos: boolean = false;
-
-  // Base de datos simulada
-  private baseDeDatos = [
-    { usuario: '12345678A', password: 'password123' },
-    { usuario: '87654321B', password: 'qwerty456' },
-    { usuario: '13579246C', password: 'pass7890' },
-  ];
 
   constructor(private fb: FormBuilder) {
     // Inicializa el formulario
+    //Dejar campo vacio una vez que funcioan el login
     this.login = this.fb.group({
-      usuario: ['', [Validators.required, Validators.minLength(8)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      dni: ['8374926A', [Validators.required, Validators.minLength(8)]],
+      password: ['AnaPass123!', [Validators.required, Validators.minLength(6)]],
     });
 
     // Suscripciones para manejo dinámico de validaciones
-    this.login.get('usuario')?.valueChanges.subscribe((value) => {
+    this.login.get('dni')?.valueChanges.subscribe((value) => {
       if (value === '') {
         this.userNotFound = false;
         this.usuarioCorrecto = false;
@@ -56,6 +59,14 @@ export class LoginComponent {
       this.actualizarEstadoCampos();
     });
   }
+  // getAllUserList al avio del componente da remover una vez comprobado que el backend funciona
+  ngOnInit(): void {
+    this.service.getUserAll().subscribe((data) => {
+      console.log(data);
+      this.privateAllUserList = data.usuarios;
+      console.log(this.privateAllUserList);
+    });
+  }
 
   // Alterna la visibilidad del campo de contraseña
   togglePasswordVisibility(): void {
@@ -64,10 +75,10 @@ export class LoginComponent {
 
   // Actualiza el estado general de los campos
   actualizarEstadoCampos(): void {
-    const usuario = this.login.get('usuario')?.value;
+    const dni = this.login.get('dni')?.value;
     const password = this.login.get('password')?.value;
 
-    this.camposIncompletos = !usuario || !password;
+    this.camposIncompletos = !dni || !password;
   }
 
   // Manejo del evento de envío del formulario
@@ -82,33 +93,21 @@ export class LoginComponent {
     }
 
     // Extraemos los valores ingresados
-    const usuarioIngresado = this.login.get('usuario')?.value;
-    const passwordIngresada = this.login.get('password')?.value;
+    const credentials = {
+      dni: this.login.get('dni')?.value,
+      password: this.login.get('password')?.value,
+    };
 
-    // Verifica si el usuario existe en la base de datos
-    const usuarioEncontrado = this.baseDeDatos.find(
-      (user) => user.usuario === usuarioIngresado
+    this.service.login(credentials).subscribe(
+      (response) => {
+        console.log('Inicio de sesión exitoso', response);
+        this.stateService.setLogin(response.access_token);
+        this.router.navigate(['/home']);
+      } /* ,
+      (error) => {
+        console.error('Error en el inicio de sesión', error);
+        // Aquí  manejar el error, mostrando un mensaje al usuario
+      } */
     );
-
-    this.userNotFound = !usuarioEncontrado;
-    this.usuarioCorrecto = !!usuarioEncontrado;
-
-    if (!this.userNotFound) {
-      // Si el usuario existe, verifica la contraseña
-      this.passwordNotFound = usuarioEncontrado?.password !== passwordIngresada;
-      this.passwordCorrecta = !this.passwordNotFound;
-
-      if (this.passwordCorrecta) {
-        console.log('Inicio de sesión exitoso.');
-        // Aquí podrías redirigir al usuario a otra página
-      } else {
-        console.log('Contraseña incorrecta.');
-      }
-    } else {
-      this.passwordCorrecta = false;
-      console.log('Usuario no encontrado.');
-    }
   }
-
-  
 }
