@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+import { AuthService } from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +17,8 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
+  private service = inject(AuthService);
+  private router = inject(Router);
   isPasswordVisible: boolean = false;
   isRepeatPasswordVisible: boolean = false;
   registerForm: FormGroup;
@@ -33,14 +41,17 @@ export class RegisterComponent {
       usuario: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
-      terms: [false, Validators.requiredTrue]
+      terms: [false, Validators.requiredTrue],
     });
   }
 
   checkEmptyFields(): void {
     this.errorFieldsEmpty = '';
     for (const control in this.registerForm.controls) {
-      if (this.registerForm.controls[control].invalid && this.registerForm.controls[control].touched) {
+      if (
+        this.registerForm.controls[control].invalid &&
+        this.registerForm.controls[control].touched
+      ) {
         this.errorFieldsEmpty = '¡Error! Todos los campos son obligatorios.';
         break;
       }
@@ -49,13 +60,14 @@ export class RegisterComponent {
 
   checkUpperAndLowerCase(): void {
     const password = this.registerForm.value.password;
-    this.hasUpperCaseAndLowerCase = /[A-Z]/.test(password) && /[a-z]/.test(password);
+    this.hasUpperCaseAndLowerCase =
+      /[A-Z]/.test(password) && /[a-z]/.test(password);
   }
 
   // Llama a este método en cada input
   onInputChange(): void {
     this.checkEmptyFields();
-    this.checkUpperAndLowerCase(); 
+    this.checkUpperAndLowerCase();
   }
 
   isEmailValid(): boolean {
@@ -73,12 +85,22 @@ export class RegisterComponent {
     this.hasLowerCase = /[a-z]/.test(password);
     this.hasNumber = /\d/.test(password);
     this.hasSpecialChar = /[!@#$%^&*(),.?":{}|<>/_·]/.test(password);
-  
-    return password.length >= minLength && password.length <= maxLength && this.hasUpperCase && this.hasLowerCase && this.hasNumber && this.hasSpecialChar;
+
+    return (
+      password.length >= minLength &&
+      password.length <= maxLength &&
+      this.hasUpperCase &&
+      this.hasLowerCase &&
+      this.hasNumber &&
+      this.hasSpecialChar
+    );
   }
 
   passwordsMatch(): boolean {
-    return this.registerForm.value.password === this.registerForm.value.repeatPassword;
+    return (
+      this.registerForm.value.password ===
+      this.registerForm.value.repeatPassword
+    );
   }
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
@@ -89,11 +111,13 @@ export class RegisterComponent {
   }
 
   isAllInputsValid(): boolean {
-    return (this.registerForm.get('fullname')?.valid ?? false) &&
+    return (
+      (this.registerForm.get('fullname')?.valid ?? false) &&
       (this.registerForm.get('email')?.valid ?? false) &&
       (this.registerForm.get('usuario')?.valid ?? false) &&
       this.isPasswordValid() &&
-      this.passwordsMatch();
+      this.passwordsMatch()
+    );
   }
 
   onSubmit() {
@@ -116,7 +140,8 @@ export class RegisterComponent {
     }
 
     if (!this.isPasswordValid()) {
-      this.errorPassword = '¡Error! La contraseña no cumple con los requisitos.';
+      this.errorPassword =
+        '¡Error! La contraseña no cumple con los requisitos.';
       return;
     }
 
@@ -126,9 +151,18 @@ export class RegisterComponent {
       this.errorPasswordCheck = ''; // Limpiar el error si las contraseñas coinciden
     }
 
-    // Aquí puedes continuar con el registro 
-
-    this.registerForm.reset();
-
+    // Aquí puedes continuar con el registro
+    console.log(this.registerForm.value);
+    this.service.register(this.registerForm.value).subscribe({
+      next: (response) => {
+        console.log('Registro exitoso:', response);
+        this.registerForm.reset();
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Error en el registro:', error);
+        // Manejar el error de registro aquí, como mostrar un mensaje de error al usuario
+      },
+    });
   }
 }

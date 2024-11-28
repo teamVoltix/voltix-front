@@ -8,7 +8,6 @@ import { Login } from '../../model/user';
 })
 export class AuthService {
   private service = inject(ApiService);
-  private router = inject(Router);
 
   getUserAll() {
     return this.service.getAllUser();
@@ -17,7 +16,10 @@ export class AuthService {
   login(credentials: Login) {
     return this.service.login(credentials);
   }
-  
+  register(userData: any) {
+    return this.service.register(userData);
+  }
+
   profile() {
     return this.service.profile();
   }
