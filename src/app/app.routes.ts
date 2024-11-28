@@ -8,9 +8,15 @@ import { ProfileSettingsComponent } from './profile/components/profile-settings/
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LogoutComponent } from './auth/components/logout/logout.component';
 import { StartComponent } from './start/start.component';
+import { HomePageComponent } from './auth/components/home-page/home-page.component';
+import { InvoiceListingComponent } from './invoice/components/invoice-listing/invoice-listing.component';
+import { InvoiceHeaderComponent } from './invoice/components/invoice-header/invoice-header.component';
 import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
 import { MeasurementCompareComponent } from './internal-measurements/components/measurement-compare/measurement-compare.component';
 import { MeasurementDetailComponent } from './internal-measurements/components/measurement-search/measurement-detail/measurement-detail.component';
+import { InvoiceDetailsComponent } from './invoice/components/invoice-details/invoice-details.component';
+import { InvoiceImageComponent } from './invoice/components/invoice-image/invoice-image.component';
+import { InvoiceUploadComponent } from './invoice/components/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -19,10 +25,9 @@ export const routes: Routes = [
     title: 'My Start Page',
     component: StartComponent,
   },
-
   {
-    path: 'home',
-    title: 'My Home Page',
+    path: 'inicio',
+    title: 'Welcome to Voltix',
     component: HomeComponent,
   },
   {
@@ -61,6 +66,21 @@ export const routes: Routes = [
     component: LogoutComponent,
   },
   {
+    path: 'home',
+    title: 'Welcome to Voltix Home Page',
+    component: HomePageComponent,
+  },
+  {
+    path: 'invoce-listing',
+    title: 'invoce listing',
+    component: InvoiceListingComponent,
+  },
+  {
+    path: 'invoce-header',
+    title: 'invoce header',
+    component: InvoiceHeaderComponent,
+  },
+  {
     path: 'measurement-search',
     title: 'Measurement search',
     component: MeasurementSearchComponent,
@@ -74,5 +94,20 @@ export const routes: Routes = [
     path: 'measurement-compare',
     title: 'Measurement compare',
     component: MeasurementCompareComponent,
+  },
+  {
+    path: 'invoice-details',
+    title: 'Invoice Details',
+    component: InvoiceDetailsComponent,
+  },
+  {
+    path: 'invoice-image',
+    title: 'Invoice Image',
+    component: InvoiceImageComponent,
+  },
+  {
+    path: 'invoice-upload',
+    title: 'Upload Invoice',
+    component: InvoiceUploadComponent,
   },
 ];
