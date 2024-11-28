@@ -12,15 +12,8 @@ export class ApiService {
   private http = inject(HttpClient);
   private url = environment.API_URL;
   private urlprova = 'http://localhost:8800/users/get_all_users/';
-  private loginUrl = 'http://localhost:8800/';
-  getUser() {
-    console.log(this.url);
-    return this.http.get(this.url + 'users');
-  }
-  getUserById(id: string): Observable<User> {
-    return this.http.get(this.url + '/user' + '/' + id) as Observable<User>;
-  }
 
+  //methodo de prueba
   getAllUser(): Observable<UserResponse> {
     return this.http.get<UserResponse>(this.urlprova);
   }
@@ -29,5 +22,8 @@ export class ApiService {
   }
   login(credentials: { dni: string; password: string }): Observable<any> {
     return this.http.post<any>(this.url + 'api/auth/login/', credentials);
+  }
+  profile(): Observable<User> {
+    return this.http.get<User>(this.url + 'api/profile/');
   }
 }

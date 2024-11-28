@@ -30,8 +30,12 @@
         <input placeholder={{user.email}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
     </div>
     <div class="mb-6">
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-        <input placeholder={{user.password}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+        <input placeholder=********** type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+    </div>
+    <div class="mb-6">
+        <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de Telefono</label>
+        <input placeholder={{user.phone_number}} type="text" id="default-input" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
     </div>
     <div class="mb-6">
         <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Direccion</label>
@@ -39,6 +43,6 @@
     </div>
 </div>
 <div class="button">
-    <button class="cerrar">Cerrar Session</button> 
+    <button class="cerrar" (click)="logout()">Cerrar Session</button> 
     <button class="editar" routerLink="/profile-settings">Editar Perfil</button>
 </div>

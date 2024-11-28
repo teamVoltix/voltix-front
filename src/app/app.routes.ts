@@ -64,17 +64,19 @@ export const routes: Routes = [
     component: LogoutComponent,
   },
   {
-    path: 'home-page',
-    title: 'Home Page',
+    path: 'home',
+    title: 'Welcome to Voltix Home Page',
     component: HomePageComponent,
+  },
+  {
     path: 'invoce-listing',
     title: 'invoce listing',
-    component: InvoiceListingComponent
+    component: InvoiceListingComponent,
   },
   {
     path: 'invoce-header',
     title: 'invoce header',
-    component: InvoiceHeaderComponent
+    component: InvoiceHeaderComponent,
   },
   {
     path: 'measurement-search',
