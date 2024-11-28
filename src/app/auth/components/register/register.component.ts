@@ -38,10 +38,10 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       fullname: ['', Validators.required],
       email: ['', Validators.required],
-      usuario: ['', Validators.required],
+      dni: ['', Validators.required],
       password: ['', Validators.required],
-      repeatPassword: ['', Validators.required],
-      terms: [false, Validators.requiredTrue],
+      /*  repeatPassword: ['', Validators.required],
+      terms: [false, Validators.requiredTrue], */
     });
   }
 
@@ -98,8 +98,7 @@ export class RegisterComponent {
 
   passwordsMatch(): boolean {
     return (
-      this.registerForm.value.password ===
-      this.registerForm.value.repeatPassword
+      this.registerForm.value.password === this.registerForm.value.password
     );
   }
   togglePasswordVisibility() {
@@ -114,7 +113,7 @@ export class RegisterComponent {
     return (
       (this.registerForm.get('fullname')?.valid ?? false) &&
       (this.registerForm.get('email')?.valid ?? false) &&
-      (this.registerForm.get('usuario')?.valid ?? false) &&
+      (this.registerForm.get('dni')?.valid ?? false) &&
       this.isPasswordValid() &&
       this.passwordsMatch()
     );

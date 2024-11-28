@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../../core/service/apiService/api-service.service';
-import { Router } from '@angular/router';
-import { Login } from '../../model/user';
+import { Credentials, RegisterUser } from '../../model/user';
 
 @Injectable({
   providedIn: 'root',
@@ -9,14 +8,10 @@ import { Login } from '../../model/user';
 export class AuthService {
   private service = inject(ApiService);
 
-  getUserAll() {
-    return this.service.getAllUser();
-  }
-
-  login(credentials: Login) {
+  login(credentials: Credentials) {
     return this.service.login(credentials);
   }
-  register(userData: any) {
+  register(userData: RegisterUser) {
     return this.service.register(userData);
   }
 
