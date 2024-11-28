@@ -35,9 +35,12 @@
 .avatar{
     position:absolute;
     border: white 3px groove;
-    border-radius: 100px;
+    border-radius:100%;
     top: 159px;
     left: 20px;
+}
+.profilePhoto{
+    object-fit: cover;
 }
 .modificar-pics{
     position:absolute;
@@ -69,14 +72,14 @@
 .button {
     background-color: #f4f4f6;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     width: 100%;
     padding: 28px 14px 28px 14px;
     gap: 28px;
     border:10px;
 }
-.editar{
+.editarDatos{
     width: 100%;
     height: 52px;
     border-radius: 8px;

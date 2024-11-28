@@ -7,7 +7,8 @@ export interface User {
   email: string;
   password: string;
   address: string;
-  phone_number: string;
+  phoneNumber: string;
+  photo: string;
 }
 
 /* registro */
