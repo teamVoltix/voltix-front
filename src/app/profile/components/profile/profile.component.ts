@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../model/user';
 import { RouterLink } from '@angular/router';
@@ -23,9 +23,9 @@ const mockUser = {
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  user!: User;
-
-  constructor(private service: ProfileService, private location: Location) {}
+  user: User = mockUser;
+  private service = inject(ProfileService);
+  private location = inject(Location);
 
   ngOnInit(): void {
     this.service.profile().subscribe((data) => {
