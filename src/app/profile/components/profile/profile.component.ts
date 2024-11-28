@@ -23,14 +23,18 @@ const mockUser = {
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  user: User = mockUser;
+  user!: User;
+
   constructor(private service: ProfileService, private location: Location) {}
 
   ngOnInit(): void {
-    this.service.getUser().subscribe((data) => {
+    this.service.profile().subscribe((data) => {
       console.log(data);
+      this.user = data;
     });
-    console.log('OnInit not implemented.');
+  }
+  logout(): void {
+    this.service.logout();
   }
   goBack(): void {
     this.location.back();

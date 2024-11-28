@@ -102,6 +102,9 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log('Inicio de sesión exitoso', response);
         this.stateService.setLogin(response.access_token);
+        this.service.profile().subscribe((data) => {
+          console.log('Perfil de usuario', data);
+        });
         this.router.navigate(['/home']);
       } /* ,
       (error) => {

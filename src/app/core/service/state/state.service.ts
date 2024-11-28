@@ -4,35 +4,34 @@ import { initialState, Payload, State } from '../../../model/state';
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../../model/user';
 import { ApiService } from '../apiService/api-service.service';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StateService {
+  private router = inject(Router);
   private apiServer = inject(ApiService);
   private state$ = new BehaviorSubject<State>(initialState);
   jwt = jwtDecode;
 
-  getState(): Observable<State> {
+ /*  getState(): Observable<State> {
     return this.state$.asObservable();
+  }
+  setState(payload: Payload) {
+    this.state$.next({ ...this.state$.value, ...payload });
   }
 
   getCurrentUser = (): User => this.state$.value.currentUser!;
 
-  getToken = (): string | null => this.state$.value.token;
+  getToken = (): string | null => this.state$.value.token; */
 
   setLogin(token: string) {
-    const currentPayload: Payload = this.jwt(token);
+    localStorage.setItem('token', JSON.stringify({ token }));
+  }
 
-    localStorage.setItem('voltix', JSON.stringify({ token }));
-    this.apiServer.getUserById(currentPayload.id).subscribe((data) => {
-      this.state$.next({
-        ...this.state$.value,
-        loginState: 'logged',
-        token,
-        currentPayload,
-        currentUser: data,
-      });
-    });
+  logout(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }
