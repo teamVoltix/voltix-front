@@ -5,8 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrls: ['./home-page.component.css'] 
 })
 export class HomePageComponent {
-
+  user = {
+    firstname: 'Juan' // Quemado mientras no se conecte el backend, despues hacer dinamico
+  };
 }
