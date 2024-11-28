@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../../core/service/apiService/api-service.service';
-import { Credentials } from '../../model/user';
+import { Credentials, RegisterUser } from '../../model/user';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class AuthService {
   login(credentials: Credentials) {
     return this.service.login(credentials);
   }
-  register(userData: any) {
+  register(userData: RegisterUser) {
     return this.service.register(userData);
   }
 
