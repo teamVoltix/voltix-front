@@ -8,7 +8,6 @@ import {
   RegisterUser,
   User,
 } from '../../../model/user';
-import { UserResponse } from '../../../model/state';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,6 @@ import { UserResponse } from '../../../model/state';
 export class ApiService {
   private http = inject(HttpClient);
   private url = environment.API_URL;
-  private urlprova = 'http://localhost:8800/users/get_all_users/';
 
   login(credentials: Credentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(

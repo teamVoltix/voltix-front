@@ -18,11 +18,6 @@ export interface RegisterUser {
   password: string;
 }
 
-export interface Login {
-  dni: string;
-  password: string;
-}
-
 export interface LoginResponse {
   message: string;
   access_token: string;
