@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogoutComponent } from './logout.component';
+import { InvoiceImageComponent } from './invoice-image.component';
 
-describe('LogoutComponent', () => {
-  let component: LogoutComponent;
-  let fixture: ComponentFixture<LogoutComponent>;
+describe('InvoiceImageComponent', () => {
+  let component: InvoiceImageComponent;
+  let fixture: ComponentFixture<InvoiceImageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LogoutComponent] // Usa 'declarations' en lugar de 'imports'
+      imports: [InvoiceImageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LogoutComponent);
+    fixture = TestBed.createComponent(InvoiceImageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

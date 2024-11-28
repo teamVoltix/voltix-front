@@ -9,10 +9,6 @@ export class ProfileService {
   private service = inject(ApiService);
   private router = inject(Router);
 
-  getUser() {
-    return this.service.getAllUser();
-  }
-
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

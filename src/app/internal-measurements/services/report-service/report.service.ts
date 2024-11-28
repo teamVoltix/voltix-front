@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { InstanceOptions, Modal, ModalInterface, ModalOptions } from 'flowbite';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReportService {
+  downloading = false;
+  downloadFinished = false;
 
   private $modalElement: HTMLElement | null = null;
   private modal: ModalInterface | null = null;
@@ -30,13 +32,17 @@ export class ReportService {
     override: true,
   };
 
-  constructor() { }
+  constructor() {}
 
   initializeModal() {
     this.$modalElement = document.querySelector('#reportDownloadModal');
 
     if (this.$modalElement) {
-      this.modal = new Modal(this.$modalElement, this.modalOptions, this.instanceOptions);
+      this.modal = new Modal(
+        this.$modalElement,
+        this.modalOptions,
+        this.instanceOptions
+      );
     }
   }
 
@@ -51,4 +57,15 @@ export class ReportService {
       this.modal.hide();
     }
   }
+
+   // TODO: Método para simular la descarga, cambiar cuando el backend esté listo
+   downloadReport() {
+    this.downloading = true;
+
+    setTimeout(() => {
+      this.downloading = false;
+      this.downloadFinished = true;
+    }, 3000); // Simulamos 3 segundos de descarga
+  }
+
 }

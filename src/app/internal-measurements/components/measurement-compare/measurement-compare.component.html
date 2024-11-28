@@ -114,8 +114,19 @@
       class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]"
       (click)="showModal()">Descargar
       PDF</button>
+
+    <!-- Modal de descarga -->
     <app-report-download></app-report-download>
 
+    <!-- Toast de descargas -->
+    @if(reportService.downloading){
+    <app-downloading-toast></app-downloading-toast>
+    }
+    @if(reportService.downloadFinished){
+    <app-download-toast></app-download-toast>
+    }
+
   </section>
+
 
 </div>
