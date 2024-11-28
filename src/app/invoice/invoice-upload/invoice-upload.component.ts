@@ -24,12 +24,12 @@ export class InvoiceUploadComponent {
 
   // Método para ir a la ruta de las facturas adjuntas
   goToAttachedInvoices(): void {
-    this.router.navigate(['/ruta-de-facturas-adjuntas']); // Cambiar a la ruta real cuando exista
+    this.router.navigate(['/invoce-listing']);
   }
 
   // Método para ir al inicio
   goToHome(): void {
-    this.router.navigate(['/home-page']); 
+    this.router.navigate(['/home']); 
   }
 
   // Método para manejar la selección de un archivo
