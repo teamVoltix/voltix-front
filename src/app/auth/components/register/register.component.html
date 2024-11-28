@@ -41,11 +41,11 @@
         </p>
     </div>
       <div class="mb-4">
-        <label for="usuario" class="block mb-2 text-sm text-gray-900 dark:text-white">Usuario</label>
-        <input type="text" id="usuario" formControlName="usuario" (input)="isAllInputsValid()" [ngClass]="{
-      'border-red-500': registerForm.get('usuario')?.invalid && (registerForm.get('usuario')?.touched || errorFieldsEmpty),
-      'border-gray-300': !(registerForm.get('usuario')?.invalid && (registerForm.get('usuario')?.touched || errorFieldsEmpty)),
-      'border-green-500': registerForm.get('usuario')?.touched
+        <label for="dni" class="block mb-2 text-sm text-gray-900 dark:text-white">Usuario</label>
+        <input type="text" id="dni" formControlName="dni" (input)="isAllInputsValid()" [ngClass]="{
+      'border-red-500': registerForm.get('dni')?.invalid && (registerForm.get('dni')?.touched || errorFieldsEmpty),
+      'border-gray-300': !(registerForm.get('dni')?.invalid && (registerForm.get('dni')?.touched || errorFieldsEmpty)),
+      'border-green-500': registerForm.get('dni')?.touched
     }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="DNI/NIF/CIF" required />
       </div>
@@ -89,7 +89,7 @@
       <div class="mb-4">
         <label for="repeat-password" class="block mb-2 text-sm">Repita la contraseña</label>
         <div class="relative">
-            <input type="password" id="repeat-password" formControlName="repeatPassword" (input)="isAllInputsValid()"
+            <input type="password" id="repeat-password"  (input)="isAllInputsValid()"
                 [type]="isRepeatPasswordVisible ? 'text' : 'password'" [ngClass]="{
                 'border-red-500': (!passwordsMatch() && repeatPasswordTouched) || (registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)),
                 'border-gray-300': !(registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)) && passwordsMatch(),

@@ -9,9 +9,7 @@ import { Login } from '../../model/user';
 export class AuthService {
   private service = inject(ApiService);
 
-  getUserAll() {
-    return this.service.getAllUser();
-  }
+  
 
   login(credentials: Login) {
     return this.service.login(credentials);
