@@ -9,6 +9,7 @@ import { ReportService } from '../../services/report-service/report.service';
   styleUrl: './report-download.component.css',
 })
 export class ReportDownloadComponent {
+
   constructor(private reportService: ReportService) {}
 
   ngAfterViewInit() {
@@ -24,6 +25,8 @@ export class ReportDownloadComponent {
   }
 
   downloadReport() {
-    console.log('Descargar');
+    console.log('Descarga');
+    this.reportService.downloadReport();
+    this.hideModal();
   }
 }
