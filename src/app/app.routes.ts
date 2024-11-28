@@ -11,6 +11,8 @@ import { StartComponent } from './start/start.component';
 import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
 import { MeasurementCompareComponent } from './internal-measurements/components/measurement-compare/measurement-compare.component';
 import { MeasurementDetailComponent } from './internal-measurements/components/measurement-search/measurement-detail/measurement-detail.component';
+import { InvoiceDetailsComponent } from './invoice/components/invoice-details/invoice-details.component';
+import { InvoiceImageComponent } from './invoice/components/invoice-image/invoice-image.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -74,5 +76,15 @@ export const routes: Routes = [
     path: 'measurement-compare',
     title: 'Measurement compare',
     component: MeasurementCompareComponent,
+  },
+  {
+    path: 'invoice-details',
+    title: 'Invoice Details',
+    component: InvoiceDetailsComponent,
+  },
+  {
+    path: 'invoice-image',
+    title: 'Invoice Image',
+    component: InvoiceImageComponent,
   },
 ];
