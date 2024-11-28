@@ -17,11 +17,13 @@ export class ApiService {
   getAllUser(): Observable<UserResponse> {
     return this.http.get<UserResponse>(this.urlprova);
   }
-  register(user: User): Observable<User> {
-    return this.http.post<User>(this.url + 'users', user);
-  }
+  //metodos de autenticacion da arreglar
   login(credentials: { dni: string; password: string }): Observable<any> {
     return this.http.post<any>(this.url + 'api/auth/login/', credentials);
+  }
+  //metodo de registro da arreglar
+  register(userData: any): Observable<any> {
+    return this.http.post<any>(this.url, userData);
   }
   profile(): Observable<User> {
     return this.http.get<User>(this.url + 'api/profile/');
