@@ -9,7 +9,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { InputPasswordComponent } from '../../../core/components/inputs/input-password/input-password.component';
+import { InputPasswordComponent } from '../input-password/input-password.component';
+
 
 @Component({
   selector: 'app-new-password',
