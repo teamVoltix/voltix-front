@@ -13,21 +13,20 @@
   <div class="body-section">
     <!-- Bienvenida -->
     <section class="section">
-      <h2 class="text-xl font-medium mb-4">¡Hola {{ user.firstname }}!</h2>
+      <h2 class="text-xl font-medium mb-2">¡Hola {{ user.firstname }}!</h2>
 
       <div class="containerConsumo">
         <div class="flex items-center">
-          <img src="/assets/icons/homePageGraphicIco.svg" alt="Graph Ico" class="graphIco mb-2" />
+          <img src="/assets/icons/homePageGraphicIco.svg" alt="Graph Ico" class="graphIco" />
           <div class="ml-4">
-              <p class="text-sm text-gray-500 mb-1">Tu último consumo</p>
-              <h3 class="text-2xl font-semibold mb-1">266 kWh</h3>
+              <p class="text-xs text-gray-500 mb-1">Tu último consumo</p>
+              <h3 class="text-xl font-semibold mb-1">266 kWh</h3>
               <p class="text-gray-500">Octubre</p>
           </div>
-      
       </div>
       <div class="consumo-mes flex items-center">
         <p class="text-green-600 text-xs">0.43%</p>
-        <img src="/assets/icons/arrowUpGreen.svg" alt="Arrow up" class="w-3 h-4 text-semibold" />
+        <img src="/assets/icons/arrowUpGreen.svg" alt="Arrow up" class="w-3 h-4" />
     </div>
       </div>
 
@@ -35,18 +34,11 @@
       <div class="center-boton">
         <div class="botones">
           <button>
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 3h16v16H4zM8 7h8M8 11h8M8 15h4" />
-            </svg>
+            <img src="/assets/icons/ticketAlt.svg" alt="Ticket Icon" class="w-5 h-5" />
             <span>Facturas</span>
           </button>
           <button>
-            <svg fill="#0072ce" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <title>speedometer</title>
-              <path
-                d="M12,16A3,3 0 0,1 9,13C9,11.88 9.61,10.9 10.5,10.39L20.21,4.77L14.68,14.35C14.18,15.33 13.17,16 12,16M12,3C13.81,3 15.5,3.5 16.97,4.32L14.87,5.53C14,5.19 13,5 12,5A8,8 0 0,0 4,13C4,15.21 4.89,17.21 6.34,18.65H6.35C6.74,19.04 6.74,19.67 6.35,20.06C5.96,20.45 5.32,20.45 4.93,20.07V20.07C3.12,18.26 2,15.76 2,13A10,10 0 0,1 12,3M22,13C22,15.76 20.88,18.26 19.07,20.07V20.07C18.68,20.45 18.05,20.45 17.66,20.06C17.27,19.67 17.27,19.04 17.66,18.65V18.65C19.11,17.2 20,15.21 20,13C20,12 19.81,11 19.46,10.1L20.67,8C21.5,9.5 22,11.18 22,13Z" />
-            </svg>
+            <img src="/assets/icons/dashboardAlt.svg" alt="Velocity Icon" class="w-5 h-5" />
 
             <span>Medición</span>
           </button>
@@ -55,35 +47,71 @@
     </section>
 
     <!-- Gráfico mensual -->
-    <section class="bg-white p-4 rounded-lg shadow-md">
-      <h2 class="text-xl font-bold">Gráfico mensual</h2>
+    <section class="p-4">
+      <h2 class="text-xl font-medium">Gráfico mensual</h2>
       <div class="mt-4">
         <!-- Placeholder para el gráfico -->
-        <div class="h-48 bg-gray-100 flex items-center justify-center rounded-lg">
-          <p class="text-gray-500">Aquí va tu gráfico</p>
+        <div class="containerGraphic bg-white flex items-center justify-center rounded-lg">
+          <img src="/assets/images/graphicExample.svg" alt="Graphic Example" class="graphicExample" />
         </div>
       </div>
     </section>
 
     <!-- Recomendaciones -->
-    <section class="bg-white p-4 rounded-lg shadow-md">
-      <h2 class="text-xl font-bold">Recomendaciones</h2>
-      <div class="mt-4">
-        <div class="bg-blue-50 p-4 rounded-lg flex items-center space-x-4">
-          <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm5 13h-2v3h-2v-3H9v-2h2V9h2v4h2v2z" />
-          </svg>
-          <div>
-            <h3 class="text-lg font-bold">Utiliza luces LED</h3>
-            <p class="text-gray-600 text-sm">Ahorran hasta un 75% de energía</p>
+    <section class="p-4">
+      <h2 class="text-xl font-medium">Recomendaciones</h2>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Utiliza luces LED</h3>
+                <p class="text-gray-500">Ahorran hasta un 75%</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Ajusta la temperatura</h3>
+                <p class="text-gray-500">Bajar 1ºC ahorra entre el 10% y 20%</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Desenchufa los aparatos</h3>
+                <p class="text-gray-500">Apagados consumen hasta el 75%</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Apaga las luces que no usas</h3>
+                <p class="text-gray-500">Puedes ahorrar hasta un 5%</p>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- Contenedor de paginación -->
+        <div class="swiper-pagination"></div>
       </div>
     </section>
 
     <!-- Botón de cargar factura -->
-    <div class="text-center">
-      <button class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow">
+    <div class="text-center px-4 mb-4">
+      <button (click)="goToUploadInvoice()" class="btn-upload">
+        <img src="/assets/icons/circlePlus.svg" alt="Ticket Icon" class="w-5 h-5" />
         Cargar factura
       </button>
     </div>
