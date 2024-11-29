@@ -8,14 +8,12 @@ import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
-  AbstractControl,
-  FormControl,
 } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -125,6 +123,14 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  getPhonePlaceholder(): string {
+    return this.user.phoneNumber
+      ? this.user.phoneNumber
+      : 'Número de teléfono no disponible';
+  }
+  getAdressPlaceholder(): string {
+    return this.user.address ? this.user.address : 'Direccion no disponible';
+  }
   logout(): void {
     this.service.logout();
   }
