@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -12,12 +12,7 @@ import { HeaderComponent } from '../../../core/components/header/header.componen
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-    HeaderComponent,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
@@ -26,7 +21,13 @@ export class ForgotPasswordComponent implements OnInit {
   showSuccessSection: boolean = false;
 
   fb = inject(FormBuilder);
+  isLoggedIn = false;
 
+  constructor(private location: Location) {}
+
+  goBack(): void {
+    this.location.back();
+  }
   ngOnInit(): void {
     this.buildForm();
   }
@@ -44,7 +45,7 @@ export class ForgotPasswordComponent implements OnInit {
       // Lógica para enviar el correo de restablecimiento de contraseña
       //Si se ha enviado todo ok, mostrar sección de se ha enviado el correo para restablecer contraseña
       this.showSuccessSection = true;
-    } else{
+    } else {
       this.resetPasswordForm.markAllAsTouched();
       return;
     }

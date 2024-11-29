@@ -6,7 +6,6 @@ import { ForgotPasswordComponent } from './auth/components/forgot-password/forgo
 import { NewPasswordComponent } from './auth/components/new-password/new-password.component';
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
-import { StartComponent } from './start/start.component';
 import { HomePageComponent } from './auth/components/home-page/home-page.component';
 import { InvoiceListingComponent } from './invoice/components/invoice-listing/invoice-listing.component';
 import { InvoiceHeaderComponent } from './invoice/components/invoice-header/invoice-header.component';
@@ -16,6 +15,7 @@ import { MeasurementDetailComponent } from './internal-measurements/components/m
 import { InvoiceDetailsComponent } from './invoice/components/invoice-details/invoice-details.component';
 import { InvoiceImageComponent } from './invoice/components/invoice-image/invoice-image.component';
 import { InvoiceUploadComponent } from './invoice/components/invoice-upload/invoice-upload.component';
+import { StartComponent } from './auth/components/start/start.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -103,5 +103,10 @@ export const routes: Routes = [
     path: 'invoice-upload',
     title: 'Upload Invoice',
     component: InvoiceUploadComponent,
+  },
+  {
+    path: '**',
+    title: '',
+    component: StartComponent,
   },
 ];

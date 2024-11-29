@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { HeaderComponent } from '../../../core/components/header/header.component';
+import { CommonModule, Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,7 +7,6 @@ import {
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ButtonComponent } from '../../../core/components/button/button.component';
@@ -21,7 +19,6 @@ import { InputPasswordComponent } from '../../../core/components/inputs/input-pa
     CommonModule,
     ReactiveFormsModule,
     ButtonComponent,
-    HeaderComponent,
     InputPasswordComponent,
   ],
   templateUrl: './new-password.component.html',
@@ -30,7 +27,12 @@ import { InputPasswordComponent } from '../../../core/components/inputs/input-pa
 export class NewPasswordComponent {
   newPasswordForm!: FormGroup;
   showSuccessSection: boolean = false;
+  isLoggedIn = false;
+  private location = inject(Location);
 
+  goBack(): void {
+    this.location.back();
+  }
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {

@@ -14,6 +14,6 @@ export class StartComponent implements OnInit {
 
   ngOnInit() {
     this.service.getLogged();
-    console.log('StartComponent');
+    console.log('StartComponent initialized');
   }
 }
