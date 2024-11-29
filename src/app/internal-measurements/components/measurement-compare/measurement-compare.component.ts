@@ -3,11 +3,12 @@ import { ReportDownloadComponent } from '../report-download/report-download.comp
 import { ReportService } from '../../services/report-service/report.service';
 import { DownloadToastComponent } from '../download-toast/download-toast.component';
 import { DownloadingToastComponent } from '../downloading-toast/downloading-toast.component';
+import { InvoiceHeaderComponent } from '../../../invoice/components/invoice-header/invoice-header.component';
 
 @Component({
   selector: 'app-measurement-compare',
   standalone: true,
-  imports: [ReportDownloadComponent, DownloadToastComponent, DownloadingToastComponent],
+  imports: [ReportDownloadComponent, DownloadToastComponent, DownloadingToastComponent, InvoiceHeaderComponent],
   templateUrl: './measurement-compare.component.html',
   styleUrl: './measurement-compare.component.css',
 })

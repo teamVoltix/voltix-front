@@ -3,12 +3,13 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MeasurementService } from '../../../services/measurement-service/measurement.service';
 import { Measurement } from '../../../../model/measurement';
+import { InvoiceHeaderComponent } from '../../../../invoice/components/invoice-header/invoice-header.component';
 
 
 @Component({
   selector: 'app-measurement-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, InvoiceHeaderComponent],
   templateUrl: './measurement-detail.component.html',
   styleUrl: './measurement-detail.component.css'
 })
