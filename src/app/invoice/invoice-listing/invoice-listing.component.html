@@ -1,4 +1,6 @@
-<div class="w-full">
+<app-invoice-header></app-invoice-header>
+
+<div class="w-full factura">
     <!-- Header de Facturas -->
 
     <!-- Sección de Facturas -->
@@ -9,40 +11,43 @@
         <form action="">
             <div class="relative w-full mt-4 mb-3">
                 <div class="absolute inset-y-0 start-1 flex items-center ps-3 pointer-events-none">
-                    <img src="/assets/icons/search.svg" alt="icono de lupa">
+                    <img src="/assets/icons/search.svg" alt="icono de lupa" height="16px" width="16px">
                 </div>
                 <input type="text"
                     class="bg-neutral-50 border border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded-lg block w-full ps-10 p-3"
                     placeholder="Buscar por ID o período" required />
             </div>
         </form>
+       
 
         <!-- Listado de Facturas -->
         <section class="bg-white border border-neutral-100 rounded-lg p-4">
-            <section class="flex items-center justify-between bg-neutral-100  px-4 py-[10px] mb-3 mark">
+            <section class="flex items-center justify-between bg-neutral-100 px-4 py-[10px] mb-3 mark">
                 <input id="selectAll" type="checkbox" value="" (change)="selectAll()"
                     class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0" />
-                <div class="flex items-center gap-2" (click)="deleteSelectedInvoices()">
+                <div *ngIf="hasSelectedInvoices()" class="flex items-center gap-2" (click)="deleteSelectedInvoices()">
                     <img src="/assets/icons/trash.svg" alt="icono para borrar">
                 </div>
             </section>
 
+
+
             <!-- Facturas individuales -->
             <section *ngFor="let invoice of paginatedInvoices; trackBy: trackById"
-    class="flex items-center justify-between py-2 px-4 mb-[10px] rounded"
-    [ngClass]="{'selected-invoice': invoice.selected}">
-    <div class="flex items-center">
-        <input [id]="invoice.id" type="checkbox" [checked]="invoice.selected"
-            (change)="toggleSelection(invoice)"
-            class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2" />
-    </div>
-    <div class="texts me-2">
-        <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
-        <p class="text-gray-500 text-sm">{{invoice.date}}</p>
-    </div>
-    <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="detalle factura"
-        (click)="viewInvoice(invoice.id)" />
-</section>
+                class="flex items-center justify-between py-2 px-4 mb-[10px] rounded"
+                [ngClass]="{'selected-invoice': invoice.selected}">
+                <div class="flex items-center">
+                    <input [id]="invoice.id" type="checkbox" [checked]="invoice.selected"
+                        (change)="toggleSelection(invoice)"
+                        class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2" />
+                </div>
+                <div class="texts me-2">
+                    <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
+                    <p class="text-gray-500 text-sm">{{invoice.date}}</p>
+                </div>
+                <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="detalle factura"
+                    (click)="viewInvoice(invoice.id)" />
+            </section>
         </section>
 
         <!-- Paginador -->
@@ -68,7 +73,7 @@
                         {{ page }}
                     </a>
                 </li>
-                
+
                 <!-- Botón Siguiente -->
                 <li>
                     <a href="#" (click)="goToPage($event, currentPage + 1)"
