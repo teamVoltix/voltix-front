@@ -7,7 +7,7 @@ import {
   LoginResponse,
   RegisterUser,
   User,
-} from '../../../model/user';
+} from '../../model/user';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class ApiService {
       credentials
     );
   }
-  
+
   register(userData: RegisterUser): Observable<RegisterUser> {
     return this.http.post<RegisterUser>(
       this.url + 'api/auth/register/',

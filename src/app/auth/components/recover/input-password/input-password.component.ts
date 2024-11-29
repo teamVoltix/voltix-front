@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef, Input } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-input-password',
@@ -45,12 +49,10 @@ export class InputPasswordComponent {
     this.onTouch = fn;
   }
 
-
   updateValue(event: Event): void {
     const newValue = (event.target as HTMLInputElement).value;
     this.value = newValue;
     this.onChange(newValue);
     this.onTouch();
   }
-
 }
