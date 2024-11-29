@@ -1,15 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { InvoiceHeaderComponent } from '../invoice-header/invoice-header.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-listing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, InvoiceHeaderComponent],
   templateUrl: './invoice-listing.component.html',
   styleUrls: ['./invoice-listing.component.css']
 })
 export class InvoiceListingComponent {
+
+  
+  
+  
   // Lista estática de facturas
+
   invoices = [
     { id: '664705', date: '08/09/2024', selected: false },
     { id: '565644', date: '08/10/2024', selected: false },
@@ -28,6 +35,16 @@ export class InvoiceListingComponent {
     { id: '565644', date: '08/10/2024', selected: false },
     { id: '584846', date: '08/11/2024', selected: false },
   ];
+  
+
+  
+
+
+  hasSelectedInvoices(): boolean {
+    return this.invoices.some(invoice => invoice.selected);
+  }
+  
+  
 
   // Variables para el paginador
   currentPage = 1; // Página actual

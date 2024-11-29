@@ -4,9 +4,10 @@ input[type="text"] {
     
     
 }
+
 .factura-section {
     background-color: #f4f4f6; /* Color de fondo */
-   
+    
 }
 
 .mark {
@@ -38,3 +39,4 @@ input[type="text"] {
 .pagination-active:hover {
     background-color: #dcdce0; /* Fondo ligeramente más oscuro al pasar el cursor */
 }
+
