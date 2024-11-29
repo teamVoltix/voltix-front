@@ -1,13 +1,40 @@
 <div class="background">
   <img src="/assets/images/rayoAzulLogin.svg" class="background-image" alt="Voltix Logo" />
-
-  <section class="header-section flex items-center justify-between px-4">
+  
+  <section class="header-section flex items-center justify-between px-4 relative">
     <div class="text-center">
       <img src="/assets/images/VoltixLoginBlanco.svg" alt="Voltix logo" class="w-28">
     </div>
-    <div
-      class="user-avatar w-[34px] h-[34px] flex justify-end overflow-hidden rounded-full border-2 border-gray-300 mb-1">
-      <img src="/assets/avatar-default.png" alt="Avatar" class="w-full h-full object-cover" />
+    
+    <div class="relative"> <!-- Este contenedor debe tener position: relative -->
+      <div
+        class="user-avatar w-[34px] h-[34px] flex justify-end overflow-hidden rounded-full border-2 border-gray-300 mb-1 cursor-pointer"
+        (click)="toggleDropdown()">
+        <img src="/assets/avatar-default.png" alt="Avatar" class="w-full h-full object-cover" />
+      </div>
+      
+      <!-- Dropdown -->
+      <div
+        [ngClass]="{ 
+          'hidden': !isDropdownOpen, 
+          'absolute': true, 
+          'right-0': true, 
+          'mt-2': true, 
+          'w-48': true, 
+          'bg-blue-800': true,
+          'border': true, 
+          'border-gray-200': true, 
+          'rounded-lg': true, 
+          'shadow-lg': true, 
+          'z-50': true 
+        }">
+        <ul>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer" (click)="goToProfile()">Perfil</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer">Notificaciones</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer">Ayuda</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer">Cerrar Sesión</li>
+        </ul>
+      </div>
     </div>
   </section>
   <div class="body-section">
@@ -33,11 +60,11 @@
       <!-- Botones -->
       <div class="center-boton">
         <div class="botones">
-          <button>
+          <button (click)="goToAttachedInvoices()">
             <img src="/assets/icons/ticketAlt.svg" alt="Ticket Icon" class="w-5 h-5" />
             <span>Facturas</span>
           </button>
-          <button>
+          <button (click)="goToMeasurementSearch()" >
             <img src="/assets/icons/dashboardAlt.svg" alt="Velocity Icon" class="w-5 h-5" />
 
             <span>Medición</span>
@@ -48,11 +75,9 @@
 
     <!-- Gráfico mensual -->
     <section class="p-4">
-      <h2 class="text-xl font-medium">Gráfico mensual</h2>
+      <h2 class="text-xl font-medium mb-4">Gráfico mensual</h2>
       <div class="mt-4">
-        <!-- Placeholder para el gráfico -->
-        <div class="containerGraphic bg-white flex items-center justify-center rounded-lg">
-          <img src="/assets/images/graphicExample.svg" alt="Graphic Example" class="graphicExample" />
+        <div class="containerGraphic bg-white flex flex-col items-center justify-center rounded-lg relative">
         </div>
       </div>
     </section>

@@ -1,8 +1,9 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
-import Swiper from 'swiper/bundle'; // La importación correcta si has instalado Swiper en la última versión
-import { Navigation } from 'swiper/modules'; // Importa el módulo de navegación
+import Swiper from 'swiper/bundle'; 
+import { Navigation } from 'swiper/modules'; 
+import ApexCharts from 'apexcharts';
 
 @Component({
   selector: 'app-home-page',
@@ -12,15 +13,145 @@ import { Navigation } from 'swiper/modules'; // Importa el módulo de navegació
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements AfterViewInit {
+  isDropdownOpen = false;
   
   user = {
-    firstname: 'Juan' // Temporario hasta conectarse con backend
+    firstname: 'Juan' // Temporal hasta conectarse con backend
   };
 
   constructor(private location: Location, private router: Router) {}
 
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+    console.log('Dropdown state:', this.isDropdownOpen);
+  }
+  goToProfile(): void {
+    this.router.navigate(['/profile']); 
+  }
+
   goToUploadInvoice(): void {
     this.router.navigate(['/invoice-upload']); 
+  }
+
+    goToAttachedInvoices(): void {
+      this.router.navigate(['/invoce-listing']);
+    }
+  
+    goToMeasurementSearch(): void {
+      this.router.navigate(['/measurement-search']);
+    }
+
+  // Método para obtener los últimos 6 meses
+  getLastSixMonths(): string[] {
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const now = new Date();
+    const result: string[] = [];
+
+    for (let i = 5; i >= 0; i--) {
+      const monthIndex = (now.getMonth() - i + 12) % 12; 
+      result.push(months[monthIndex]);
+    }
+
+    return result;
+  }
+
+  initializeChart(): void {
+    const lastSixMonths = this.getLastSixMonths(); 
+
+    const options: ApexCharts.ApexOptions = {
+      chart: {
+        type: 'bar',
+        height: 350,
+        toolbar: {
+          show: false
+        }
+      },
+      title: {
+        text: 'Consumo energético (kWh)', 
+        align: 'center',
+        style: {
+          fontSize: '16px',
+          fontWeight: 'semibold',
+          color: '#333',
+        },
+        offsetY: 0, 
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          borderRadius: 4,
+          dataLabels: {
+            position: 'top',
+          },
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: (val) => Number(val).toFixed(0),
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          colors: ["#304758"]
+        }
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      series: [
+        {
+          name: 'Facturas',
+          data: [35, 41, 36, 26, 45, 48] // Datos de ejemplo
+        },
+        {
+          name: 'Mediciones',
+          data: [45, 52, 38, 45, 19, 23] // Datos de ejemplo
+        }
+      ],
+      legend: {
+        show: true, 
+        position: 'top', 
+        horizontalAlign: 'center', 
+        floating: false,
+        fontSize: '12px',
+        fontWeight: 'bold',
+        labels: {
+          colors: ['#01D4AD', '#0158A3'],
+        },
+        offsetY: 0,
+        markers: {
+          size: 6, 
+          strokeWidth: 2, 
+          fillColors: ['#01D4AD', '#0158A3'], 
+          shape: 'circle' 
+        },
+        itemMargin: {
+          horizontal: 10, 
+          vertical: 0 
+        }
+    },
+      xaxis: {
+        categories: lastSixMonths, // Usa los últimos 6 meses calculados
+      },
+      yaxis: {
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: (val) => `${val} unidades`
+        }
+      },
+      colors: ['#01D4AD', '#0158A3'], 
+      grid: {
+        borderColor: '#f1f1f1',
+      }
+    };
+  
+    const chart = new ApexCharts(document.querySelector('.containerGraphic'), options);
+    chart.render();
   }
 
   ngAfterViewInit(): void {
@@ -28,12 +159,12 @@ export class HomePageComponent implements AfterViewInit {
       modules: [Navigation],
       slidesPerView: 1, 
       spaceBetween: 10,
-      
+
       pagination: {
         el: '.swiper-pagination',
         clickable: true, 
       },
-    
+
       breakpoints: {
         640: {
           slidesPerView: 1, 
@@ -49,5 +180,8 @@ export class HomePageComponent implements AfterViewInit {
         },
       },
     });
+    setTimeout(() => {
+      this.initializeChart();
+    }, 100);
   }
 }
