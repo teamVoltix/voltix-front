@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,18 +9,12 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { ButtonComponent } from '../../../core/components/button/button.component';
 import { InputPasswordComponent } from '../../../core/components/inputs/input-password/input-password.component';
 
 @Component({
   selector: 'app-new-password',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-    InputPasswordComponent,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, InputPasswordComponent],
   templateUrl: './new-password.component.html',
   styleUrl: './new-password.component.css',
 })
@@ -28,6 +22,10 @@ export class NewPasswordComponent {
   newPasswordForm!: FormGroup;
   showSuccessSection: boolean = false;
   isLoggedIn = false;
+  @Input() text = 'Enviar';
+  @Input() maxWidth = '';
+  @Input() disabled = false;
+
   private location = inject(Location);
 
   goBack(): void {
@@ -86,7 +84,6 @@ export class NewPasswordComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.newPasswordForm.valid) {
       console.log('formulrio enviado correctamente');
       this.showSuccessSection = true;
