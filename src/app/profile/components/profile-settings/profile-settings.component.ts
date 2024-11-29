@@ -1,47 +1,58 @@
 import { HttpUserEvent } from '@angular/common/http';
-import { User } from '../../../model/user';
+import { User } from '../../../core/model/user';
 import { ProfileService } from '../../service/profile.service';
 import { Component } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
-
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-profile-settings',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './profile-settings.component.html',
-  styleUrl: './profile-settings.component.css'
+  styleUrl: './profile-settings.component.css',
 })
 export class ProfileSettingsComponent {
-  
   public settingsForm: FormGroup;
   public isPasswordVisible: boolean = false;
   public isPassword2Visible: boolean = false;
-  
- 
-  constructor (
-    private formBuilder: FormBuilder, 
+
+  constructor(
+    private formBuilder: FormBuilder,
     private location: Location,
-    public profileService: ProfileService,
-    // public user: User
-   
-  ){
-      
-      this.settingsForm = this.formBuilder.group({
-        
+    public profileService: ProfileService
+  ) // public user: User
+
+  {
+    this.settingsForm = this.formBuilder.group(
+      {
         photo: [],
         fullname: [],
         birth_date: [],
-        email: ['', [,Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
-        password: ['', [Validators.minLength(8), Validators.maxLength(15), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$')]],
+        email: ['', [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
+        password: [
+          '',
+          [
+            Validators.minLength(8),
+            Validators.maxLength(15),
+            Validators.pattern(
+              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$'
+            ),
+          ],
+        ],
         password2: ['', [, this.passwordsMatch]],
-        address: []
+        address: [],
       },
       {
-        validators: [this.passwordsMatch, this.atLeastOneFieldRequired()]
+        validators: [this.passwordsMatch, this.atLeastOneFieldRequired()],
       }
-    )
+    );
   }
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
@@ -66,25 +77,32 @@ export class ProfileSettingsComponent {
   atLeastOneFieldRequired() {
     return (group: AbstractControl) => {
       const controls = group.value;
-      const atLeastOneFilled = Object.values(controls).some(value => value && value.toString().trim() !== '');
+      const atLeastOneFilled = Object.values(controls).some(
+        (value) => value && value.toString().trim() !== ''
+      );
       return atLeastOneFilled ? null : { atLeastOneRequired: true };
     };
   }
-  onSubmit(){
+  onSubmit() {
     if (this.settingsForm.valid) {
       console.log('El formulario es válido.', this.settingsForm.value);
-   }
-   else{
-    console.log('El formulario no es válido')
-   }
+    } else {
+      console.log('El formulario no es válido');
+    }
   }
   goBack(): void {
     this.location.back();
   }
 
-  public editUser(photo: String, fullname: String , birth_date: String, email: String, password: String, password2: String, address: String){
-    console.log(photo, fullname, birth_date, email, password, address)
+  public editUser(
+    photo: String,
+    fullname: String,
+    birth_date: String,
+    email: String,
+    password: String,
+    password2: String,
+    address: String
+  ) {
+    console.log(photo, fullname, birth_date, email, password, address);
   }
-
-
 }

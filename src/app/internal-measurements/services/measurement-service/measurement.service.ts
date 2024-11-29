@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Measurement } from '../../../model/measurement';
+import { Measurement } from '../../../core/model/measurement';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MeasurementService {
-
-  constructor() { }
+  constructor() {}
   // TODO: quitar los datos estáticos cuando venga del backend
-  measurementList: Measurement [] = [
+  measurementList: Measurement[] = [
     {
       checked: true,
       id: 664705,
@@ -19,7 +18,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: false,
@@ -30,7 +29,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 356,
-      estimatedAmount: 75
+      estimatedAmount: 75,
     },
     {
       checked: true,
@@ -41,7 +40,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: false,
@@ -52,7 +51,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -63,7 +62,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -74,7 +73,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: false,
@@ -85,7 +84,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -96,7 +95,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: false,
@@ -107,7 +106,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -118,7 +117,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -129,7 +128,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: false,
@@ -140,7 +139,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -151,7 +150,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: false,
@@ -162,7 +161,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
     {
       checked: true,
@@ -173,7 +172,7 @@ export class MeasurementService {
       endDate: '31/05/2024',
       measuredDays: 31,
       consumption: 266,
-      estimatedAmount: 48
+      estimatedAmount: 48,
     },
   ];
 
@@ -184,7 +183,7 @@ export class MeasurementService {
 
   // Obtiene una medición por ID
   getMeasurementById(id: number): Observable<Measurement | undefined> {
-    const measurement = this.measurementList.find(m => m.id === id);
+    const measurement = this.measurementList.find((m) => m.id === id);
     return of(measurement);
   }
 }

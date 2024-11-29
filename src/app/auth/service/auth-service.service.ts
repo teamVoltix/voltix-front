@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../../core/service/apiService/api-service.service';
-import { Credentials, RegisterUser } from '../../model/user';
+import { Credentials, RegisterUser } from '../../core/model/user';
 
 @Injectable({
   providedIn: 'root',

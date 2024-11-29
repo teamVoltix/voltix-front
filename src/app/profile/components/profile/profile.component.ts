@@ -1,10 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
-import { User } from '../../../model/user';
+import { User } from '../../../core/model/user';
 import { RouterLink } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl, FormControl } from '@angular/forms';
-
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+  FormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +30,7 @@ export class ProfileComponent implements OnInit {
   private service = inject(ProfileService);
   private location = inject(Location);
 
-  constructor(private fb: FormBuilder ) {
+  constructor(private fb: FormBuilder) {
     this.userTest = {
       iprofile_id: 1,
       user: 'user',
@@ -34,24 +40,42 @@ export class ProfileComponent implements OnInit {
       email: 'mockUser@vamoEquipo',
       password: '**********',
       address: 'Calle sita 999',
-      phoneNumber: '522698741', 
-      photo: 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg'
-    }
+      phoneNumber: '522698741',
+      photo:
+        'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg',
+    };
 
-  
     this.perfilForm = this.fb.group({
       user: [],
       fullname: [{ value: '', disabled: true }],
-      dni: ({ value: '', disabled: true }),
+      dni: { value: '', disabled: true },
       phoneNumber: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
-      email: [{ value: '', disabled: true }, [,Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
-      password: [{ value: '', disabled: true }, [Validators.minLength(8), Validators.maxLength(15), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$')]],
-    })
+      email: [
+        { value: '', disabled: true },
+        [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
+      ],
+      password: [
+        { value: '', disabled: true },
+        [
+          Validators.minLength(8),
+          Validators.maxLength(15),
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$'
+          ),
+        ],
+      ],
+    });
   }
 
-
-  public enable(fullname: string, dni: string, phoneNumber: string, address: string, email: string, password: string): void {
+  public enable(
+    fullname: string,
+    dni: string,
+    phoneNumber: string,
+    address: string,
+    email: string,
+    password: string
+  ): void {
     this.perfilForm.get(fullname)?.enable();
     this.perfilForm.get(dni)?.enable();
     this.perfilForm.get(phoneNumber)?.enable();
@@ -63,7 +87,14 @@ export class ProfileComponent implements OnInit {
     this.edit = false;
     this.save = true;
   }
-  disable(fullname: string, dni: string, phoneNumber: string, address: string, email: string, password: string): void {
+  disable(
+    fullname: string,
+    dni: string,
+    phoneNumber: string,
+    address: string,
+    email: string,
+    password: string
+  ): void {
     this.perfilForm.get(fullname)?.disable();
     this.perfilForm.get(dni)?.disable();
     this.perfilForm.get(phoneNumber)?.disable();
@@ -76,17 +107,24 @@ export class ProfileComponent implements OnInit {
     this.save = false;
   }
 
-  editUser(fullname: string, dni: string, phoneNumber: string, address: string, email: string, password: string){
-    console.log(fullname, email)
+  editUser(
+    fullname: string,
+    dni: string,
+    phoneNumber: string,
+    address: string,
+    email: string,
+    password: string
+  ) {
+    console.log(fullname, email);
   }
-  
+
   ngOnInit(): void {
     this.service.profile().subscribe((data) => {
       console.log(data);
       this.user = data;
     });
   }
-  
+
   logout(): void {
     this.service.logout();
   }
@@ -99,5 +137,4 @@ export class ProfileComponent implements OnInit {
       console.log('Formulario corrercto', this.perfilForm.value);
     }
   }
-  
 }

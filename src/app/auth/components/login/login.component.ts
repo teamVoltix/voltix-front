@@ -9,7 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth-service.service';
 import { StateService } from '../../../core/service/state/state.service';
-import { LoginResponse } from '../../../model/user';
+import { LoginResponse } from '../../../core/model/user';
 
 @Component({
   selector: 'app-login',
