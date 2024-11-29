@@ -6,7 +6,7 @@ import { ForgotPasswordComponent } from './auth/components/recover/forgot-passwo
 import { NewPasswordComponent } from './auth/components/recover/new-password/new-password.component';
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
-import { HomePageComponent } from './auth/components/home-page/home-page.component';
+import { HomePageComponent } from './home-page/components/home-page.component';
 import { InvoiceListingComponent } from './invoice/components/invoice-listing/invoice-listing.component';
 import { InvoiceHeaderComponent } from './invoice/components/invoice-header/invoice-header.component';
 import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
