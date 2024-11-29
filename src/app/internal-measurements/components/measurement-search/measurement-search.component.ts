@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { MeasurementService } from '../../services/measurement-service/measurement.service';
 import { ReportService } from '../../services/report-service/report.service';
 import { ReportDownloadComponent } from '../report-download/report-download.component';
+import { InvoiceHeaderComponent } from '../../../invoice/components/invoice-header/invoice-header.component';
 
 @Component({
   selector: 'app-measurement-search',
   standalone: true,
-  imports: [CommonModule, ReportDownloadComponent],
+  imports: [CommonModule, ReportDownloadComponent, InvoiceHeaderComponent],
   templateUrl: './measurement-search.component.html',
   styleUrl: './measurement-search.component.css',
 })
