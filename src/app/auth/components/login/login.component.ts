@@ -39,8 +39,8 @@ export class LoginComponent {
     // Inicializa el formulario
     //Dejar campo vacio una vez que funcioan el login
     this.login = this.fb.group({
-      dni: ['7782452J', [Validators.required, Validators.minLength(8)]],
-      password: ['Secur3John@', [Validators.required, Validators.minLength(6)]],
+      dni: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
     // Suscripciones para manejo dinámico de validaciones
