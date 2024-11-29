@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {
   FormBuilder,
@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth-service.service';
 import { StateService } from '../../../core/service/state/state.service';
+import { LoginResponse } from '../../../model/user';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ import { StateService } from '../../../core/service/state/state.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   private service = inject(AuthService);
   private stateService = inject(StateService);
   privateAllUserList: any; //da quitar una vez que funciona el backend
@@ -38,8 +39,8 @@ export class LoginComponent implements OnInit {
     // Inicializa el formulario
     //Dejar campo vacio una vez que funcioan el login
     this.login = this.fb.group({
-      dni: ['8374926A', [Validators.required, Validators.minLength(8)]],
-      password: ['AnaPass123!', [Validators.required, Validators.minLength(6)]],
+      dni: ['7782452J', [Validators.required, Validators.minLength(8)]],
+      password: ['Secur3John@', [Validators.required, Validators.minLength(6)]],
     });
 
     // Suscripciones para manejo dinámico de validaciones
@@ -57,14 +58,6 @@ export class LoginComponent implements OnInit {
         this.passwordCorrecta = false;
       }
       this.actualizarEstadoCampos();
-    });
-  }
-  // getAllUserList al avio del componente da remover una vez comprobado que el backend funciona
-  ngOnInit(): void {
-    this.service.getUserAll().subscribe((data) => {
-      console.log(data);
-      this.privateAllUserList = data.usuarios;
-      console.log(this.privateAllUserList);
     });
   }
 
@@ -99,9 +92,12 @@ export class LoginComponent implements OnInit {
     };
 
     this.service.login(credentials).subscribe(
-      (response) => {
+      (response: LoginResponse) => {
         console.log('Inicio de sesión exitoso', response);
         this.stateService.setLogin(response.access_token);
+        this.service.profile().subscribe((data) => {
+          console.log('Perfil de usuario', data);
+        });
         this.router.navigate(['/home']);
       } /* ,
       (error) => {

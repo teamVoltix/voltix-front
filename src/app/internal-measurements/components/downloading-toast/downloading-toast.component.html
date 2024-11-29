@@ -1,0 +1,24 @@
+<article
+  class="download-toast flex flex-col py-4 px-7 bg-white shadow-[0px_1px_4px_0px_rgba(37,39,44,0.24)] rounded-lg relative bottom-16"
+  [ngClass]="{'animate-toastIn': !isToastExiting, 'animate-toastOut': isToastExiting}">
+  <button
+    class="absolute top-4 end-6"
+    (click)="closeToast()">
+    <img src="/assets/icons/closeGray.svg" alt="Icono de cerrar">
+  </button>
+
+  <div class="flex items-center gap-5 mb-4">
+    <img src="/assets/icons/downloading.svg" alt="Icono de descarga en curso" aria-hidden="true">
+    <div class="flex flex-col">
+      <div class="flex items-baseline gap-4">
+        <h3 class="text-lg text-dark-text font-semibold">Descargando</h3>
+        <p class="text-sm text-neutral-600">{{percentage}}%</p>
+      </div>
+      <p class="text-sm text-neutral-600">{{pdfName}}</p>
+    </div>
+  </div>
+
+  <div class="w-full bg-neutral-100 rounded-full h-2">
+    <div class="bg-primary h-2 rounded-full" style="width: 80%"></div>
+  </div>
+</article>

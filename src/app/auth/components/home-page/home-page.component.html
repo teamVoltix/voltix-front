@@ -1,0 +1,144 @@
+<div class="background">
+  <img src="/assets/images/rayoAzulLogin.svg" class="background-image" alt="Voltix Logo" />
+  
+  <section class="header-section flex items-center justify-between px-4 relative">
+    <div class="text-center">
+      <img src="/assets/images/VoltixLoginBlanco.svg" alt="Voltix logo" class="w-28">
+    </div>
+    
+    <div class="relative"> <!-- Este contenedor debe tener position: relative -->
+      <div
+        class="user-avatar w-[34px] h-[34px] flex justify-end overflow-hidden rounded-full border-2 border-gray-300 mb-1 cursor-pointer"
+        (click)="toggleDropdown()">
+        <img src="/assets/avatar-default.png" alt="Avatar" class="w-full h-full object-cover" />
+      </div>
+      
+      <!-- Dropdown -->
+      <div
+        [ngClass]="{ 
+          'hidden': !isDropdownOpen, 
+          'absolute': true, 
+          'right-0': true, 
+          'mt-2': true, 
+          'w-48': true, 
+          'bg-blue-800': true,
+          'border': true, 
+          'border-gray-200': true, 
+          'rounded-lg': true, 
+          'shadow-lg': true, 
+          'z-50': true 
+        }">
+        <ul>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer" (click)="goToProfile()">Perfil</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer">Notificaciones</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer">Ayuda</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer">Cerrar Sesión</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <div class="body-section">
+    <!-- Bienvenida -->
+    <section class="section">
+      <h2 class="text-xl font-medium mb-2">¡Hola {{ user.firstname }}!</h2>
+
+      <div class="containerConsumo">
+        <div class="flex items-center">
+          <img src="/assets/icons/homePageGraphicIco.svg" alt="Graph Ico" class="graphIco" />
+          <div class="ml-4">
+              <p class="text-xs text-gray-500 mb-1">Tu último consumo</p>
+              <h3 class="text-xl font-semibold mb-1">266 kWh</h3>
+              <p class="text-gray-500">Octubre</p>
+          </div>
+      </div>
+      <div class="consumo-mes flex items-center">
+        <p class="text-green-600 text-xs">0.43%</p>
+        <img src="/assets/icons/arrowUpGreen.svg" alt="Arrow up" class="w-3 h-4" />
+    </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="center-boton">
+        <div class="botones">
+          <button (click)="goToAttachedInvoices()">
+            <img src="/assets/icons/ticketAlt.svg" alt="Ticket Icon" class="w-5 h-5" />
+            <span>Facturas</span>
+          </button>
+          <button (click)="goToMeasurementSearch()" >
+            <img src="/assets/icons/dashboardAlt.svg" alt="Velocity Icon" class="w-5 h-5" />
+
+            <span>Medición</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gráfico mensual -->
+    <section class="p-4">
+      <h2 class="text-xl font-medium mb-4">Gráfico mensual</h2>
+      <div class="mt-4">
+        <div class="containerGraphic bg-white flex flex-col items-center justify-center rounded-lg relative">
+        </div>
+      </div>
+    </section>
+
+    <!-- Recomendaciones -->
+    <section class="p-4">
+      <h2 class="text-xl font-medium">Recomendaciones</h2>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Utiliza luces LED</h3>
+                <p class="text-gray-500">Ahorran hasta un 75%</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Ajusta la temperatura</h3>
+                <p class="text-gray-500">Bajar 1ºC ahorra entre el 10% y 20%</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Desenchufa los aparatos</h3>
+                <p class="text-gray-500">Apagados consumen hasta el 75%</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="flex items-center">
+              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <div class="ml-4">
+                <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
+                <h3 class="text-xl font-semibold mb-1">Apaga las luces que no usas</h3>
+                <p class="text-gray-500">Puedes ahorrar hasta un 5%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Contenedor de paginación -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- Botón de cargar factura -->
+    <div class="text-center px-4 mb-4">
+      <button (click)="goToUploadInvoice()" class="btn-upload">
+        <img src="/assets/icons/circlePlus.svg" alt="Ticket Icon" class="w-5 h-5" />
+        Cargar factura
+      </button>
+    </div>
+  </div>
+</div>

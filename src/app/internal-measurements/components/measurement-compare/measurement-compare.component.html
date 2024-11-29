@@ -1,6 +1,5 @@
 <div class="w-full">
-  <!-- TODO: agregar el header general cuando esté hecho -->
-  <div class="bg-primary h-44"></div>
+  <app-invoice-header></app-invoice-header>
 
   <section class="bg-neutral-50 px-5 pt-5 pb-14">
     <h2 class="text-dark-text text-2xl font-semibold mb-4">Comparación</h2>
@@ -114,8 +113,19 @@
       class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]"
       (click)="showModal()">Descargar
       PDF</button>
+
+    <!-- Modal de descarga -->
     <app-report-download></app-report-download>
 
+    <!-- Toast de descargas -->
+    @if(reportService.downloading){
+    <app-downloading-toast></app-downloading-toast>
+    }
+    @if(reportService.downloadFinished){
+    <app-download-toast></app-download-toast>
+    }
+
   </section>
+
 
 </div>

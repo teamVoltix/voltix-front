@@ -7,28 +7,27 @@ export interface User {
   email: string;
   password: string;
   address: string;
-  phone_number: string;
+  phoneNumber: string;
+  photo: string;
 }
 
 /* registro */
-/* 
-fullname:string
-email:string
-password:string 
-*/
-
-export interface Login {
+export interface RegisterUser {
+  fullname: string;
+  email: string;
   dni: string;
   password: string;
 }
 
-/* class Perfil
-    profile_id
-    user
-    password
-    fullname
-    dni
-    birth_date
-    address
-    phone_number
-*/
+export interface LoginResponse {
+  message: string;
+  access_token: string;
+  refresh_token: string;
+  user_id: number;
+  fullname: string;
+}
+
+export interface Credentials {
+  dni: string;
+  password: string;
+}
