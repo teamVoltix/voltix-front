@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+        "apexcharts"
+     ],
             "outputPath": "dist/template-angular-ts",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -43,12 +46,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "2MB",
                   "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
+                  "maximumWarning": "2MB",
                   "maximumError": "5MB"
                 }
               ],
