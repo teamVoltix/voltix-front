@@ -33,4 +33,16 @@ export class AuthService {
   profile(): Observable<User> {
     return this.http.get<User>(this.url + 'api/profile/');
   }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    // improve more the logic for validation
+    
+    if (token) {
+      // implement the logic for see if token is expired
+
+      return true;
+    }
+    return false;
+  }
 }
