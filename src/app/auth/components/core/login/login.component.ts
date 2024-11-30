@@ -11,7 +11,6 @@ import { AuthService } from '../../../service/auth-service.service';
 import { StateService } from '../../../../core/service/state/state.service';
 import { LoginResponse } from '../../../../core/model/user';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -100,11 +99,13 @@ export class LoginComponent {
           console.log('Perfil de usuario', data);
         });
         this.router.navigate(['/home']);
-      } /* ,
+      },
       (error) => {
         console.error('Error en el inicio de sesión', error);
+        
+
         // Aquí  manejar el error, mostrando un mensaje al usuario
-      } */
+      }
     );
   }
 }

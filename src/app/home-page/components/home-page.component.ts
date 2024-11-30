@@ -1,9 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, inject } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import Swiper from 'swiper/bundle';
 import { Navigation } from 'swiper/modules';
 import ApexCharts from 'apexcharts';
+import { HomepageService } from '../service/homepage.service';
+import { User } from '../../core/model/user';
 
 @Component({
   selector: 'app-home-page',
@@ -12,14 +14,20 @@ import ApexCharts from 'apexcharts';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-export class HomePageComponent implements AfterViewInit {
+export class HomePageComponent implements OnInit, AfterViewInit {
   isDropdownOpen = false;
+  private service = inject(HomepageService);
 
-  user = {
-    firstname: 'Juan', // Temporal hasta conectarse con backend
-  };
+  user!: User;
+
+  /* this.service.profile().subscribe((data) => {
+    console.log(data);
+  }) */
 
   constructor(private location: Location, private router: Router) {}
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -170,6 +178,10 @@ export class HomePageComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.service.profile().subscribe((data) => {
+      console.log(data);
+      this.user = data;
+    });
     const swiper = new Swiper('.swiper-container', {
       modules: [Navigation],
       slidesPerView: 1,
