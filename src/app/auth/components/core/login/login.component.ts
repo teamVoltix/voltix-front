@@ -91,21 +91,28 @@ export class LoginComponent {
       password: this.login.get('password')?.value,
     };
 
-    this.service.login(credentials).subscribe(
-      (response: LoginResponse) => {
+    this.service.login(credentials).subscribe({
+      next: (response: LoginResponse) => {
         console.log('Inicio de sesión exitoso', response);
         this.stateService.setLogin(response.access_token);
-        this.service.profile().subscribe((data) => {
-          console.log('Perfil de usuario', data);
+        this.service.profile().subscribe({
+          next: (data) => {
+            console.log('Perfil de usuario', data);
+          },
+          error: (profileError) => {
+            console.error(
+              'Error al obtener el perfil de usuario',
+              profileError
+            );
+            // Aquí manejar el error de perfil, mostrando un mensaje al usuario si es necesario
+          },
         });
         this.router.navigate(['/home']);
       },
-      (error) => {
+      error: (error) => {
         console.error('Error en el inicio de sesión', error);
-        
-
-        // Aquí  manejar el error, mostrando un mensaje al usuario
-      }
-    );
+        // Aquí manejar el error, mostrando un mensaje al usuario
+      },
+    });
   }
 }

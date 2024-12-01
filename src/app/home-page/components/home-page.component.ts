@@ -17,22 +17,33 @@ import { User } from '../../core/model/user';
 export class HomePageComponent implements OnInit, AfterViewInit {
   isDropdownOpen = false;
   private service = inject(HomepageService);
+  private location = inject(Location);
+  private router = inject(Router);
 
   user!: User;
 
-  /* this.service.profile().subscribe((data) => {
-    console.log(data);
-  }) */
-
-  constructor(private location: Location, private router: Router) {}
+ //esto carga los datos antes de la vista meter aqui el servicio de medicion para cargar los dato de medicion
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.service.profile().subscribe({
+      next: (data) => {
+        console.log('Perfil de usuario', data);
+        this.user = data;
+      },
+      error: (profileError) => {
+        console.error('Error al obtener el perfil de usuario', profileError);
+      },
+    });
+  }
+
+  logout(): void {
+    this.service.logout();
   }
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
     console.log('Dropdown state:', this.isDropdownOpen);
   }
+
   goToProfile(): void {
     this.router.navigate(['/profile']);
   }
@@ -177,6 +188,7 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     chart.render();
   }
 
+  //esto es despues de haber cargado la vista
   ngAfterViewInit(): void {
     this.service.profile().subscribe((data) => {
       console.log(data);
