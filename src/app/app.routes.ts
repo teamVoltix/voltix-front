@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/components/login/login.component';
-import { HomeComponent } from './auth/components/home/home.component';
+import { LoginComponent } from './auth/components/core/login/login.component';
+import { AuthEntryComponent } from './auth/components/AuthEntry/AuthEntry.component';
 import { ProfileComponent } from './profile/components/profile/profile.component';
-import { ForgotPasswordComponent } from './auth/components/forgot-password/forgot-password.component';
-import { NewPasswordComponent } from './auth/components/new-password/new-password.component';
+import { ForgotPasswordComponent } from './auth/components/recover/forgot-password/forgot-password.component';
+import { NewPasswordComponent } from './auth/components/recover/new-password/new-password.component';
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
-import { StartComponent } from './start/start.component';
-import { HomePageComponent } from './auth/components/home-page/home-page.component';
+import { HomePageComponent } from './home-page/components/home-page.component';
 import { InvoiceListingComponent } from './invoice/components/invoice-listing/invoice-listing.component';
 import { InvoiceHeaderComponent } from './invoice/components/invoice-header/invoice-header.component';
 import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
@@ -16,6 +15,8 @@ import { MeasurementDetailComponent } from './internal-measurements/components/m
 import { InvoiceDetailsComponent } from './invoice/components/invoice-details/invoice-details.component';
 import { InvoiceImageComponent } from './invoice/components/invoice-image/invoice-image.component';
 import { InvoiceUploadComponent } from './invoice/components/invoice-upload/invoice-upload.component';
+import { StartComponent } from './auth/components/start/start.component';
+import { authGuard } from './auth/components/core/guard/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -25,9 +26,10 @@ export const routes: Routes = [
     component: StartComponent,
   },
   {
+    //cambiar en AuthEntry
     path: 'inicio',
     title: 'Welcome to Voltix',
-    component: HomeComponent,
+    component: AuthEntryComponent,
   },
   {
     path: 'login',
@@ -38,6 +40,7 @@ export const routes: Routes = [
     path: 'profile',
     title: 'My Profile Page',
     component: ProfileComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'profile-settings',
@@ -63,6 +66,7 @@ export const routes: Routes = [
     path: 'home',
     title: 'Welcome to Voltix Home Page',
     component: HomePageComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'invoce-listing',
@@ -103,5 +107,10 @@ export const routes: Routes = [
     path: 'invoice-upload',
     title: 'Upload Invoice',
     component: InvoiceUploadComponent,
+  },
+  {
+    path: '**',
+    title: '',
+    component: StartComponent,
   },
 ];

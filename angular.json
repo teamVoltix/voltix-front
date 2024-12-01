@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+        "apexcharts"
+     ],
             "outputPath": "dist/template-angular-ts",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -30,22 +33,26 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/flowbite/dist/flowbite.min.css"
+              "node_modules/flowbite/dist/flowbite.min.css",
+              "node_modules/swiper/swiper-bundle.min.css"  
             ],
-            "scripts": ["node_modules/flowbite/dist/flowbite.min.js"]
+            "scripts": [
+              "node_modules/flowbite/dist/flowbite.min.js",
+              "node_modules/swiper/swiper-bundle.min.js" 
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 }
               ],
               "outputHashing": "all"
