@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
       user: [],
       fullname: [{ value: '', disabled: true }],
       dni: { value: '', disabled: true },
-      phoneNumber: [{ value: '', disabled: true }],
+      phone_number: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
       email: [
         { value: '', disabled: true },
@@ -88,14 +88,14 @@ export class ProfileComponent implements OnInit {
   enable(
     fullname: string,
     dni: string,
-    phoneNumber: string,
+    phone_number: string,
     address: string,
     email: string,
     password: string
   ): void {
     this.profileForm.get(fullname)?.enable();
     this.profileForm.get(dni)?.enable();
-    this.profileForm.get(phoneNumber)?.enable();
+    this.profileForm.get(phone_number)?.enable();
     this.profileForm.get(address)?.enable();
     this.profileForm.get(email)?.enable();
 
@@ -107,14 +107,14 @@ export class ProfileComponent implements OnInit {
   disable(
     fullname: string,
     dni: string,
-    phoneNumber: string,
+    phone_number: string,
     address: string,
     email: string,
     password: string
   ): void {
     this.profileForm.get(fullname)?.disable();
     this.profileForm.get(dni)?.disable();
-    this.profileForm.get(phoneNumber)?.disable();
+    this.profileForm.get(phone_number)?.disable();
     this.profileForm.get(address)?.disable();
     this.profileForm.get(email)?.disable();
 
@@ -125,11 +125,11 @@ export class ProfileComponent implements OnInit {
   editUser(
     fullname: string,
     dni: string,
-    phoneNumber: string,
+    phone_number: string,
     address: string,
-    email: string,
+    email: string
   ) {
-    console.log(fullname, dni, phoneNumber, address, email);
+    console.log(fullname, dni, phone_number, address, email);
   }
 
   editPhoto(photo: string) {
@@ -144,7 +144,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getPhonePlaceholder(): string {
-    return this.user.phoneNumber ? this.user.phoneNumber : '';
+    return this.user.phone_number ? this.user.phone_number : '';
   }
   getAdressPlaceholder(): string {
     return this.user.address ? this.user.address : '';
