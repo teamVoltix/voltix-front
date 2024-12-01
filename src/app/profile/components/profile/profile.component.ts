@@ -19,7 +19,7 @@ import {
 })
 export class ProfileComponent implements OnInit {
   user!: User;
-  public userTest: User;
+  /* public userTest: User; */
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
   public edit: Boolean = true;
@@ -29,43 +29,45 @@ export class ProfileComponent implements OnInit {
   public currentPassword: string = '';
   public newPassword: string = '';
   public confirmPassword: string = '';
-  // user: User = mockUser;
+
   private service = inject(ProfileService);
   private location = inject(Location);
+  photo = 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg';
 
   constructor(private fb: FormBuilder) {
-    this.userTest = {
-      iprofile_id: 1,
-      user: 'user',
-      fullname: 'Mock User',
-      dni: 'Y4074276R',
-      birth_date: '11/01/1986',
-      email: 'mockUser@vamoEquipo',
-      password: 'Gato123--',
-      address: 'Calle sita 999',
-      phoneNumber: '522698741', 
-      photo: 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg',
-    }
-   
     this.profileForm = this.fb.group({
       user: [],
       fullname: [{ value: '', disabled: true }],
       dni: { value: '', disabled: true },
-      phoneNumber: [{ value: '', disabled: true }],
+      phone_number: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
-      email: [{ value: '', disabled: true }, [,Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
+      email: [
+        { value: '', disabled: true },
+        [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
+      ],
       password: [{ value: '', disabled: true }, []],
-    })
+    });
 
-    this.passwordForm = this.fb.group ({
-      currentPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$')]],
-      confirmPassword: ['',[ Validators.required, this.passwordsMatch]]
-    },
-    {
-      validators: this.passwordsMatch   
-    }
-  )
+    this.passwordForm = this.fb.group(
+      {
+        currentPassword: ['', [Validators.required]],
+        newPassword: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(15),
+            Validators.pattern(
+              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$'
+            ),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required, this.passwordsMatch]],
+      },
+      {
+        validators: this.passwordsMatch,
+      }
+    );
   }
 
   passwordsMatch(group: FormGroup) {
@@ -76,9 +78,9 @@ export class ProfileComponent implements OnInit {
   get email() {
     return this.profileForm.get('email');
   }
- 
-  changepassword(){
-    console.log('Pasamos a cambiar contraseña')
+
+  changepassword() {
+    console.log('Pasamos a cambiar contraseña');
     this.newPasswordPage = true;
     this.profileInputs = false;
   }
@@ -86,33 +88,33 @@ export class ProfileComponent implements OnInit {
   enable(
     fullname: string,
     dni: string,
-    phoneNumber: string,
+    phone_number: string,
     address: string,
     email: string,
     password: string
   ): void {
     this.profileForm.get(fullname)?.enable();
     this.profileForm.get(dni)?.enable();
-    this.profileForm.get(phoneNumber)?.enable();
+    this.profileForm.get(phone_number)?.enable();
     this.profileForm.get(address)?.enable();
     this.profileForm.get(email)?.enable();
-    
+
     this.edit = false;
     this.save = true;
   }
-  
+
   //Deshabilitar campos y guardar datos
   disable(
     fullname: string,
     dni: string,
-    phoneNumber: string,
+    phone_number: string,
     address: string,
     email: string,
     password: string
   ): void {
     this.profileForm.get(fullname)?.disable();
     this.profileForm.get(dni)?.disable();
-    this.profileForm.get(phoneNumber)?.disable();
+    this.profileForm.get(phone_number)?.disable();
     this.profileForm.get(address)?.disable();
     this.profileForm.get(email)?.disable();
 
@@ -120,19 +122,18 @@ export class ProfileComponent implements OnInit {
     this.save = false;
   }
 
-
   editUser(
     fullname: string,
     dni: string,
-    phoneNumber: string,
+    phone_number: string,
     address: string,
-    email: string,
+    email: string
   ) {
-    console.log(fullname, dni, phoneNumber, address, email);
+    console.log(fullname, dni, phone_number, address, email);
   }
 
- editPhoto (photo: string){
-    console.log(photo)
+  editPhoto(photo: string) {
+    console.log(photo);
   }
 
   ngOnInit(): void {
@@ -143,9 +144,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getPhonePlaceholder(): string {
-    return this.user.phoneNumber
-      ? this.user.phoneNumber
-      : '';
+    return this.user.phone_number ? this.user.phone_number : '';
   }
   getAdressPlaceholder(): string {
     return this.user.address ? this.user.address : '';

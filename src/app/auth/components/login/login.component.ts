@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../service/auth-service.service';
-import { StateService } from '../../../../core/service/state/state.service';
-import { LoginResponse } from '../../../../core/model/user';
+import { AuthService } from '../../service/auth-service.service';
+import { StateService } from '../../../core/state/state.service';
+import { LoginResponse } from '../../../core/model/user';
 
 @Component({
   selector: 'app-login',
@@ -111,7 +111,8 @@ export class LoginComponent {
       },
       error: (error) => {
         console.error('Error en el inicio de sesión', error);
-        // Aquí manejar el error, mostrando un mensaje al usuario
+
+        // Aquí  manejar el error, mostrando un mensaje al usuario
       },
     });
   }

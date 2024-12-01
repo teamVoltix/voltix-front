@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Invoice } from '../../../core/model/invoice';
+import { Invoice } from '../../../../core/model/invoice';
 import { RouterLink } from '@angular/router';
 
 @Component({

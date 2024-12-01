@@ -7,7 +7,7 @@
     
 <div *ngIf="profileInputs">
     <div class="sub-header-gris">
-    <img class="avatar" src="{{this.userTest.photo}}" alt="Avatar" height="128" width="128">
+    <img class="avatar" src="{{this.photo}}" alt="Avatar" height="128" width="128">
     <button class="modificar-pics" (click)="editPhoto('photo')">
         <div class="place-self-center">
                   <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
@@ -25,23 +25,23 @@
         <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
             <div class="mb-6">
                 <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Apellido</label>
-                <input  formControlName='fullname' placeholder={{this.userTest.fullname}} type="text" id="fullname" #input1 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='fullname' placeholder={{this.user.fullname}} type="text" id="fullname" #input1 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="mb-6">
                 <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
-                <input  formControlName='dni' placeholder={{this.userTest.dni}} type="text" id="dni" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='dni' placeholder={{this.user.dni}} type="text" id="dni" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="mb-6">
                 <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Teléfono</label>
-                <input  formControlName='phoneNumber' placeholder={{this.userTest.phoneNumber}} type="text" id="phoneNumber" #input3 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='phoneNumber' placeholder={{getPhonePlaceholder()}} type="text" id="phoneNumber" #input3 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="mb-6">
                 <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
-                <input  formControlName='address' placeholder={{this.userTest.address}} type="text" id="address" #input4 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='address' placeholder={{getAdressPlaceholder()}} type="text" id="address" #input4 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail</label>
-                <input  formControlName='email' placeholder={{this.userTest.email}} type="text" id="email" #input5 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <input  formControlName='email' placeholder={{this.user.email}} type="text" id="email" #input5 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 [ngClass]="{
                     'border-red-500': email?.invalid,
                     'border-green-500': profileForm.get('email')?.dirty && email?.valid,

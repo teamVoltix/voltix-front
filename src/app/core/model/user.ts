@@ -1,13 +1,10 @@
 export interface User {
-  iprofile_id: number;
-  user: string;
-  fullname: string;
-  dni: string;
-  birth_date: string;
-  email: string;
-  password: string;
   address: string;
-  phoneNumber: string;
+  birth_date: string;
+  dni: string;
+  email: string;
+  fullname: string;
+  phone_number: string;
   photo: string;
 }
 
