@@ -8,7 +8,7 @@
 <div *ngIf="profileInputs">
     <div class="sub-header-gris">
     <img class="avatar" src="{{this.userTest.photo}}" alt="Avatar" height="128" width="128">
-    <button class="modificar-pics" (click)="editPhoto">
+    <button class="modificar-pics" (click)="editPhoto('photo')">
         <div class="place-self-center">
                   <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                     <img src="assets/icons/pics.svg" alt="">
