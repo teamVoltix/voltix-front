@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
       address: [{ value: '', disabled: true }],
       email: [{ value: '', disabled: true }, [,Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
       password: [{ value: '', disabled: true }, []],
-    };
+    })
 
     this.passwordForm = this.fb.group ({
       currentPassword: ['', [Validators.required]],
@@ -127,7 +127,6 @@ export class ProfileComponent implements OnInit {
     phoneNumber: string,
     address: string,
     email: string,
-    password: string
   ) {
     console.log(fullname, dni, phoneNumber, address, email);
   }
