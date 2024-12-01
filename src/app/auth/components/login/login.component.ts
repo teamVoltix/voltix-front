@@ -21,7 +21,6 @@ import { LoginResponse } from '../../../core/model/user';
 export class LoginComponent {
   private service = inject(AuthService);
   private stateService = inject(StateService);
-  privateAllUserList: any; //da quitar una vez que funciona el backend
   private router = inject(Router);
 
   passwordVisible: boolean = false;
@@ -94,7 +93,10 @@ export class LoginComponent {
     this.service.login(credentials).subscribe({
       next: (response: LoginResponse) => {
         console.log('Inicio de sesión exitoso', response);
-        this.stateService.setLogin(response.access_token);
+        this.stateService.setLogin(
+          response.access_token,
+          response.refresh_token
+        );
         this.service.profile().subscribe({
           next: (data) => {
             console.log('Perfil de usuario', data);
