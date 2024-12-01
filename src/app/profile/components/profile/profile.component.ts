@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   public currentPassword: string = '';
   public newPassword: string = '';
   public confirmPassword: string = '';
-  // user: User = mockUser;
+
   private service = inject(ProfileService);
   private location = inject(Location);
   photo = 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg';

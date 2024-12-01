@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../service/auth-service.service';
-import { StateService } from '../../../../core/state/state.service';
-import { LoginResponse } from '../../../../core/model/user';
+import { AuthService } from '../../service/auth-service.service';
+import { StateService } from '../../../core/state/state.service';
+import { LoginResponse } from '../../../core/model/user';
 
 @Component({
   selector: 'app-login',

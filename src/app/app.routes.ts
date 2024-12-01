@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/components/core/login/login.component';
+import { LoginComponent } from './auth/components/login/login.component';
 import { AuthEntryComponent } from './auth/components/AuthEntry/AuthEntry.component';
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { ForgotPasswordComponent } from './auth/components/recover/forgot-password/forgot-password.component';
