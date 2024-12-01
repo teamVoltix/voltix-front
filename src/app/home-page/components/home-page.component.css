@@ -6,7 +6,7 @@
   width: 100%;
   height: 100vh; 
   background-color: #0072CE; 
-  position: relative; /* Esto asegura que los elementos dentro puedan ser posicionados correctamente */
+  position: relative; 
 }
 
 .background-image {
@@ -94,6 +94,58 @@
   padding: 1rem;
   background-color: #F4F4F6;
 }
+
+.user-container {
+  position: relative;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: end;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #D1D5DB; 
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 40vh;
+  background-color: #0072CE;
+  border: 1px solid #F3F4F6; 
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.dropdown-item {
+  display: flex; 
+  align-items: center; 
+  padding: 0.8rem;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #0158A3;
+}
+
+.icon {
+  width: 20px;  
+  height: 20px; 
+  margin-right: 0.5rem;
+}
+
 .consumo-mes {
   margin-left: auto;
 }
@@ -123,10 +175,23 @@ button {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
-.icon {
-  width: 24px;
-  height: 24px;
-  color: #0072ce;
+.dropdown-item {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 0.8rem;
+  cursor: pointer;
+}
+
+.chevronRight {
+  margin-left: auto; 
+  margin-right: 15px;
+  width: 20px; 
+  height: 20px; 
+}
+
+.closeX {
+  margin-left: auto; 
 }
 
 .containerGraphic {

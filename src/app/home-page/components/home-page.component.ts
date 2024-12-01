@@ -44,6 +44,11 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     console.log('Dropdown state:', this.isDropdownOpen);
   }
 
+  closeDropdown(): void {
+    this.isDropdownOpen = false; 
+    console.log('Dropdown closed');
+}
+
   goToProfile(): void {
     this.router.navigate(['/profile']);
   }
