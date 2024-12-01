@@ -20,10 +20,15 @@ import {
 export class ProfileComponent implements OnInit {
   user!: User;
   public userTest: User;
-  public perfilForm: FormGroup;
+  public profileForm: FormGroup;
+  public passwordForm: FormGroup;
   public edit: Boolean = true;
   public save: Boolean = false;
-
+  public newPasswordPage: Boolean = false;
+  public profileInputs: Boolean = true;
+  public currentPassword: string = '';
+  public newPassword: string = '';
+  public confirmPassword: string = '';
   // user: User = mockUser;
   private service = inject(ProfileService);
   private location = inject(Location);
@@ -36,37 +41,49 @@ export class ProfileComponent implements OnInit {
       dni: 'Y4074276R',
       birth_date: '11/01/1986',
       email: 'mockUser@vamoEquipo',
-      password: '**********',
+      password: 'Gato123--',
       address: 'Calle sita 999',
-      phoneNumber: '522698741',
-      photo:
-        'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg',
-    };
-
-    this.perfilForm = this.fb.group({
+      phoneNumber: '522698741', 
+      photo: 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg',
+    }
+   
+    this.profileForm = this.fb.group({
       user: [],
       fullname: [{ value: '', disabled: true }],
       dni: { value: '', disabled: true },
       phoneNumber: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
-      email: [
-        { value: '', disabled: true },
-        [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
-      ],
-      password: [
-        { value: '', disabled: true },
-        [
-          Validators.minLength(8),
-          Validators.maxLength(15),
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$'
-          ),
-        ],
-      ],
-    });
+      email: [{ value: '', disabled: true }, [,Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
+      password: [{ value: '', disabled: true }, []],
+    };
+
+    this.passwordForm = this.fb.group ({
+      currentPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#.,-])[A-Za-z\\d@$!%*?&#.,-]{8,15}$')]],
+      confirmPassword: ['',[ Validators.required, this.passwordsMatch]]
+    },
+    {
+      validators: this.passwordsMatch   
+    }
+  )
   }
 
-  public enable(
+  passwordsMatch(group: FormGroup) {
+    const newPassword = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return newPassword === confirmPassword ? null : { passwordMismatch: true };
+  }
+  get email() {
+    return this.profileForm.get('email');
+  }
+ 
+  changepassword(){
+    console.log('Pasamos a cambiar contraseña')
+    this.newPasswordPage = true;
+    this.profileInputs = false;
+  }
+
+  enable(
     fullname: string,
     dni: string,
     phoneNumber: string,
@@ -74,17 +91,17 @@ export class ProfileComponent implements OnInit {
     email: string,
     password: string
   ): void {
-    this.perfilForm.get(fullname)?.enable();
-    this.perfilForm.get(dni)?.enable();
-    this.perfilForm.get(phoneNumber)?.enable();
-    this.perfilForm.get(address)?.enable();
-    this.perfilForm.get(email)?.enable();
-    this.perfilForm.get(password)?.enable();
-    // this.perfilForm.get(photo)?.enable();
-
+    this.profileForm.get(fullname)?.enable();
+    this.profileForm.get(dni)?.enable();
+    this.profileForm.get(phoneNumber)?.enable();
+    this.profileForm.get(address)?.enable();
+    this.profileForm.get(email)?.enable();
+    
     this.edit = false;
     this.save = true;
   }
+  
+  //Deshabilitar campos y guardar datos
   disable(
     fullname: string,
     dni: string,
@@ -93,17 +110,16 @@ export class ProfileComponent implements OnInit {
     email: string,
     password: string
   ): void {
-    this.perfilForm.get(fullname)?.disable();
-    this.perfilForm.get(dni)?.disable();
-    this.perfilForm.get(phoneNumber)?.disable();
-    this.perfilForm.get(address)?.disable();
-    this.perfilForm.get(email)?.disable();
-    this.perfilForm.get(password)?.disable();
-    // this.perfilForm.get(photo)?.disable();
+    this.profileForm.get(fullname)?.disable();
+    this.profileForm.get(dni)?.disable();
+    this.profileForm.get(phoneNumber)?.disable();
+    this.profileForm.get(address)?.disable();
+    this.profileForm.get(email)?.disable();
 
     this.edit = true;
     this.save = false;
   }
+
 
   editUser(
     fullname: string,
@@ -113,7 +129,11 @@ export class ProfileComponent implements OnInit {
     email: string,
     password: string
   ) {
-    console.log(fullname, email);
+    console.log(fullname, dni, phoneNumber, address, email);
+  }
+
+ editPhoto (photo: string){
+    console.log(photo)
   }
 
   ngOnInit(): void {
@@ -126,10 +146,10 @@ export class ProfileComponent implements OnInit {
   getPhonePlaceholder(): string {
     return this.user.phoneNumber
       ? this.user.phoneNumber
-      : 'Número de teléfono no disponible';
+      : '';
   }
   getAdressPlaceholder(): string {
-    return this.user.address ? this.user.address : 'Direccion no disponible';
+    return this.user.address ? this.user.address : '';
   }
   logout(): void {
     this.service.logout();
@@ -138,9 +158,13 @@ export class ProfileComponent implements OnInit {
     this.location.back();
   }
 
-  onSubmit(): void {
-    if (this.perfilForm.valid) {
-      console.log('Formulario corrercto', this.perfilForm.value);
+  onSubmit() {
+    if (this.passwordForm.valid) {
+      const { currentPassword, newPassword } = this.passwordForm.value;
+      console.log('Contraseña actual:', currentPassword);
+      console.log('Nueva contraseña:', newPassword);
+    } else {
+      console.log('Formulario inválido');
     }
   }
 }
