@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { InvMesHeaderComponent } from './inv-mes-header.component';
 
-import { InvoiceHeaderComponent } from './invoice-header.component';
+
 
 describe('InvoiceHeaderComponent', () => {
-  let component: InvoiceHeaderComponent;
-  let fixture: ComponentFixture<InvoiceHeaderComponent>;
+  let component: InvMesHeaderComponent
+  let fixture: ComponentFixture<InvMesHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InvoiceHeaderComponent]
-    })
-    .compileComponents();
+      imports: [InvMesHeaderComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(InvoiceHeaderComponent);
+    fixture = TestBed.createComponent(InvMesHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

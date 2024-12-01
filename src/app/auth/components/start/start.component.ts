@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { StateService } from '../../../core/service/state/state.service';
+import { StateService } from '../../../core/state/state.service';
 
 @Component({
   selector: 'app-start',

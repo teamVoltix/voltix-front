@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { InvoiceDetailsComponent } from '../invoice-details/invoice-details.component';
-import { Invoice } from '../../../core/model/invoice';
+import { Invoice } from '../../../../core/model/invoice';
 
 @Component({
   selector: 'app-invoice-image',

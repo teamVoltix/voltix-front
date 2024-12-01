@@ -1,20 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { InvoiceHeaderComponent } from '../invoice-header/invoice-header.component';
+import {InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-listing',
   standalone: true,
-  imports: [CommonModule, InvoiceHeaderComponent],
+  imports: [CommonModule, InvMesHeaderComponent],
   templateUrl: './invoice-listing.component.html',
-  styleUrls: ['./invoice-listing.component.css']
+  styleUrls: ['./invoice-listing.component.css'],
 })
 export class InvoiceListingComponent {
-
-  
-  
-  
   // Lista estática de facturas
 
   invoices = [
@@ -35,16 +31,10 @@ export class InvoiceListingComponent {
     { id: '565644', date: '08/10/2024', selected: false },
     { id: '584846', date: '08/11/2024', selected: false },
   ];
-  
-
-  
-
 
   hasSelectedInvoices(): boolean {
-    return this.invoices.some(invoice => invoice.selected);
+    return this.invoices.some((invoice) => invoice.selected);
   }
-  
-  
 
   // Variables para el paginador
   currentPage = 1; // Página actual
@@ -64,8 +54,8 @@ export class InvoiceListingComponent {
 
   // Método para marcar o desmarcar todas las facturas
   selectAll() {
-    const allSelected = this.invoices.every(invoice => invoice.selected);
-    this.invoices.forEach(invoice => (invoice.selected = !allSelected));
+    const allSelected = this.invoices.every((invoice) => invoice.selected);
+    this.invoices.forEach((invoice) => (invoice.selected = !allSelected));
   }
 
   // Método para alternar selección individual de una factura
@@ -75,7 +65,8 @@ export class InvoiceListingComponent {
 
   // Método para cargar más facturas (simulación)
   openFileUploader() {
-    const fileUploader: HTMLElement | null = document.getElementById('fileUploader');
+    const fileUploader: HTMLElement | null =
+      document.getElementById('fileUploader');
     if (fileUploader) {
       fileUploader.click();
     }
@@ -89,7 +80,7 @@ export class InvoiceListingComponent {
       console.log('Archivos seleccionados:', files);
 
       // Validar y procesar los archivos cargados
-      files.forEach(file => {
+      files.forEach((file) => {
         if (file.type === 'application/pdf') {
           console.log(`Cargando archivo: ${file.name}`);
           // Implementa la lógica para subir o procesar el archivo
@@ -107,7 +98,7 @@ export class InvoiceListingComponent {
 
   // Método para eliminar las facturas seleccionadas
   deleteSelectedInvoices() {
-    this.invoices = this.invoices.filter(invoice => !invoice.selected);
+    this.invoices = this.invoices.filter((invoice) => !invoice.selected);
     this.totalPages = Math.ceil(this.invoices.length / this.invoicesPerPage); // Actualiza el total de páginas
     this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Actualiza los números de página
     console.log('Facturas eliminadas');
@@ -120,7 +111,6 @@ export class InvoiceListingComponent {
     this.currentPage = page;
     console.log(`Cambiando a la página ${page}`);
   }
-
 
   // Método para identificar elementos únicos en el *ngFor (mejora el rendimiento)
   trackById(index: number, invoice: any) {

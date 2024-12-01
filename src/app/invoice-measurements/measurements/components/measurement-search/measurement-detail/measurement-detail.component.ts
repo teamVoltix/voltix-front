@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MeasurementService } from '../../../services/measurement-service/measurement.service';
-import { Measurement } from '../../../../core/model/measurement';
-import { InvoiceHeaderComponent } from '../../../../invoice/components/invoice-header/invoice-header.component';
+import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.component';
+import { Measurement } from '../../../../../core/model/measurement';
 
 @Component({
   selector: 'app-measurement-detail',
   standalone: true,
-  imports: [CommonModule, InvoiceHeaderComponent],
+  imports: [CommonModule,InvMesHeaderComponent],
   templateUrl: './measurement-detail.component.html',
   styleUrl: './measurement-detail.component.css',
 })

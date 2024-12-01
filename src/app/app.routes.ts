@@ -7,16 +7,16 @@ import { NewPasswordComponent } from './auth/components/recover/new-password/new
 import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { HomePageComponent } from './home-page/components/home-page.component';
-import { InvoiceListingComponent } from './invoice/components/invoice-listing/invoice-listing.component';
-import { InvoiceHeaderComponent } from './invoice/components/invoice-header/invoice-header.component';
-import { MeasurementSearchComponent } from './internal-measurements/components/measurement-search/measurement-search.component';
-import { MeasurementCompareComponent } from './internal-measurements/components/measurement-compare/measurement-compare.component';
-import { MeasurementDetailComponent } from './internal-measurements/components/measurement-search/measurement-detail/measurement-detail.component';
-import { InvoiceDetailsComponent } from './invoice/components/invoice-details/invoice-details.component';
-import { InvoiceImageComponent } from './invoice/components/invoice-image/invoice-image.component';
-import { InvoiceUploadComponent } from './invoice/components/invoice-upload/invoice-upload.component';
 import { StartComponent } from './auth/components/start/start.component';
 import { authGuard } from './auth/components/core/guard/auth.guard';
+import { InvoiceListingComponent } from './invoice-measurements/invoice/components/invoice-listing/invoice-listing.component';
+import { InvMesHeaderComponent } from './invoice-measurements/shared/header/inv-mes-header.component';
+import { MeasurementSearchComponent } from './invoice-measurements/measurements/components/measurement-search/measurement-search.component';
+import { MeasurementDetailComponent } from './invoice-measurements/measurements/components/measurement-search/measurement-detail/measurement-detail.component';
+import { MeasurementCompareComponent } from './invoice-measurements/measurements/components/measurement-compare/measurement-compare.component';
+import { InvoiceDetailsComponent } from './invoice-measurements/invoice/components/invoice-details/invoice-details.component';
+import { InvoiceImageComponent } from './invoice-measurements/invoice/components/invoice-image/invoice-image.component';
+import { InvoiceUploadComponent } from './invoice-measurements/invoice/components/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -72,11 +72,6 @@ export const routes: Routes = [
     path: 'invoce-listing',
     title: 'invoce listing',
     component: InvoiceListingComponent,
-  },
-  {
-    path: 'invoce-header',
-    title: 'invoce header',
-    component: InvoiceHeaderComponent,
   },
   {
     path: 'measurement-search',

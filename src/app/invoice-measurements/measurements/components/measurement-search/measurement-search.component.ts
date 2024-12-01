@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Measurement } from '../../../core/model/measurement';
+import { Measurement } from '../../../../core/model/measurement';
 import { Router } from '@angular/router';
 import { MeasurementService } from '../../services/measurement-service/measurement.service';
 import { ReportService } from '../../services/report-service/report.service';
 import { ReportDownloadComponent } from '../report-download/report-download.component';
-import { InvoiceHeaderComponent } from '../../../invoice/components/invoice-header/invoice-header.component';
+import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
 
 @Component({
   selector: 'app-measurement-search',
   standalone: true,
-  imports: [CommonModule, ReportDownloadComponent, InvoiceHeaderComponent],
+  imports: [CommonModule, ReportDownloadComponent, InvMesHeaderComponent],
   templateUrl: './measurement-search.component.html',
   styleUrl: './measurement-search.component.css',
 })
