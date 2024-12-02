@@ -97,24 +97,13 @@ export class LoginComponent {
           response.access_token,
           response.refresh_token
         );
-        this.service.profile().subscribe({
-          next: (data) => {
-            console.log('Perfil de usuario', data);
-          },
-          error: (profileError) => {
-            console.error(
-              'Error al obtener el perfil de usuario',
-              profileError
-            );
-            // Aquí manejar el error de perfil, mostrando un mensaje al usuario si es necesario
-          },
-        });
+
         this.router.navigate(['/home']);
       },
       error: (error) => {
         console.error('Error en el inicio de sesión', error);
-
-        // Aquí  manejar el error, mostrando un mensaje al usuario
+        this.userNotFound = true;
+        this.passwordNotFound = true;
       },
     });
   }

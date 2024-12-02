@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import {
   BehaviorSubject,
+  catchError,
   interval,
   Observable,
   Subscription,
@@ -31,28 +32,31 @@ export class StateService {
     }
   }
 
-  setLogin(token: string, refreshToken: string) {
+  setLogin(access_token: string, refresh_token: string) {
     console.log('Setting login tokens');
-    console.log('Access Token:', token);
-    console.log('Refresh Token:', refreshToken);
-    localStorage.setItem('token', JSON.stringify({ token }));
-    localStorage.setItem('refreshToken', JSON.stringify({ refreshToken }));
-    this.tokenSubject.next(token);
+    console.log('Access Token:', access_token);
+    console.log('Refresh Token:', refresh_token);
+    localStorage.setItem('access_token', JSON.stringify({ access_token }));
+    localStorage.setItem('refresh_token', JSON.stringify({ refresh_token }));
+    this.tokenSubject.next(access_token);
     this.startTokenRefresh();
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem('token');
+    const accessToken = localStorage.getItem('access_token');
+    return accessToken ? JSON.parse(accessToken).access_token : null;
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refresh_token');
+    return refreshToken ? JSON.parse(refreshToken).refresh_token : null;
   }
 
   isAuthenticated(): boolean {
     const token = this.getAccessToken();
     if (token) {
       const decoded: any = jwtDecode(token);
+
       return decoded.exp * 1000 > Date.now();
     }
     return false;
@@ -69,8 +73,8 @@ export class StateService {
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.tokenSubject.next(null);
     if (this.refreshTokenInterval) {
       this.refreshTokenInterval.unsubscribe();
@@ -78,7 +82,7 @@ export class StateService {
     this.router.navigate(['/login']);
   }
 
-  refreshToken(): Observable<LoginResponse> {
+  /*  refreshToken(): Observable<LoginResponse> {
     const refresh = this.getRefreshToken();
     if (!refresh) {
       throw new Error('Refresh token is missing');
@@ -91,10 +95,35 @@ export class StateService {
           this.setLogin(tokens.access, tokens.refresh); // Usar los tokens de la respuesta
         })
       );
+  } */
+
+  refreshToken(): Observable<LoginResponse> {
+    const refresh = this.getRefreshToken();
+    if (!refresh) {
+      throw new Error('Refresh token is missing');
+    }
+    return this.http
+      .post<any>(this.url + 'api/auth/token/refresh/', {
+        refresh_token: refresh,
+      })
+      .pipe(
+        tap((tokens: any) => {
+          console.log('Received tokens:', tokens);
+          this.setLogin(tokens.access_token, tokens.refresh_token);
+        }),
+        catchError((error) => {
+          if (error.status === 401) {
+            // Token expired or invalid, redirect to login
+            this.router.navigate(['/login']);
+          }
+          throw error;
+        })
+      );
   }
 
   startTokenRefresh(): void {
-    const refreshInterval = 13 * 60 * 1000; // Rinnova ogni 13 minuti
+    const refreshInterval = 13 * 60 * 1000; // Rinnova ogni 13 minuti */
+
     if (this.refreshTokenInterval) {
       this.refreshTokenInterval.unsubscribe();
     }
