@@ -1,16 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Measurement } from '../../../../core/model/measurement';
+
 import { Router } from '@angular/router';
 import { MeasurementService } from '../../services/measurement-service/measurement.service';
 import { ReportService } from '../../services/report-service/report.service';
 import { ReportDownloadComponent } from '../report-download/report-download.component';
+import { FormsModule } from '@angular/forms';
 import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
+import { Measurement } from '../../../../core/model/measurement';
 
 @Component({
   selector: 'app-measurement-search',
   standalone: true,
-  imports: [CommonModule, ReportDownloadComponent, InvMesHeaderComponent],
+  imports: [
+    CommonModule,
+    ReportDownloadComponent,
+    InvMesHeaderComponent,
+    FormsModule,
+  ],
   templateUrl: './measurement-search.component.html',
   styleUrl: './measurement-search.component.css',
 })
@@ -18,6 +25,9 @@ export class MeasurementSearchComponent {
   isHoverPrevious = false;
   isHoverNext = false;
   measurementList: Measurement[] = [];
+  searchQuery: string = '';
+  filteredMeasurements: Measurement[] = [];
+  timeout: any;
 
   router = inject(Router);
   measurementService = inject(MeasurementService);
@@ -25,7 +35,12 @@ export class MeasurementSearchComponent {
 
   ngOnInit() {
     this.measurementService.getAllMeasurements().subscribe((measurements) => {
-      this.measurementList = measurements;
+      // Añadir la propiedad `checked` a cada medición
+      this.measurementList = measurements.map((measurement) => ({
+        ...measurement,
+        checked: false
+      }));
+      this.filteredMeasurements = [...this.measurementList];
     });
   }
 
@@ -48,14 +63,14 @@ export class MeasurementSearchComponent {
   currentPage = 1; // Página actual
 
   get totalPages() {
-    return Math.ceil(this.measurementList.length / this.itemsPerPage);
+    return Math.ceil(this.filteredMeasurements.length / this.itemsPerPage);
   }
 
   // Obtener los elementos de la página actual
   get paginatedItems() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    return this.measurementList.slice(start, end);
+    return this.filteredMeasurements.slice(start, end);
   }
 
   // Números de las páginas
@@ -81,4 +96,47 @@ export class MeasurementSearchComponent {
   showModal() {
     this.reportService.showModal();
   }
+
+  onSearchChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const trimmedValue = input.value.trim(); // Eliminar los espacios antes y después
+
+    this.searchQuery = trimmedValue;
+
+    // Limpiar el timeout anterior, si existe
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
+    // Establecer un nuevo timeout para ejecutar la búsqueda después de 500ms
+    this.timeout = setTimeout(() => {
+      this.filterMeasurements(trimmedValue);
+    }, 500);
+  }
+
+  filterMeasurements(query: string) {
+    if (!query) {
+      this.filteredMeasurements = [...this.measurementList];
+    } else {
+      const match = query.match(/^(\d{2})\/(\d{4})$/);
+      if (!match) {
+        this.filteredMeasurements = [];
+      } else {
+        const [, searchMonth, searchYear] = match.map(Number);
+
+        // Filtrar las mediciones por mes y año
+        this.filteredMeasurements = this.measurementList.filter((measurement) => {
+          const measurementDate = new Date(measurement.measurement_start);
+          const measurementMonth = measurementDate.getMonth() + 1;
+          const measurementYear = measurementDate.getFullYear();
+
+          return measurementMonth === searchMonth && measurementYear === searchYear;
+        });
+      }
+    }
+
+    // Resetear a la primera página después del filtrado
+    this.currentPage = 1;
+  }
+
 }

@@ -26,7 +26,7 @@ module.exports = {
     extend: {
       colors: {
         neutral: {
-          50: '#eeeff2',
+          50: '#f4f4f6',
           100: '#e8e9ed',
           200: '#c7cbd1',
           300: '#b6bac3',
