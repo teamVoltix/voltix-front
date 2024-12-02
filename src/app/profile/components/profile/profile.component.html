@@ -32,19 +32,20 @@
     <div class="info">
         <form [formGroup]="profileForm" (ngSubmit)="saveUser()">
             <div class="mb-6">
-                <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Apellido</label>
-                <input  formControlName='fullname' placeholder={{this.user.fullname}} type="text" id="fullname" #input1 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                [ngClass]="{
-                  'bg-white text-gray-900': !profileForm.get('fullname')?.disabled,
-                }">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Apellido</label>
+                <input placeholder={{this.user.fullname}} type="text"  #input1 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
             </div>
             <div class="mb-6">
-                <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
-                <input  formControlName='dni' placeholder={{this.user.dni}} type="text" id="dni" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                [ngClass]="{
-                  'bg-white text-gray-900': !profileForm.get('dni')?.disabled,
-                }">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
+                <input placeholder={{this.user.dni}} type="text" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
             </div>
+            <div class="mb-6">
+              <label for="birth_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
+              <input  formControlName='birth_date' placeholder={{this.user.birth_date}} type="text" id="birth_date" #input4 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              [ngClass]="{
+                'bg-white text-gray-900': !profileForm.get('birth_date')?.disabled,
+              }">
+          </div>
             <div class="mb-6">
                 <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Teléfono</label>
                 <input  formControlName='phone_number' placeholder={{getPhonePlaceholder()}} type="text" id="phone_number" #input3 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -60,32 +61,20 @@
                 }">
             </div>
             <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail</label>
-                <input  formControlName='email' placeholder={{this.user.email}} type="text" id="email" #input5 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                [ngClass]="{
-                    'border-red-500': email?.invalid,
-                    'border-green-500': profileForm.get('email')?.dirty && email?.valid,
-                    'bg-white text-gray-900': !profileForm.get('email')?.disabled,
-                }" >
-                <div *ngIf="email?.touched && email?.invalid" class="text-red-500 text-xs mt-2">
-                    <p *ngIf="email?.errors?.['pattern']">Email en formato inválido.</p>
-                </div>    
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail</label>
+                <input placeholder={{this.user.email}} type="text" #input5 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>  
             </div>
                 <div class="mb-6">
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input   placeholder='*********' type="password" id="password" #input6 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                [ngClass]="{
-                  'bg-white text-gray-900': !profileForm.get('password')?.disabled,
-                }">
+                <input placeholder='*********' type="password" id="password" #input6 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <button class="justify-end" (click) ="changepassword()"><img src="assets/back-button.svg" alt="change password" class="rotate-180 absolute end-0 "></button>
-                
             </div>
 
             <div class="button"> 
-                <button type="button" *ngIf="edit" class="editarDatos" (click)="enable('fullname', 'dni', 'phone_number', 'address', 'email')"
+                <button type="button" *ngIf="edit" class="editarDatos" (click)="enable('phone_number', 'address', 'birth_date')"
                 >Editar perfil</button>
                 
-                <button type="button" (click)="openModalProfile()" *ngIf="save" class="editarDatos" (click)="disable('fullname', 'dni', 'phone_number', 'address', 'email')"
+                <button type="button" (click)="openModalProfile()" *ngIf="save" class="editarDatos" (click)="disable('phone_number', 'address', 'birth_date')"
                 [disabled]="profileForm.invalid"
                 >Guardar</button>
                 
