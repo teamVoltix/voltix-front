@@ -10,9 +10,13 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { LoginResponse } from '../model/user';
 import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
+import {
+  DecodedAccessToken,
+  DecodedRefreshToken,
+  refreshingTokenResponse,
+} from '../model/token';
 @Injectable({
   providedIn: 'root',
 })
@@ -33,9 +37,6 @@ export class StateService {
   }
 
   setLogin(access_token: string, refresh_token: string) {
-    console.log('Setting login tokens');
-    console.log('Access Token:', access_token);
-    console.log('Refresh Token:', refresh_token);
     localStorage.setItem('access_token', JSON.stringify({ access_token }));
     localStorage.setItem('refresh_token', JSON.stringify({ refresh_token }));
     this.tokenSubject.next(access_token);
@@ -53,12 +54,24 @@ export class StateService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.getAccessToken();
-    if (token) {
-      const decoded: any = jwtDecode(token);
+    const accessToken = this.getAccessToken();
+    const refreshToken = this.getRefreshToken();
 
-      return decoded.exp * 1000 > Date.now();
+    if (accessToken && refreshToken) {
+      try {
+        const decodedAccessToken: DecodedAccessToken = jwtDecode(accessToken);
+        const decodedRefreshToken: DecodedRefreshToken =
+          jwtDecode(refreshToken);
+
+        const isAccessTokenValid = decodedAccessToken.exp * 1000 > Date.now();
+        const isRefreshTokenValid = decodedRefreshToken.exp * 1000 > Date.now();
+        return isAccessTokenValid && isRefreshTokenValid;
+      } catch (e) {
+        console.error('Error decoding tokens', e);
+        return false;
+      }
     }
+
     return false;
   }
 
@@ -68,7 +81,7 @@ export class StateService {
       this.router.navigate(['/home']);
     } else {
       console.log('No token found');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/inicio']);
     }
   }
 
@@ -82,39 +95,23 @@ export class StateService {
     this.router.navigate(['/login']);
   }
 
-  /*  refreshToken(): Observable<LoginResponse> {
-    const refresh = this.getRefreshToken();
-    if (!refresh) {
-      throw new Error('Refresh token is missing');
-    }
-
-    return this.http
-      .post<any>(this.url + 'api/auth/token/refresh/', { refresh }) // Enviar el refresh_token correctamente como 'refresh'
-      .pipe(
-        tap((tokens: any) => {
-          this.setLogin(tokens.access, tokens.refresh); // Usar los tokens de la respuesta
-        })
-      );
-  } */
-
-  refreshToken(): Observable<LoginResponse> {
+  refreshToken(): Observable<refreshingTokenResponse> {
     const refresh = this.getRefreshToken();
     if (!refresh) {
       throw new Error('Refresh token is missing');
     }
     return this.http
-      .post<any>(this.url + 'api/auth/token/refresh/', {
+      .post<refreshingTokenResponse>(this.url + 'api/auth/token/refresh/', {
         refresh_token: refresh,
       })
       .pipe(
-        tap((tokens: any) => {
-          console.log('Received tokens:', tokens);
+        tap((tokens: refreshingTokenResponse) => {
           this.setLogin(tokens.access_token, tokens.refresh_token);
         }),
         catchError((error) => {
           if (error.status === 401) {
             // Token expired or invalid, redirect to login
-            this.router.navigate(['/login']);
+            this.router.navigate(['/inicio']);
           }
           throw error;
         })
