@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,16 +18,10 @@ import {
 export class ForgotPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   showSuccessSection: boolean = false;
-  @Input() text = 'Enviar';
-  @Input() maxWidth = '';
-  @Input() disabled = false;
 
-  isLoggedIn = false;
-  private location = inject(Location);
   fb = inject(FormBuilder);
-  goBack(): void {
-    this.location.back();
-  }
+  router = inject(Router);
+
   ngOnInit(): void {
     this.buildForm();
   }
@@ -56,5 +51,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   get email() {
     return this.resetPasswordForm.get('email');
+  }
+
+  goToLogin(){
+    this.router.navigate(['/login']);
   }
 }

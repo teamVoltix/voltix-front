@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { InputPasswordComponent } from '../input-password/input-password.component';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-password',
@@ -22,17 +22,9 @@ import { InputPasswordComponent } from '../input-password/input-password.compone
 export class NewPasswordComponent {
   newPasswordForm!: FormGroup;
   showSuccessSection: boolean = false;
-  isLoggedIn = false;
-  @Input() text = 'Enviar';
-  @Input() maxWidth = '';
-  @Input() disabled = false;
 
-  private location = inject(Location);
-
-  goBack(): void {
-    this.location.back();
-  }
-  constructor(private fb: FormBuilder) {}
+  fb = inject(FormBuilder);
+  router = inject(Router);
 
   ngOnInit(): void {
     this.buildForm();
@@ -130,5 +122,14 @@ export class NewPasswordComponent {
       return { specialCharacterError: true };
     }
     return null;
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  goToForgotPassword(){
+    this.router.navigate(['/forgor-password']);
+
   }
 }
