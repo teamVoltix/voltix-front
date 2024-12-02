@@ -39,13 +39,21 @@
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
                 <input placeholder={{this.user.dni}} type="text" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
             </div>
-            <div class="mb-6">
-              <label for="birth_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
-              <input  formControlName='birth_date' placeholder={{this.user.birth_date}} type="text" id="birth_date" #input4 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              [ngClass]="{
-                'bg-white text-gray-900': !profileForm.get('birth_date')?.disabled,
-              }">
-          </div>
+            <ng-container *ngIf="!profileForm.get('birth_date')?.disabled; else disabledTemplate">
+              <input formControlName='birth_date' placeholder="{{this.formatDate(this.user.birth_date)}}" type="date" id="birth_date" 
+                class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('birth_date')?.disabled
+                }">
+            </ng-container>
+          
+            <ng-template #disabledTemplate>
+              <input formControlName='birth_date' placeholder="{{this.formatDate(this.user.birth_date)}}" type="text" id="birth_date" 
+                class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('birth_date')?.disabled
+                }">
+            </ng-template>
             <div class="mb-6">
                 <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Teléfono</label>
                 <input  formControlName='phone_number' placeholder={{getPhonePlaceholder()}} type="text" id="phone_number" #input3 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

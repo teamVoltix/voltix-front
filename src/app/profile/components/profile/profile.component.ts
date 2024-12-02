@@ -73,6 +73,9 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+  formatDate(date: string): string {
+    return new Date(date).toLocaleDateString();
+  }
 
   enable(phone_number: string, address: string, birth_date: string): void {
     this.profileForm.get(phone_number)?.enable();
