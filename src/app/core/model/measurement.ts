@@ -1,3 +1,10 @@
+export interface MeasurementsResponse {
+  measurements: Measurement[];
+  message: string;
+  status: string;
+  user: UserMeasurement;
+}
+
 export interface Measurement {
   id: number;
   comparison_status: string;
@@ -34,4 +41,10 @@ export interface PeakValley {
 export interface RecordedEvents {
   interrupciones: number;
   caidas_de_tension: number;
+}
+
+export interface UserMeasurement {
+  id: number;
+  name: string;
+  email: string;
 }

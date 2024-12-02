@@ -34,13 +34,23 @@ export class MeasurementSearchComponent {
   reportService = inject(ReportService);
 
   ngOnInit() {
-    this.measurementService.getAllMeasurements().subscribe((measurements) => {
-      // Añadir la propiedad `checked` a cada medición
-      this.measurementList = measurements.map((measurement) => ({
-        ...measurement,
-        checked: false
-      }));
-      this.filteredMeasurements = [...this.measurementList];
+    this.getMeasurements();
+  }
+
+  getMeasurements(): void {
+    this.measurementService.getMeasurements().subscribe({
+      next: (data) => {
+        this.measurementList = data.measurements;
+        this.measurementList = this.measurementList.map((measurement: Measurement) => ({
+          ...measurement,
+          checked: false,
+        }));
+
+        this.filteredMeasurements = [...this.measurementList];
+      },
+      error: (err) => {
+        console.error('Error al obtener las mediciones:', err);
+      },
     });
   }
 
@@ -89,14 +99,6 @@ export class MeasurementSearchComponent {
     this.currentPage = page;
   }
 
-  goToDetail(measurementId: number) {
-    this.router.navigate([`measurement-search/${measurementId.toString()}`]);
-  }
-
-  showModal() {
-    this.reportService.showModal();
-  }
-
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const trimmedValue = input.value.trim(); // Eliminar los espacios antes y después
@@ -125,18 +127,30 @@ export class MeasurementSearchComponent {
         const [, searchMonth, searchYear] = match.map(Number);
 
         // Filtrar las mediciones por mes y año
-        this.filteredMeasurements = this.measurementList.filter((measurement) => {
-          const measurementDate = new Date(measurement.measurement_start);
-          const measurementMonth = measurementDate.getMonth() + 1;
-          const measurementYear = measurementDate.getFullYear();
+        this.filteredMeasurements = this.measurementList.filter(
+          (measurement) => {
+            const measurementDate = new Date(measurement.measurement_start);
+            const measurementMonth = measurementDate.getMonth() + 1;
+            const measurementYear = measurementDate.getFullYear();
 
-          return measurementMonth === searchMonth && measurementYear === searchYear;
-        });
+            return (
+              measurementMonth === searchMonth && measurementYear === searchYear
+            );
+          }
+        );
       }
     }
 
     // Resetear a la primera página después del filtrado
     this.currentPage = 1;
+  }
+
+  goToDetail(measurementId: number) {
+    this.router.navigate([`measurement-search/${measurementId.toString()}`]);
+  }
+
+  showModal() {
+    this.reportService.showModal();
   }
 
 }
