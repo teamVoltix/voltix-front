@@ -4,7 +4,6 @@ import { AuthEntryComponent } from './auth/components/AuthEntry/AuthEntry.compon
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { ForgotPasswordComponent } from './auth/components/recover/forgot-password/forgot-password.component';
 import { NewPasswordComponent } from './auth/components/recover/new-password/new-password.component';
-import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { HomePageComponent } from './home-page/components/home-page.component';
 import { StartComponent } from './auth/components/start/start.component';
@@ -41,11 +40,6 @@ export const routes: Routes = [
     title: 'My Profile Page',
     component: ProfileComponent,
     canActivate: [authGuard],
-  },
-  {
-    path: 'profile-settings',
-    title: 'Profile Settings',
-    component: ProfileSettingsComponent,
   },
   {
     path: 'forgot-password',

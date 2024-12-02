@@ -37,9 +37,8 @@
     border-radius:100%;
     top: 159px;
     left: 20px;
-}
-.profilePhoto{
-    object-fit: cover;
+    /* background-image: url("../../../../assets/avatar-default.png"); */
+    object-fit: contain;
 }
 .modificar-pics{
     position:absolute;

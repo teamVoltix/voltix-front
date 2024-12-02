@@ -7,37 +7,57 @@
     
 <div *ngIf="profileInputs">
     <div class="sub-header-gris">
-    <img class="avatar" src="{{this.photo}}" alt="Avatar" height="128" width="128">
-    <button class="modificar-pics" (click)="editPhoto('photo')">
-        <div class="place-self-center">
-                  <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                    <img src="assets/icons/pics.svg" alt="">
-                  </label>
-                  <input id="photo" type="file" #input1 class="sr-only">
-                  <p class="pl-1"></p>                
-          </div>
-    </button>
-    </div>
+        
+            <img class="avatar" [src]="previewUrl" alt="Foto de perfil" alt="Avatar" height="128" width="128">
+            <button type="submit" class="modificar-pics" (click)="editPhoto()" >
+                
+                <div class="place-self-center">
+                      <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                        <img src="assets/icons/pics.svg" alt="">
+                      </label>
+                      <input id="photo" type="file" #input1 class="sr-only" (change)="onFileSelected($event)" >
+                      
+                      <p class="pl-1"></p>                
+              </div>
+            </button>
+            <!-- <button (click)="editPhoto()" [disabled]="!selectedFile" class="save-button">Guardar Foto
+            </button> -->
+            
+            
+        </div>
+            
     
 
 
     <div class="info">
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="profileForm" (ngSubmit)="saveUser()">
             <div class="mb-6">
                 <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y Apellido</label>
-                <input  formControlName='fullname' placeholder={{this.user.fullname}} type="text" id="fullname" #input1 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='fullname' placeholder={{this.user.fullname}} type="text" id="fullname" #input1 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('fullname')?.disabled,
+                }">
             </div>
             <div class="mb-6">
                 <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
-                <input  formControlName='dni' placeholder={{this.user.dni}} type="text" id="dni" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='dni' placeholder={{this.user.dni}} type="text" id="dni" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('dni')?.disabled,
+                }">
             </div>
             <div class="mb-6">
-                <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Teléfono</label>
-                <input  formControlName='phoneNumber' placeholder={{getPhonePlaceholder()}} type="text" id="phoneNumber" #input3 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Teléfono</label>
+                <input  formControlName='phone_number' placeholder={{getPhonePlaceholder()}} type="text" id="phone_number" #input3 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('phone_number')?.disabled,
+                }">
             </div>
             <div class="mb-6">
                 <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
-                <input  formControlName='address' placeholder={{getAdressPlaceholder()}} type="text" id="address" #input4 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input  formControlName='address' placeholder={{getAdressPlaceholder()}} type="text" id="address" #input4 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('address')?.disabled,
+                }">
             </div>
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail</label>
@@ -45,6 +65,7 @@
                 [ngClass]="{
                     'border-red-500': email?.invalid,
                     'border-green-500': profileForm.get('email')?.dirty && email?.valid,
+                    'bg-white text-gray-900': !profileForm.get('email')?.disabled,
                 }" >
                 <div *ngIf="email?.touched && email?.invalid" class="text-red-500 text-xs mt-2">
                     <p *ngIf="email?.errors?.['pattern']">Email en formato inválido.</p>
@@ -52,17 +73,40 @@
             </div>
                 <div class="mb-6">
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input  formControlName='password' placeholder='*********' type="password" id="password" #input6 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <button class="justify-end" (click) ="changepassword()"><img src="assets/back-button.svg" alt="change password"></button>
+                <input   placeholder='*********' type="password" id="password" #input6 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                [ngClass]="{
+                  'bg-white text-gray-900': !profileForm.get('password')?.disabled,
+                }">
+                <button class="justify-end" (click) ="changepassword()"><img src="assets/back-button.svg" alt="change password" class="rotate-180 absolute end-0 "></button>
                 
             </div>
 
             <div class="button"> 
-                <button type="button" *ngIf="edit" class="editarDatos" (click)="enable('fullname', 'dni', 'phoneNumber', 'address', 'email', 'password')">Editar perfil</button>
-                <button *ngIf="save" class="editarDatos" (click)="disable('fullname', 'dni', 'phoneNumber', 'address', 'email', 'password')"
-                (click) = "editUser ('fullname', 'dni', 'phoneNumber', 'address', 'email')" >Guardar</button>
-                <button class="cerrar" (click)="logout()">Cerrar Sesión</button>
+                <button type="button" *ngIf="edit" class="editarDatos" (click)="enable('fullname', 'dni', 'phone_number', 'address', 'email')"
+                >Editar perfil</button>
+                
+                <button type="button" (click)="openModalProfile()" *ngIf="save" class="editarDatos" (click)="disable('fullname', 'dni', 'phone_number', 'address', 'email')"
+                [disabled]="profileForm.invalid"
+                >Guardar</button>
+                
+                <button class="cerrar" (click)="logout()">Cerrar sesión</button>
             </div>
+<!-- Modal guardar datos -->
+            <div *ngIf="modalProfileOpen" class="fixed inset-0 flex items-center justify-center z-50">
+                <div class="bg-black bg-opacity-50 absolute inset-0" (click)="closeModalProfile()"></div>
+                <div class="relative w-96 bg-white rounded-lg shadow-lg">
+                  <div class="p-4">
+                    <h2 class="text-xl font-semibold">Editar Perfil</h2>
+                    <p class="mt-2">¿Estás seguro de que querer guardar los cambios de tu perfil?</p>
+                  </div>
+                  <div class="p-4 flex justify-end space-x-5">
+                    <button type="submit" (click) = "saveUser()" class="editarDatos">Confirmar</button>
+                    <button (click)="closeModalProfile()" class="bg-white border border-gray-200  rounded-lg px-4 py-2 rounded">
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
         </form>
     </div>
 </div>
@@ -71,23 +115,24 @@
 
 <div *ngIf="newPasswordPage" class="max-w-sm mx-auto text-justify ">
     <h2 class="text-lg font-bold mb-6 mt-6">Nueva contraseña</h2>
-    <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
         
         <div class="mb-6">
-            <label for="currentPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña actual</label>
+            <label for="currentPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white border-gray-300">Contraseña actual</label>
             <input  formControlName='currentPassword' type="text" id="currentPassword" name="currentPassword" #input6 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             [ngClass]="{
-                'border-red-500': passwordForm.get('currentPassword')?.touched, 
+                'border-gray-300': !passwordForm.get('currentPassword')?.touched || !passwordForm.get('currentPassword')?.invalid,
+                'border-red-500': passwordForm.get('currentPassword')?.touched && passwordForm.get('currentPassword')?.invalid, 
               }"
             required>
             <div>
-                <span *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched"
+                <span *ngIf="passwordForm.get('currentPassword')?.touched && !passwordForm.get('currentPassword')?.dirty"
                 class="text-red-500 text-sm mt-1">La contraseña actual es obligatoria.</span>
             </div>
               
         </div>
         <div class="mb-6">
-            <label for="newPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nueva contraseña</label>
+            <label for="newPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white border-gray-300">Nueva contraseña</label>
             <input  formControlName='newPassword' type="text" id="newPassword" #input6 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             [ngClass]="{
                 'border-gray-300': !passwordForm.get('newPassword')?.invalid || !passwordForm.get('newPassword')?.touched,
@@ -100,15 +145,55 @@
                 <span *ngIf="passwordForm.get('newPassword')?.errors?.['required'] && passwordForm.get('newPassword')?.touched" class="flex flex-col mt-2 text-xs text-red-500">
                     Por favor, introduce una nueva contraseña.
                 </span>
+                
                 <span>
-                    <i [ngClass]="(passwordForm.get('newPassword')?.errors?.['minlength'] || !passwordForm.get('newPassword')?.touched)? 'fa-regular fa-circle-xmark text-red-500' : 'fa-regular fa-circle-check text-green-500'"></i>
+                    <i [ngClass]="(passwordForm.get('newPassword')?.errors?.['minlength'] || !passwordForm.get('newPassword')?.dirty)? 'fa-regular fa-circle-xmark text-red-500' : 'fa-regular fa-circle-check text-green-500'"></i>
                     Mínimo 8 caracteres.
                 </span> 
                 <span>
-                    <i [ngClass]="(passwordForm.get('newPassword')?.errors?.['maxlength'] || !passwordForm.get('newPassword')?.touched)? 'fa-regular fa-circle-xmark text-red-500' : 'fa-regular fa-circle-check text-green-500'"></i>
+                    <i [ngClass]="(passwordForm.get('newPassword')?.errors?.['maxlength'] || !passwordForm.get('newPassword')?.dirty)? 'fa-regular fa-circle-xmark text-red-500' : 'fa-regular fa-circle-check text-green-500'"></i>
                     Máximo 15 caracteres.
                 </span>
                 <span>
-                    
+                    <i [ngClass]="(passwordForm.get('newPassword')?.errors?.['pattern'] || !passwordForm.get('newPassword')?.dirty)? 'fa-regular fa-circle-xmark text-red-500' : 'fa-regular fa-circle-check text-green-500'"></i>
+                    Mínimo 1 mayúscula y 1 minúscula, 1 número y 1 caracter especial.
                 </span>
+    
             </div> 
+            <div class="flex flex-col mt-2 mb-6 text-xs text-gray-600 dark:text-gray-400">
+                <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nueva contraseña</label>
+            <input  formControlName='confirmPassword' type="text" id="confirmPassword" #input6 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            [ngClass]="{
+                'border-gray-300': !passwordForm.get('confirmPassword')?.touched,
+                'border-green-600': !passwordForm.errors?.['passwordMismatch'] && passwordForm.get('confirmPassword')?.dirty ,
+                'border-red-500': passwordForm.errors?.['passwordMismatch'] && passwordForm.get('confirmPassword')?.errors?.['required'] ,  
+              }" >
+              <li *ngIf="passwordForm.errors?.['passwordMismatch']" class="flex flex-col mt-2 text-xs text-red-500">
+                Las contraseñas no coinciden.
+              </li>
+            <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['required'] && passwordForm.get('confirmPassword')?.touched" class="flex flex-col mt-2 text-xs text-red-500">
+                Por favor, introduce una contraseña.
+            </span>
+            </div>
+            <button type='button' class="editarDatos"
+            (click)="openModalPassword()"
+            [disabled]="passwordForm.invalid"[ngClass]="{'bg-gray-300 cursor-not-allowed': passwordForm.invalid}"
+            >Aceptar</button>
+        </div>
+        <!-- Modal confirmar datos -->
+        <div *ngIf="modalPasswordOpen" class="fixed inset-0 flex items-center justify-center z-50">
+            <div class="bg-black bg-opacity-50 absolute inset-0" (click)="closeModalPassword()"></div>
+            <div class="relative w-96 bg-white rounded-lg shadow-lg">
+              <div class="p-4">
+                <h2 class="text-xl font-semibold">Cambiar contraseña</h2>
+                <p class="mt-2">¿Estás seguro de querer cambiar tu contraseña actual</p>
+              </div>
+              <div class="p-4 flex justify-end space-x-5">
+                <button type="submit" (click)="savePassword(currentPassword, newPassword)" class="editarDatos">Confirmar</button>
+                <button (click)="closeModalPassword()" class="bg-white border border-blue-600  rounded-lg px-4 py-2 rounded">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+    </form>
