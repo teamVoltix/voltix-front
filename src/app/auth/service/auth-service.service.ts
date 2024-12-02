@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { StateService } from '../../core/state/state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,8 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private http = inject(HttpClient);
   private url = environment.API_URL;
+  private stateService = inject(StateService);
+
   /* auth/email-verification/request/ */
   /*
     {
@@ -23,18 +26,18 @@ export class AuthService {
    */
   /* tiene que enviar solo la email */
 
-/* auth/email-verification/validate/ */
+  /* auth/email-verification/validate/ */
   /* 
     {
       email: "string",
       code: "string"
     }
   */
-/* enviar email ty codigo por confirmacion */
+  /* enviar email ty codigo por confirmacion */
 
-/* auth/email-verification/register/ */
-/* campo de registracione normale */
-/* si la mail es verificada permite registrar */
+  /* auth/email-verification/register/ */
+  /* campo de registracione normale */
+  /* si la mail es verificada permite registrar */
 
   login(credentials: Credentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
@@ -55,15 +58,6 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    // improve more the logic for validation
-    
-    if (token) {
-      // implement the logic for see if token is expired
-
-      return true;
-    }
-    return false;
+    return this.stateService.isAuthenticated();
   }
-
 }

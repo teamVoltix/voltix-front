@@ -6,6 +6,7 @@ import { Navigation } from 'swiper/modules';
 import ApexCharts from 'apexcharts';
 import { HomepageService } from '../service/homepage.service';
 import { User } from '../../core/model/user';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-home-page',
@@ -33,6 +34,15 @@ export class HomePageComponent implements OnInit, AfterViewInit {
         console.error('Error al obtener el perfil de usuario', profileError);
       },
     });
+    const token = localStorage.getItem('accessToken') || '';
+if (token) {
+  try {
+    const decodedToken = jwtDecode(token);
+    console.log('Decoded Token:', decodedToken);
+  } catch (error) {
+    console.error('Error decoding token:', error);
+  }
+}
   }
 
   logout(): void {
