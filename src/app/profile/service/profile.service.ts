@@ -21,8 +21,8 @@ export class ProfileService {
   profile(): Observable<User> {
     return this.http.get<User>(this.url + 'api/profile/');
   }
-  editUser(userData: any): Observable<any>{
-    console.log('Usuario en servicio:' + userData)
+  editUser(userData: any): Observable<any> {
+    console.log('Usuario en servicio:', userData);
     return this.http.patch<any>(this.url + 'api/profile/update/', userData);
   }
   // editPassword(currentPassword:string, newPassword:string){
@@ -30,8 +30,6 @@ export class ProfileService {
   //   console.log('Contraseña en servicio' + editedPassword)
   //   return this.http.post<any>(this.url + 'api/auth/profile/change-password/');
   // }
-  
+
   // (this.url + 'api/profile/upload-photo/' + url)
-
 }
-

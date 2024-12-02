@@ -1,12 +1,11 @@
-import { Component, AfterViewInit, OnInit, inject } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { Component, AfterViewInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swiper from 'swiper/bundle';
 import { Navigation } from 'swiper/modules';
 import ApexCharts from 'apexcharts';
 import { HomepageService } from '../service/homepage.service';
 import { User } from '../../core/model/user';
-import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-home-page',
@@ -15,35 +14,20 @@ import { jwtDecode } from 'jwt-decode';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-export class HomePageComponent implements OnInit, AfterViewInit {
+export class HomePageComponent implements AfterViewInit {
   isDropdownOpen = false;
   private service = inject(HomepageService);
-  private location = inject(Location);
   private router = inject(Router);
 
-  user!: User;
-
- //esto carga los datos antes de la vista meter aqui el servicio de medicion para cargar los dato de medicion
-  ngOnInit(): void {
-    this.service.profile().subscribe({
-      next: (data) => {
-        console.log('Perfil de usuario', data);
-        this.user = data;
-      },
-      error: (profileError) => {
-        console.error('Error al obtener el perfil de usuario', profileError);
-      },
-    });
-    const token = localStorage.getItem('accessToken') || '';
-if (token) {
-  try {
-    const decodedToken = jwtDecode(token);
-    console.log('Decoded Token:', decodedToken);
-  } catch (error) {
-    console.error('Error decoding token:', error);
-  }
-}
-  }
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
 
   logout(): void {
     this.service.logout();
@@ -51,13 +35,11 @@ if (token) {
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
-    console.log('Dropdown state:', this.isDropdownOpen);
   }
 
   closeDropdown(): void {
-    this.isDropdownOpen = false; 
-    console.log('Dropdown closed');
-}
+    this.isDropdownOpen = false;
+  }
 
   goToProfile(): void {
     this.router.navigate(['/profile']);

@@ -1,9 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../core/model/user';
-import { RouterLink } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import {FormGroup, FormBuilder, Validators, ReactiveFormsModule,
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 
 @Component({
@@ -14,7 +17,16 @@ import {FormGroup, FormBuilder, Validators, ReactiveFormsModule,
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  user!: User;
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
+  originalUser!: User;
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
   public edit: Boolean = true;
@@ -35,15 +47,9 @@ export class ProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      fullname: [{ value: '', disabled: true }],
-      dni: { value: '', disabled: true },
       phone_number: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
-      email: [
-        { value: '', disabled: true },
-        [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
-      ],
-    
+      birth_date: [{ value: '', disabled: true }],
     });
 
     this.passwordForm = this.fb.group(
@@ -63,45 +69,27 @@ export class ProfileComponent implements OnInit {
         confirmPassword: ['', [Validators.required, this.passwordsMatch]],
       },
       {
-        validators: this.passwordsMatch, 
+        validators: this.passwordsMatch,
       }
     );
   }
-  
-  get email() {
-    return this.profileForm.get('email');
+  formatDate(date: string): string {
+    return new Date(date).toLocaleDateString();
   }
-  
-  enable(
-    fullname: string,
-    dni: string,
-    phone_number: string,
-    address: string,
-    email: string,
-  ): void {
-    this.profileForm.get(fullname)?.enable();
-    this.profileForm.get(dni)?.enable();
+
+  enable(phone_number: string, address: string, birth_date: string): void {
     this.profileForm.get(phone_number)?.enable();
     this.profileForm.get(address)?.enable();
-    this.profileForm.get(email)?.enable();
-
+    this.profileForm.get(birth_date)?.enable();
     this.edit = false;
     this.save = true;
   }
 
   //Deshabilitar campos y guardar datos
-  disable(
-    fullname: string,
-    dni: string,
-    phone_number: string,
-    address: string,
-    email: string,
-  ): void {
-    this.profileForm.get(fullname)?.disable();
-    this.profileForm.get(dni)?.disable();
+  disable(phone_number: string, address: string, birth_date: string): void {
     this.profileForm.get(phone_number)?.disable();
     this.profileForm.get(address)?.disable();
-    this.profileForm.get(email)?.disable();
+    this.profileForm.get(birth_date)?.disable();
 
     this.edit = true;
     this.save = false;
@@ -110,20 +98,53 @@ export class ProfileComponent implements OnInit {
     this.service.profile().subscribe((data) => {
       console.log(data);
       this.user = data;
+      this.originalUser = { ...data };
     });
   }
   saveUser() {
-    
-    this.service.editUser(this.profileForm.value).subscribe({
-        next:(response)=>{ 
-          console.log('Metodo' + response)
-        },      
-        error:(error)=>{
-        console.error('Error:', error )
+    const updatedUser: Partial<User> = {};
+
+    if (this.profileForm.get('phone_number')?.dirty) {
+      updatedUser.phone_number = this.profileForm.get('phone_number')?.value;
+    } else {
+      updatedUser.phone_number = this.originalUser.phone_number;
+    }
+
+    if (this.profileForm.get('address')?.dirty) {
+      updatedUser.address = this.profileForm.get('address')?.value;
+    } else {
+      updatedUser.address = this.originalUser.address;
+    }
+
+    if (this.profileForm.get('birth_date')?.dirty) {
+      updatedUser.birth_date = this.profileForm.get('birth_date')?.value;
+    } else {
+      updatedUser.birth_date = this.originalUser.birth_date;
+    }
+    this.service.editUser(updatedUser).subscribe({
+      next: () => {
+        this.closeModalProfile();
+        this.ngOnInit();
       },
-    })  
-}
-  
+      error: (error) => {
+        console.error('Error:', error);
+      },
+    });
+  }
+
+  //funcionale però envia todo los 3 datos a la vez
+  /* saveUser() {
+    this.service.editUser(this.profileForm.value).subscribe({
+      next: () => {
+        this.closeModalProfile();
+        this.ngOnInit();
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      },
+    });
+  } */
+
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
@@ -150,29 +171,29 @@ export class ProfileComponent implements OnInit {
   closeModalPassword() {
     this.modalPasswordOpen = false;
   }
+
   editPhoto(): void {
     if (this.selectedFile) {
       console.log('Foto guardada:', this.selectedFile.name);
       alert('Foto de perfil actualizada.');
     }
   }
+
   changepassword() {
     console.log('Pasamos a cambiar contraseña');
     this.newPasswordPage = true;
     this.profileInputs = false;
   }
+
   passwordsMatch(group: FormGroup) {
     const newPassword = group.get('newPassword')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     return newPassword === confirmPassword ? null : { passwordMismatch: true };
   }
 
-  savePassword(currentPassword:string, newPassword:string){
-    console.log(currentPassword, newPassword)
-    
-    
+  savePassword(currentPassword: string, newPassword: string) {
+    console.log(currentPassword, newPassword);
   }
-
 
   getPhonePlaceholder(): string {
     return this.user.phone_number ? this.user.phone_number : '';
@@ -197,7 +218,6 @@ export class ProfileComponent implements OnInit {
   // }
 
   onSubmitPassword() {
-    
     if (this.passwordForm.valid) {
       const { currentPassword, newPassword } = this.passwordForm.value;
       console.log('Contraseña actual:', currentPassword);
@@ -207,4 +227,3 @@ export class ProfileComponent implements OnInit {
     }
   }
 }
-
