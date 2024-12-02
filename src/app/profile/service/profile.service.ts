@@ -21,6 +21,17 @@ export class ProfileService {
   profile(): Observable<User> {
     return this.http.get<User>(this.url + 'api/profile/');
   }
-  // editUser(photo: String, fullname: String , birth_date: String, email: String, password: String, password2: String, address: String){
-  //   let editedUser = {photo, fullname, birth_date, email, password, address}
+  editUser(userData: any): Observable<any>{
+    console.log('Usuario en servicio:' + userData)
+    return this.http.patch<any>(this.url + 'api/profile/update/', userData);
+  }
+  // editPassword(currentPassword:string, newPassword:string){
+  //   let editedPassword ={currentPassword, newPassword}
+  //   console.log('Contraseña en servicio' + editedPassword)
+  //   return this.http.post<any>(this.url + 'api/auth/profile/change-password/');
+  // }
+  
+  // (this.url + 'api/profile/upload-photo/' + url)
+
 }
+
