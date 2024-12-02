@@ -11,8 +11,11 @@
         </div>
         <input type="text"
           class="bg-neutral-50 border !border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded block w-full ps-10 p-3"
-          placeholder="Buscar período (mes/año)" required />
+          placeholder="Buscar período (mes/año)" required  (input)="onSearchChange($event)" />
       </div>
+      @if(filteredMeasurements.length === 0 && searchQuery){
+        <p class="text-neutral-700 text-sm mb-3">No se ha encontrado la factura que buscas, intenta nuevamente.</p>
+      }
     </form>
 
     <section class="bg-white border border-neutral-100 rounded-lg p-4">
@@ -38,20 +41,20 @@
         </div>
         <div class="texts me-2">
           <h4 class="text-dark-text text-base font-medium">ID {{measurement.id}}</h4>
-          <p class="text-gray-500 text-sm">{{measurement.date}}</p>
+          <p class="text-gray-500 text-sm">{{measurement.measurement_start | date: 'dd/MM/YYYY'}}</p>
         </div>
 
         <div class="min-w-32 flex justify-center">
              <div [ngClass]="{
-          'bg-neutral-50': measurement.compare === 'Sin comparar',
-          'bg-success-50': measurement.compare === 'Sin discrepancias',
-          'bg-error-50': measurement.compare === 'Con discrepancias'
+          'bg-neutral-50': measurement.comparison_status === 'Sin comparar',
+          'bg-success-50': measurement.comparison_status === 'Sin discrepancia',
+          'bg-error-50': measurement.comparison_status === 'Con discrepancia'
         }" class="w-fit rounded py-[3px] px-[10px]">
           <p [ngClass]="{
-            'text-neutral-900': measurement.compare === 'Sin comparar',
-            'text-success-900': measurement.compare === 'Sin discrepancias',
-            'text-error-900': measurement.compare === 'Con discrepancias'
-          }" class="text-xs font-medium">{{measurement.compare}}</p>
+            'text-neutral-900': measurement.comparison_status === 'Sin comparar',
+            'text-success-900': measurement.comparison_status === 'Sin discrepancia',
+            'text-error-900': measurement.comparison_status === 'Con discrepancia'
+          }" class="text-xs font-medium">{{measurement.comparison_status}}</p>
         </div>
 
         </div>
