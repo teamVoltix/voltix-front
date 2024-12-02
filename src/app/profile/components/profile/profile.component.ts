@@ -3,11 +3,7 @@ import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../core/model/user';
 import { RouterLink } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  ReactiveFormsModule,
+import {FormGroup, FormBuilder, Validators, ReactiveFormsModule,
 } from '@angular/forms';
 
 @Component({
@@ -19,7 +15,6 @@ import {
 })
 export class ProfileComponent implements OnInit {
   user!: User;
-  /* public userTest: User; */
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
   public edit: Boolean = true;
@@ -29,6 +24,10 @@ export class ProfileComponent implements OnInit {
   public currentPassword: string = '';
   public newPassword: string = '';
   public confirmPassword: string = '';
+  public selectedFile: File | null = null;
+  public previewUrl: string | null = null;
+  public modalProfileOpen = false;
+  public modalPasswordOpen = false;
 
   private service = inject(ProfileService);
   private location = inject(Location);
@@ -36,7 +35,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      user: [],
       fullname: [{ value: '', disabled: true }],
       dni: { value: '', disabled: true },
       phone_number: [{ value: '', disabled: true }],
@@ -45,7 +43,7 @@ export class ProfileComponent implements OnInit {
         { value: '', disabled: true },
         [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
       ],
-      password: [{ value: '', disabled: true }, []],
+    
     });
 
     this.passwordForm = this.fb.group(
@@ -65,33 +63,21 @@ export class ProfileComponent implements OnInit {
         confirmPassword: ['', [Validators.required, this.passwordsMatch]],
       },
       {
-        validators: this.passwordsMatch,
+        validators: this.passwordsMatch, 
       }
     );
   }
-
-  passwordsMatch(group: FormGroup) {
-    const newPassword = group.get('newPassword')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return newPassword === confirmPassword ? null : { passwordMismatch: true };
-  }
+  
   get email() {
     return this.profileForm.get('email');
   }
-
-  changepassword() {
-    console.log('Pasamos a cambiar contraseña');
-    this.newPasswordPage = true;
-    this.profileInputs = false;
-  }
-
+  
   enable(
     fullname: string,
     dni: string,
     phone_number: string,
     address: string,
     email: string,
-    password: string
   ): void {
     this.profileForm.get(fullname)?.enable();
     this.profileForm.get(dni)?.enable();
@@ -110,7 +96,6 @@ export class ProfileComponent implements OnInit {
     phone_number: string,
     address: string,
     email: string,
-    password: string
   ): void {
     this.profileForm.get(fullname)?.disable();
     this.profileForm.get(dni)?.disable();
@@ -121,27 +106,73 @@ export class ProfileComponent implements OnInit {
     this.edit = true;
     this.save = false;
   }
-
-  editUser(
-    fullname: string,
-    dni: string,
-    phone_number: string,
-    address: string,
-    email: string
-  ) {
-    console.log(fullname, dni, phone_number, address, email);
-  }
-
-  editPhoto(photo: string) {
-    console.log(photo);
-  }
-
   ngOnInit(): void {
     this.service.profile().subscribe((data) => {
       console.log(data);
       this.user = data;
     });
   }
+  saveUser() {
+    
+    this.service.editUser(this.profileForm.value).subscribe({
+        next:(response)=>{ 
+          console.log('Metodo' + response)
+        },      
+        error:(error)=>{
+        console.error('Error:', error )
+      },
+    })  
+}
+  
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+
+    if (fileInput.files && fileInput.files[0]) {
+      this.selectedFile = fileInput.files[0];
+
+      // Crear la vista previa
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.previewUrl = e.target?.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+  openModalProfile() {
+    this.modalProfileOpen = true;
+  }
+  closeModalProfile() {
+    this.modalProfileOpen = false;
+  }
+  openModalPassword() {
+    this.modalPasswordOpen = true;
+  }
+  closeModalPassword() {
+    this.modalPasswordOpen = false;
+  }
+  editPhoto(): void {
+    if (this.selectedFile) {
+      console.log('Foto guardada:', this.selectedFile.name);
+      alert('Foto de perfil actualizada.');
+    }
+  }
+  changepassword() {
+    console.log('Pasamos a cambiar contraseña');
+    this.newPasswordPage = true;
+    this.profileInputs = false;
+  }
+  passwordsMatch(group: FormGroup) {
+    const newPassword = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return newPassword === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+  savePassword(currentPassword:string, newPassword:string){
+    console.log(currentPassword, newPassword)
+    
+    
+  }
+
 
   getPhonePlaceholder(): string {
     return this.user.phone_number ? this.user.phone_number : '';
@@ -156,7 +187,17 @@ export class ProfileComponent implements OnInit {
     this.location.back();
   }
 
-  onSubmit() {
+  // onSubmitProfile() {
+  //   if(this.profileForm.valid){
+  //     const{fullname, dni, phone_number, address, email} = this.profileForm.value;
+  //     console.log ('OnSubmit:', fullname, dni, phone_number, address, email)
+  //   } else {
+  //     console.log('Formulario inválido');
+  //   }
+  // }
+
+  onSubmitPassword() {
+    
     if (this.passwordForm.valid) {
       const { currentPassword, newPassword } = this.passwordForm.value;
       console.log('Contraseña actual:', currentPassword);
@@ -166,3 +207,4 @@ export class ProfileComponent implements OnInit {
     }
   }
 }
+
