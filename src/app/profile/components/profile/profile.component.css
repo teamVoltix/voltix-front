@@ -33,11 +33,12 @@
 }
 .avatar{
     position:absolute;
+    min-width: 128px;
+    height: 128px;
     border: white 3px groove;
     border-radius:100%;
-    top: 159px;
-    left: 20px;
-    /* background-image: url("../../../../assets/avatar-default.png"); */
+    top: -80px;
+    left: -80px;
     object-fit: contain;
 }
 .modificar-pics{

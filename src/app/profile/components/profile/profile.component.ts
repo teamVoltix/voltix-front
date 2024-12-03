@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
   originalUser!: User;
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
+  public photoForm: FormGroup;
   public edit: Boolean = true;
   public save: Boolean = false;
   public newPasswordPage: Boolean = false;
@@ -40,10 +41,10 @@ export class ProfileComponent implements OnInit {
   public previewUrl: string | null = null;
   public modalProfileOpen = false;
   public modalPasswordOpen = false;
+  file: File | null = null;
 
   private service = inject(ProfileService);
   private location = inject(Location);
-  photo = 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg';
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
@@ -72,6 +73,10 @@ export class ProfileComponent implements OnInit {
         validators: this.passwordsMatch,
       }
     );
+
+    this.photoForm = this.fb.group({
+      photo: [null],
+    });
   }
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString();
@@ -147,18 +152,28 @@ export class ProfileComponent implements OnInit {
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
-
     if (fileInput.files && fileInput.files[0]) {
-      this.selectedFile = fileInput.files[0];
-
-      // Crear la vista previa
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.previewUrl = e.target?.result as string;
-      };
-      reader.readAsDataURL(this.selectedFile);
+      const file = fileInput.files[0];
+      this.photoForm.patchValue({ photo: file });
+      this.uploadPhoto(file);
     }
   }
+
+  uploadPhoto(file: File): void {
+    this.service.uploadPhoto(file).subscribe(
+      (response) => {
+        if (response.photo_url) {
+          this.user.photo = response.photo_url; // Aggiorna l'immagine dell'utente
+        } else {
+          console.log('Upload fallito');
+        }
+      },
+      (error) => {
+        console.log("Errore durante l'upload", error);
+      }
+    );
+  }
+
   openModalProfile() {
     this.modalProfileOpen = true;
   }
@@ -170,13 +185,6 @@ export class ProfileComponent implements OnInit {
   }
   closeModalPassword() {
     this.modalPasswordOpen = false;
-  }
-
-  editPhoto(): void {
-    if (this.selectedFile) {
-      console.log('Foto guardada:', this.selectedFile.name);
-      alert('Foto de perfil actualizada.');
-    }
   }
 
   changepassword() {
@@ -226,4 +234,21 @@ export class ProfileComponent implements OnInit {
       console.log('Formulario inválido');
     }
   }
+  /* onSubmit() {
+    if (this.file) {
+      this.service.uploadPhoto(this.file).subscribe(
+        (response) => {
+          if (response.success) {
+            console.log('URL della foto di profilo:', response.imageUrl);
+            // Qui puoi aggiornare il profilo dell'utente con la URL della foto
+          } else {
+            console.error("Errore durante il caricamento dell'immagine");
+          }
+        },
+        (error) => {
+          console.error('Errore durante la richiesta:', error);
+        }
+      );
+    }
+  } */
 }
