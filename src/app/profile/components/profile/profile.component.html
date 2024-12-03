@@ -8,7 +8,7 @@
 <div *ngIf="profileInputs">
   <div class="sub-header-gris">
 <div class="modificar-pics">
-    <img class="avatar" [src]="user.photo" alt="Foto de perfil" height="128" width="128">
+    <img class="avatar" [src]="user.photo ? user.photo : 'assets/avatar-default.png'" alt="Foto de perfil" height="128" width="128">
     <form [formGroup]="photoForm">
       <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
         <img src="assets/icons/pics.svg" alt="Seleziona foto" >
