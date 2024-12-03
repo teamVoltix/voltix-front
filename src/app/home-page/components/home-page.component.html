@@ -30,20 +30,21 @@
     <!-- Bienvenida -->
     <section class="section">
       <h2 class="text-xl font-medium mb-2">¡Hola {{ user.fullname }}!</h2>
-
+    
       <div class="containerConsumo">
         <div class="flex items-center">
           <img src="/assets/icons/homePageGraphicIco.svg" alt="Graph Ico" class="graphIco" />
           <div class="ml-4">
               <p class="text-xs text-gray-500 mb-1">Tu último consumo</p>
-              <h3 class="text-xl font-semibold mb-1">266 kWh</h3>
-              <p class="text-gray-500">Octubre</p>
+              <h3 class="text-xl font-semibold mb-1">{{ latestInvoiceKWh }} kWh</h3>
+              <p class="text-gray-500">{{ latestInvoiceMonth }}</p>
           </div>
+        </div>
+        <div class="consumo-mes flex items-center">
+          <p [ngClass]="changeColor" class="text-xs">{{ percentChange.toFixed(2) }}%</p>
+          <img *ngIf="changeDirection === 'up'" src="/assets/icons/arrowUpGreen.svg" alt="Arrow up" class="w-3 h-4" />
+          <img *ngIf="changeDirection === 'down'" src="/assets/icons/arrowDownRed.svg" alt="Arrow down" class="w-3 h-4" />
       </div>
-      <div class="consumo-mes flex items-center">
-        <p class="text-green-600 text-xs">0.43%</p>
-        <img src="/assets/icons/arrowUpGreen.svg" alt="Arrow up" class="w-3 h-4" />
-    </div>
       </div>
 
       <!-- Botones -->
