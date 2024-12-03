@@ -2,12 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../core/model/user';
 import { CommonModule, Location } from '@angular/common';
+import Swal from 'sweetalert2';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +28,7 @@ export class ProfileComponent implements OnInit {
     fullname: '',
     dni: '',
   };
+  
   originalUser!: User;
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
@@ -33,9 +36,9 @@ export class ProfileComponent implements OnInit {
   public save: Boolean = false;
   public newPasswordPage: Boolean = false;
   public profileInputs: Boolean = true;
-  public currentPassword: string = '';
-  public newPassword: string = '';
-  public confirmPassword: string = '';
+  public current_password: string = '';
+  public new_password: string = '';
+  public confirm_new_password: string = '';
   public selectedFile: File | null = null;
   public previewUrl: string | null = null;
   public modalProfileOpen = false;
@@ -54,8 +57,8 @@ export class ProfileComponent implements OnInit {
 
     this.passwordForm = this.fb.group(
       {
-        currentPassword: ['', [Validators.required]],
-        newPassword: [
+        current_password: ['', [Validators.required]],
+        new_password: [
           '',
           [
             Validators.required,
@@ -66,7 +69,7 @@ export class ProfileComponent implements OnInit {
             ),
           ],
         ],
-        confirmPassword: ['', [Validators.required, this.passwordsMatch]],
+        confirm_new_password: ['', [Validators.required, this.passwordsMatch]],
       },
       {
         validators: this.passwordsMatch,
@@ -132,6 +135,32 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    if (this.passwordForm.valid) {
+      const { current_password, new_password, confirm_new_password } = this.passwordForm.value;
+      console.log('Componente:', this.passwordForm.value);
+      
+      this.service.editPassword(current_password, new_password, confirm_new_password).subscribe({
+          next: (res) => 
+          (console.log('Respuesta del servicio:', res),    
+          this.showSuccessAlert()),
+          error: (error) => {
+            (console.error('Error:', error),
+            this.showErrorAlert())
+          },
+          
+        });
+        this.closeModalPassword();
+        this.profileInputs = true;
+        this.newPasswordPage = false;
+    }
+    else{
+      console.error('Inválido')
+      
+      
+    }
+  }
+ 
   //funcionale però envia todo los 3 datos a la vez
   /* saveUser() {
     this.service.editUser(this.profileForm.value).subscribe({
@@ -191,9 +220,8 @@ export class ProfileComponent implements OnInit {
     return newPassword === confirmPassword ? null : { passwordMismatch: true };
   }
 
-  savePassword(currentPassword: string, newPassword: string) {
-    console.log(currentPassword, newPassword);
-  }
+  
+
 
   getPhonePlaceholder(): string {
     return this.user.phone_number ? this.user.phone_number : '';
@@ -208,22 +236,26 @@ export class ProfileComponent implements OnInit {
     this.location.back();
   }
 
-  // onSubmitProfile() {
-  //   if(this.profileForm.valid){
-  //     const{fullname, dni, phone_number, address, email} = this.profileForm.value;
-  //     console.log ('OnSubmit:', fullname, dni, phone_number, address, email)
-  //   } else {
-  //     console.log('Formulario inválido');
-  //   }
-  // }
-
-  onSubmitPassword() {
-    if (this.passwordForm.valid) {
-      const { currentPassword, newPassword } = this.passwordForm.value;
-      console.log('Contraseña actual:', currentPassword);
-      console.log('Nueva contraseña:', newPassword);
-    } else {
-      console.log('Formulario inválido');
-    }
+  showSuccessAlert() {
+    Swal.fire({
+      title: 'Actualizado correctamente',
+      text: 'Actualiza el sitio para ver los cambios.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar', 
+      position: "top-end",
+      width: 500,
+      
+    });
   }
+  showErrorAlert() {
+    Swal.fire({
+      title: 'La contraseña actual no coincide',
+      text: 'Actualiza el sitio para ver los cambios.',
+      icon: 'error',
+      confirmButtonText: 'Aceptar', 
+      position: "top-end",
+      width: 600,
+    });
+  }
+  
 }
