@@ -6,25 +6,17 @@
     </div>
     
 <div *ngIf="profileInputs">
-    <div class="sub-header-gris">
-        
-            <img class="avatar" [src]="previewUrl" alt="Foto de perfil" alt="Avatar" height="128" width="128">
-            <button type="submit" class="modificar-pics" (click)="editPhoto()" >
-                
-                <div class="place-self-center">
-                      <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                        <img src="assets/icons/pics.svg" alt="">
-                      </label>
-                      <input id="photo" type="file" #input1 class="sr-only" (change)="onFileSelected($event)" >
-                      
-                      <p class="pl-1"></p>                
-              </div>
-            </button>
-            <!-- <button (click)="editPhoto()" [disabled]="!selectedFile" class="save-button">Guardar Foto
-            </button> -->
-            
-            
-        </div>
+  <div class="sub-header-gris">
+<div class="modificar-pics">
+    <img class="avatar" [src]="user.photo" alt="Foto de perfil" height="128" width="128">
+    <form [formGroup]="photoForm">
+      <label for="photo" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+        <img src="assets/icons/pics.svg" alt="Seleziona foto" >
+        <input id="photo" type="file" class="sr-only" (change)="onFileSelected($event)">
+      </label>
+    </form>
+</div>
+  </div>
             
     
 
@@ -39,16 +31,17 @@
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIF/NIE</label>
                 <input placeholder={{this.user.dni}} type="text" #input2 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
             </div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de nacimiento</label>
-            <ng-container *ngIf="!profileForm.get('birth_date')?.disabled; else disabledTemplate"> 
+
+            <ng-container *ngIf="!profileForm.get('birth_date')?.disabled; else disabledTemplate">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha nacimiento</label>
               <input formControlName='birth_date' placeholder="{{this.formatDate(this.user.birth_date)}}" type="date" id="birth_date" 
                 class=" bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 [ngClass]="{
                   'bg-white text-gray-900': !profileForm.get('birth_date')?.disabled
                 }">
             </ng-container>
-            <div class="mb-6">
-            <ng-template #disabledTemplate>
+            <ng-template #disabledTemplate class="mb-6">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha nacimiento</label>
               <input formControlName='birth_date' placeholder="{{this.formatDate(this.user.birth_date)}}" type="text" id="birth_date" 
                 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 [ngClass]="{
