@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
 import { Router } from '@angular/router';
+import { InvoiceService } from '../../service/invoice.service';
 
 @Component({
   selector: 'app-invoice-listing',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./invoice-listing.component.css'],
 })
 export class InvoiceListingComponent {
+  
+  selectedInvoiceId: string | null = null;
   // Lista estática de facturas
 
   invoices = [
@@ -92,7 +95,8 @@ export class InvoiceListingComponent {
   }
 
   // Método para visualizar los detalles de una factura
-  viewInvoice(id: string) {
+  viewInvoice(id: string):void {
+    this.selectedInvoiceId = id;
     console.log(`Ver detalles de la factura con ID: ${id}`);
   }
 
