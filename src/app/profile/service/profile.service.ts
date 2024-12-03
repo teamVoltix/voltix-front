@@ -25,11 +25,11 @@ export class ProfileService {
     console.log('Usuario en servicio:', userData);
     return this.http.patch<any>(this.url + 'api/profile/update/', userData);
   }
-  // editPassword(currentPassword:string, newPassword:string){
-  //   let editedPassword ={currentPassword, newPassword}
-  //   console.log('Contraseña en servicio' + editedPassword)
-  //   return this.http.post<any>(this.url + 'api/auth/profile/change-password/');
-  // }
+  editPassword(old_password:string, new_password:string, confirm_password:string): Observable<any>{
+    let editedPassword ={old_password, new_password, confirm_password}
+    console.log('Contraseña en servicio' + editedPassword)
+    return this.http.post(this.url + 'api/auth/profile/change-password/', {old_password,new_password,confirm_password});
+  }
 
   //uploadphoto
   uploadPhoto(file: File): Observable<{ photo_url: string }> {
