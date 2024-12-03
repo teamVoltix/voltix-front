@@ -1,6 +1,8 @@
+<div class="factura">
+
 <app-invoice-header></app-invoice-header>
 
-<div class="w-full factura">
+<div class="w-full ">
     <!-- Header de Facturas -->
 
     <!-- Sección de Facturas -->
@@ -8,19 +10,23 @@
         <h2 class="text-dark-text text-2xl font-semibold">Facturas</h2>
 
         <!-- Campo de búsqueda -->
-        <form action="">
+        <form (ngSubmit)="searchInvoice()">
             <div class="relative w-full mt-4 mb-3">
-                <div class="absolute inset-y-0 start-1 flex items-center ps-3 pointer-events-none">
-                    <img src="/assets/icons/search.svg" alt="icono de lupa" height="16px" width="16px">
-                </div>
-                <input type="text"
-                    class="bg-neutral-50 border border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded-lg block w-full ps-10 p-3"
-                    placeholder="Buscar por ID o período" required />
+              <div class="absolute inset-y-0 start-1 flex items-center ps-3 pointer-events-none">
+                <img src="/assets/icons/search.svg" alt="icono de lupa" height="16px" width="16px">
+              </div>
+              <input type="text" 
+                     [(ngModel)]="searchTerm" 
+                     name="searchTerm" 
+                     class="bg-neutral-50 border border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded-lg block w-full ps-10 p-3"
+                     placeholder="Buscar por ID de factura" 
+                     required />
             </div>
-        </form> 
-
-
-        <!-- Listado de Facturas -->
+        </form>
+        
+        <p *ngIf="searchMessage" class=" text-sm mt-2">{{ searchMessage }}</p>
+        
+        <!-- Listado de facturas filtradas -->
         <section class="bg-white border border-neutral-100 rounded-lg p-4">
             <section class="flex items-center justify-between bg-neutral-100 px-4 py-[10px] mb-3 mark">
                 <input id="selectAll" type="checkbox" value="" (change)="selectAll()"
@@ -31,26 +37,24 @@
                 </div>
             </section>
 
-
-
-            <!-- Facturas individuales -->
-            <section *ngFor="let invoice of paginatedInvoices; trackBy: trackById"
-                class="flex items-center justify-between py-2 px-4 mb-[10px] rounded"
-                [ngClass]="{'selected-invoice': invoice.selected}">
-                <div class="flex items-center">
-                    <input [id]="invoice.id" type="checkbox" [checked]="invoice.selected"
-                        (change)="toggleSelection(invoice)"
-                        class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2"
-                        placeholder="Facturas" />
-                </div>
-                <div class="texts me-2">
-                    <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
-                    <p class="text-gray-500 text-sm">{{invoice.date}}</p>
-                </div>
-                <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="detalle factura"
+            <section *ngFor="let invoice of paginatedInvoices" 
+                     class="flex items-center justify-between py-2 px-4 mb-[10px] rounded">
+              <div class="flex items-center">
+                <input [id]="invoice.id" type="checkbox" placeholder="invoice"
+                       [checked]="invoice.selected"
+                       (change)="toggleSelection(invoice)"
+                       class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2" />
+              </div>
+              <div class="texts me-2">
+                <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
+                <p class="text-gray-500 text-sm">{{invoice.billing_period_start}} - {{invoice.billing_period_end}}</p>
+              </div>
+              <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="detalle factura"
                     (click)="viewInvoice(invoice.id)" />
+
             </section>
         </section>
+        
 
         <!-- Paginador -->
         <nav class="mt-3">
@@ -102,4 +106,5 @@
         <input type="file" id="fileUploader" (change)="handleFileUpload($event)" accept=".pdf" multiple hidden
             placeholder="Añadir archivo">
     </section>
+</div>
 </div>

@@ -1,25 +1,26 @@
+
+
+
 input[type="text"] {
     border: 1px solid #e5e5e5; /* Misma propiedad que el listado */
-}
-
-.factura {
-    min-height: 100vh; /* Ocupa al menos el 100% de la altura de la pantalla */
+    
+    
 }
 
 .factura-section {
     background-color: #f4f4f6; /* Color de fondo */
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Permite que esta sección crezca para llenar el espacio disponible */
+    
+    
+    
 }
 
 .mark {
     background-color: #e8e9ed;
     border-radius: 8px;
 }
-
 .selected-invoice {
     background-color: #f0f7ff; /* Fondo para facturas seleccionadas */
+   
     transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
@@ -43,8 +44,3 @@ input[type="text"] {
     background-color: #dcdce0; /* Fondo ligeramente más oscuro al pasar el cursor */
 }
 
-@media (min-width: 768px) {
-    .factura-section {
-        padding: 20px; /* Ajusta el padding en pantallas más grandes */
-    }
-}
