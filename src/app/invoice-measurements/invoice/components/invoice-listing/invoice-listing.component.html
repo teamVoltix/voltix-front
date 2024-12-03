@@ -17,14 +17,15 @@
                     class="bg-neutral-50 border border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded-lg block w-full ps-10 p-3"
                     placeholder="Buscar por ID o período" required />
             </div>
-        </form>
-       
+        </form> 
+
 
         <!-- Listado de Facturas -->
         <section class="bg-white border border-neutral-100 rounded-lg p-4">
             <section class="flex items-center justify-between bg-neutral-100 px-4 py-[10px] mb-3 mark">
                 <input id="selectAll" type="checkbox" value="" (change)="selectAll()"
-                    class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0" />
+                    class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0"
+                    placeholder="listado" />
                 <div *ngIf="hasSelectedInvoices()" class="flex items-center gap-2" (click)="deleteSelectedInvoices()">
                     <img src="/assets/icons/trash.svg" alt="icono para borrar">
                 </div>
@@ -39,7 +40,8 @@
                 <div class="flex items-center">
                     <input [id]="invoice.id" type="checkbox" [checked]="invoice.selected"
                         (change)="toggleSelection(invoice)"
-                        class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2" />
+                        class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2"
+                        placeholder="Facturas" />
                 </div>
                 <div class="texts me-2">
                     <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
@@ -97,7 +99,7 @@
         </button>
 
         <!-- Input oculto para cargar archivos -->
-        <input type="file" id="fileUploader" (change)="handleFileUpload($event)" accept=".pdf" multiple
-            style="display: none;">
+        <input type="file" id="fileUploader" (change)="handleFileUpload($event)" accept=".pdf" multiple hidden
+            placeholder="Añadir archivo">
     </section>
 </div>
