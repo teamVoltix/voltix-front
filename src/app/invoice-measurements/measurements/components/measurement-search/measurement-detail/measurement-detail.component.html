@@ -6,12 +6,12 @@
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-dark-text text-lg font-semibold">Medición #{{measurementId}}</h2>
         <div [ngClass]="{
-          'bg-neutral-50': measurement?.comparison_status === 'Sin comparar',
+          'bg-neutral-50': measurement?.comparison_status === 'Sin comparacion',
           'bg-success-50': measurement?.comparison_status === 'Sin discrepancia',
           'bg-error-50': measurement?.comparison_status === 'Con discrepancia'
         }" class="rounded py-[3px] px-[10px]">
           <p [ngClass]="{
-            'text-neutral-900': measurement?.comparison_status === 'Sin comparar',
+            'text-neutral-900': measurement?.comparison_status === 'Sin comparacion',
             'text-success-900': measurement?.comparison_status === 'Sin discrepancia',
             'text-error-900': measurement?.comparison_status === 'Con discrepancia'
           }" class="text-xs font-medium">{{measurement?.comparison_status}}</p>

@@ -48,7 +48,8 @@ export class AuthService {
 
   register(userData: RegisterUser): Observable<RegisterUser> {
     return this.http.post<RegisterUser>(
-      this.url + 'api/auth/register/',
+      /* this.url + 'api/auth/register/', */
+      this.url + 'api/auth/email-verification/register/',
       userData
     );
   }
@@ -59,5 +60,24 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.stateService.isAuthenticated();
+  }
+
+  sendVerificationCode(email: string) {
+    return this.http.post<any>(
+      this.url + 'api/auth/email-verification/request/',
+      {
+        email,
+      }
+    );
+  }
+
+  verifyCode(email: string, code: string) {
+    return this.http.post<any>(
+      this.url + 'api/auth/email-verification/validate/',
+      {
+        email,
+        code,
+      }
+    );
   }
 }

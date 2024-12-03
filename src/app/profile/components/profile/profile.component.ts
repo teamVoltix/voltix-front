@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../core/model/user';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import {
   FormGroup,
@@ -9,7 +9,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -28,10 +28,11 @@ export class ProfileComponent implements OnInit {
     fullname: '',
     dni: '',
   };
-  
+
   originalUser!: User;
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
+  public photoForm: FormGroup;
   public edit: Boolean = true;
   public save: Boolean = false;
   public newPasswordPage: Boolean = false;
@@ -43,10 +44,10 @@ export class ProfileComponent implements OnInit {
   public previewUrl: string | null = null;
   public modalProfileOpen = false;
   public modalPasswordOpen = false;
+  file: File | null = null;
 
   private service = inject(ProfileService);
-  private location = inject(Location);
-  photo = 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg';
+  private router = inject(Router);
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
@@ -75,6 +76,10 @@ export class ProfileComponent implements OnInit {
         validators: this.passwordsMatch,
       }
     );
+
+    this.photoForm = this.fb.group({
+      photo: [null],
+    });
   }
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString();
@@ -137,57 +142,53 @@ export class ProfileComponent implements OnInit {
 
   onSubmit() {
     if (this.passwordForm.valid) {
-      const { current_password, new_password, confirm_new_password } = this.passwordForm.value;
+      const { current_password, new_password, confirm_new_password } =
+        this.passwordForm.value;
       console.log('Componente:', this.passwordForm.value);
-      
-      this.service.editPassword(current_password, new_password, confirm_new_password).subscribe({
-          next: (res) => 
-          (console.log('Respuesta del servicio:', res),    
-          this.showSuccessAlert()),
+
+      this.service
+        .editPassword(current_password, new_password, confirm_new_password)
+        .subscribe({
+          next: (res) => (
+            console.log('Respuesta del servicio:', res), this.showSuccessAlert()
+          ),
           error: (error) => {
-            (console.error('Error:', error),
-            this.showErrorAlert())
+            console.error('Error:', error), this.showErrorAlert();
           },
-          
         });
-        this.closeModalPassword();
-        this.profileInputs = true;
-        this.newPasswordPage = false;
-    }
-    else{
-      console.error('Inválido')
-      
-      
+      this.closeModalPassword();
+      this.profileInputs = true;
+      this.newPasswordPage = false;
+    } else {
+      console.error('Inválido');
     }
   }
- 
-  //funcionale però envia todo los 3 datos a la vez
-  /* saveUser() {
-    this.service.editUser(this.profileForm.value).subscribe({
-      next: () => {
-        this.closeModalProfile();
-        this.ngOnInit();
-      },
-      error: (error) => {
-        console.error('Error:', error);
-      },
-    });
-  } */
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
-
     if (fileInput.files && fileInput.files[0]) {
-      this.selectedFile = fileInput.files[0];
-
-      // Crear la vista previa
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.previewUrl = e.target?.result as string;
-      };
-      reader.readAsDataURL(this.selectedFile);
+      const file = fileInput.files[0];
+      this.photoForm.patchValue({ photo: file });
+      this.uploadPhoto(file);
     }
   }
+
+  uploadPhoto(file: File): void {
+    this.service.uploadPhoto(file).subscribe(
+      (response) => {
+        if (response.photo_url) {
+          this.user.photo = response.photo_url; // Aggiorna l'immagine dell'utente
+        } else {
+          console.log('Upload fallito');
+        }
+      },
+      (error) => {
+        console.log("Errore durante l'upload", error);
+        this.showErrorPhotoAlert();
+      }
+    );
+  }
+
   openModalProfile() {
     this.modalProfileOpen = true;
   }
@@ -199,13 +200,6 @@ export class ProfileComponent implements OnInit {
   }
   closeModalPassword() {
     this.modalPasswordOpen = false;
-  }
-
-  editPhoto(): void {
-    if (this.selectedFile) {
-      console.log('Foto guardada:', this.selectedFile.name);
-      alert('Foto de perfil actualizada.');
-    }
   }
 
   changepassword() {
@@ -220,9 +214,6 @@ export class ProfileComponent implements OnInit {
     return newPassword === confirmPassword ? null : { passwordMismatch: true };
   }
 
-  
-
-
   getPhonePlaceholder(): string {
     return this.user.phone_number ? this.user.phone_number : '';
   }
@@ -233,7 +224,7 @@ export class ProfileComponent implements OnInit {
     this.service.logout();
   }
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
   showSuccessAlert() {
@@ -241,10 +232,9 @@ export class ProfileComponent implements OnInit {
       title: 'Actualizado correctamente',
       text: 'Actualiza el sitio para ver los cambios.',
       icon: 'success',
-      confirmButtonText: 'Aceptar', 
-      position: "top-end",
+      confirmButtonText: 'Aceptar',
+      position: 'top-end',
       width: 500,
-      
     });
   }
   showErrorAlert() {
@@ -252,10 +242,22 @@ export class ProfileComponent implements OnInit {
       title: 'La contraseña actual no coincide',
       text: 'Actualiza el sitio para ver los cambios.',
       icon: 'error',
-      confirmButtonText: 'Aceptar', 
-      position: "top-end",
+      confirmButtonText: 'Aceptar',
+      position: 'top-end',
       width: 600,
     });
   }
-  
+  showErrorPhotoAlert() {
+    Swal.fire({
+      title: 'Error en cargar la foto',
+      text: 'OOPS! Algo salió mal!',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      position: 'top',
+      width: 300,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+
 }
