@@ -1,29 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Invoice } from '../../../../core/model/invoice';
 import { RouterLink } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
+import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
+import { InvoiceService } from '../../service/invoice.service';
 
 @Component({
   selector: 'app-invoice-details',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule, InvMesHeaderComponent],
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.css',
 })
-export class InvoiceDetailsComponent {
-  public invoice: Invoice;
+export class InvoiceDetailsComponent  {
+  
+  @Input() invoice_id: string | null = null; // Recibe el ID de la factura desde el componente padre
+  invoice: any;
+  
 
-  constructor() {
-    this.invoice = {
-      invoiceNumber: '4580',
-      cif: '43412',
-      date: '12/09/2024',
-      startDate: '20/01/2024',
-      endDate: '21/02/2024',
-      days: '30',
-      consumption: '336',
-      amount: '25',
-      image:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Feleiaenergia.com%2Fentiende-factura-luz%2F&psig=AOvVaw1p_mwKtxB4pbg3WFHBhq3O&ust=1732811266787000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPiq_ZL3_IkDFQAAAAAdAAAAABAE',
-    };
+  constructor( 
+    // public invoice_id: string = '2',
+    public invoicePage: Boolean = true,
+    public invoiceImage: Boolean = false,
+    private invoiceService: InvoiceService,
+    
+    ) {
+    
+  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['invoiceId'] && this.invoiceId) {
+  //     this.loadInvoiceDetails();
+  //   }
+  // }
+
+  // Cargar detalles de la factura
+  loadInvoiceDetails(): void {
+    if (this.invoice_id) {
+      this.invoiceService.getInvoiceById(this.invoice_id).subscribe(
+        (data) => {
+          this.invoice_id = data;
+        },
+        (error) => {
+          console.error('Error al cargar los detalles de la factura', error);
+        }
+      );
+    }
+  }
+//Cambiar vista a Imagen 
+  getImage(){
+    this.invoicePage = false;
+    this.invoiceImage = true;
   }
 }

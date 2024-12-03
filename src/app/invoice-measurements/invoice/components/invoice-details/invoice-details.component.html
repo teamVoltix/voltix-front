@@ -1,42 +1,57 @@
 <div class="w-full bg-gray-100 relative overflow-auto">
-  <!-- TODO: agregar el header general cuando esté hecho -->
-  <div class="bg-primary h-44"></div>
-  
-  <div class="relative overflow-x-auto m-4 p-4 bg-white rounded-lg border border-gray-200">
-    <h3 class="font-semibold">Factura #{{this.invoice.invoiceNumber}}</h3>
-    <form class="w-full mx-auto mt-4">
-      <div class="mb-4 relative ">
-        <label for="cif" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CIF/NIF</label>
-        <input type="text" id="cif" disabled value="{{this.invoice.cif}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      <div class="mb-4 relative">
-        <label for="date" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fecha de carga</label>
-        <input type="text" id="date" disabled value="{{this.invoice.date}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      <div class="mb-4 relative">
-        <label for="period" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Periodo de facturación</label>
-        <div class="flex space-x-4">
-          <input type="text" id="startDate" disabled value="{{this.invoice.startDate}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <h5 class="text-center pt-2 text-sm">al</h5> 
-          <input type="text" id="endDate" disabled value="{{this.invoice.endDate}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        </div>
-      </div>
-      <div class="mb-4 relative">
-        <label for="days" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Días medidos</label>
-        <input type="text" id="days" disabled value="{{this.invoice.days}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      <div class="mb-4 relative">
-        <label for="consumption" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Consumo (kWh)</label>
-        <input type="text" id="consumption" disabled value="{{this.invoice.consumption}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      <div class="mb-4 relative">
-        <label for="amount" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Importe (€)</label>
-        <input type="text" id="amount" disabled value="{{this.invoice.amount}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div> 
-    </form>
+  <app-invoice-header></app-invoice-header>
+    
+  <div *ngIf="invoicePage">
+      <div class="relative overflow-x-auto m-4 p-4 bg-white rounded-lg border border-gray-200">
+        <h3 class="font-semibold">
+          Factura #{{invoice.numero_referencia}}</h3>
+        <form class="w-full mx-auto mt-4">
+          <div class="mb-4 relative ">
+            <label for="cif" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CIF/NIF</label>
+            <input type="text" id="cif" disabled 
+            value="{{invoice.cif}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+          </div>
+          <div class="mb-4 relative">
+            <label for="fecha_cargo" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fecha de carga</label>
+            <input type="text" id="fecha_cargo" disabled value="{{invoice.fecha_cargo}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+          </div>
+          <div class="mb-4 relative">
+            <label for="period" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Periodo de facturación</label>
+            <div class="flex space-x-4">
+              <input type="text" id="inicio" disabled value="{{invoice.periodo_facturacion.inicio}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+              <h5 class="text-center pt-2 text-sm">al</h5> 
+              <input type="text" id="fin" disabled value="{{invoice.periodo_facturacion.fin}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            </div>
+          </div>
+          <div class="mb-4 relative">
+            <label for="dias" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Días medidos</label>
+            <input type="text" id="dias" disabled value="{{invoice.dias}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+          </div>
+          <div class="mb-4 relative">
+            <label for="consumo_total" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Consumo (kWh)</label>
+            <input type="text" id="consumo_total" disabled value="{{invoice.consumo_total}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+          </div>
+          <div class="mb-4 relative">
+            <label for="total_a_pagar" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Importe (€)</label>
+            <input type="text" id="total_a_pagar" disabled value="{{this.invoice.total_a_pagar}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+          </div> 
+        </form>
 
-    <button routerLink="/invoice-image" class="w-full mx-auto mt-6 text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ver factura adjunta</button>
+      <button (click)="getImage()" class="w-full mx-auto mt-6 text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ver factura adjunta</button>
+    </div>
   </div>
+</div>
+
+<div *ngIf = 'invoiceImage'>
+  <div class="w-full h-screen bg-gray-100 ">
+    <!-- TODO: agregar el header general cuando esté hecho -->
+  <div class="bg-primary h-44"></div>
+
+ <div class="relative h-dvw w-sreen bg-gray-600 flex justify-center p-12">
+        <img src="" >
+</div>
+</div>
+
 </div>
 
 

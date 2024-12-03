@@ -14,7 +14,6 @@ import { MeasurementSearchComponent } from './invoice-measurements/measurements/
 import { MeasurementDetailComponent } from './invoice-measurements/measurements/components/measurement-search/measurement-detail/measurement-detail.component';
 import { MeasurementCompareComponent } from './invoice-measurements/measurements/components/measurement-compare/measurement-compare.component';
 import { InvoiceDetailsComponent } from './invoice-measurements/invoice/components/invoice-details/invoice-details.component';
-import { InvoiceImageComponent } from './invoice-measurements/invoice/components/invoice-image/invoice-image.component';
 import { InvoiceUploadComponent } from './invoice-measurements/invoice/components/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
@@ -86,11 +85,6 @@ export const routes: Routes = [
     path: 'invoice-details',
     title: 'Invoice Details',
     component: InvoiceDetailsComponent,
-  },
-  {
-    path: 'invoice-image',
-    title: 'Invoice Image',
-    component: InvoiceImageComponent,
   },
   {
     path: 'invoice-upload',
