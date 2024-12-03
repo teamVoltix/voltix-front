@@ -30,8 +30,8 @@
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
-            <td class="p-4 text-center">{{ invoiceData.id }}</td>
-            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.id }}</td>
+            <td class="p-4 text-center">{{ invoiceId }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementId }}</td>
             <td></td>
           </tr>
 
@@ -40,11 +40,11 @@
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
-            <td class="p-4 text-center">{{ invoiceData.loadDate }}</td>
-            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.loadDate }}</td>
+            <td class="p-4 text-center">{{ dataLoaded }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ dataLoaded }}</td>
             <td class="p-4">
               <img class="w-6 min-w-6 h-6 min-h-6"
-                [src]="invoiceData.loadDate === measurementData.loadDate ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                [src]="dataLoaded ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
                 alt="check o cross">
             </td>
           </tr>
@@ -55,11 +55,11 @@
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
-            <td class="p-4 text-center">{{ invoiceData.measurementPeriod }}</td>
-            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.measurementPeriod }}</td>
+            <td class="p-4 text-center">{{ invoicePeriod }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementPeriod }}</td>
             <td class="p-4">
               <img class="w-6 min-w-6 h-6 min-h-6"
-                [src]="invoiceData.measurementPeriod === measurementData.measurementPeriod ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                [src]="periodMatches ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
                 alt="check o cross">
             </td>
           </tr>
@@ -69,11 +69,11 @@
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
-            <td class="p-4 text-center">{{ invoiceData.measuredDays }}</td>
-            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.measuredDays }}</td>
+            <td class="p-4 text-center">{{ invoicedDays }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ invoicedDays }}</td>
             <td class="p-4">
               <img class="w-6 min-w-6 h-6 min-h-6"
-                [src]="invoiceData.measuredDays === measurementData.measuredDays ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                [src]="invoicedDays ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
                 alt="check o cross">
             </td>
           </tr>
@@ -83,11 +83,11 @@
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
-            <td class="p-4 text-center">{{ invoiceData.consumption }}</td>
-            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.consumption }}</td>
+            <td class="p-4 text-center">{{ invoiceConsumption }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementConsumption }}</td>
             <td class="p-4">
               <img class="w-6 min-w-6 h-6 min-h-6"
-                [src]="invoiceData.consumption === measurementData.consumption ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                [src]="consumptionMatches ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
                 alt="check o cross">
             </td>
           </tr>
@@ -97,11 +97,11 @@
             <td class="py-2 px-3 border-l border-l-neutral-200"></td>
           </tr>
           <tr>
-            <td class="p-4 text-center">{{ invoiceData.amount }}</td>
-            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementData.amount }}</td>
+            <td class="p-4 text-center">{{ invoiceAmount }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementAmount }}</td>
             <td class="p-4">
               <img class="w-6 min-w-6 h-6 min-h-6"
-                [src]="invoiceData.amount === measurementData.amount ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                [src]="amountMatches ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
                 alt="check o cross">
             </td>
           </tr>
@@ -124,6 +124,27 @@
     @if(reportService.downloadFinished){
     <app-download-toast></app-download-toast>
     }
+
+        <!-- Modal Datos no encontrados -->
+        @if(modalDataNotFound){
+          <div class="fixed inset-0 flex items-center justify-center z-10">
+            <div class="bg-gray-900/50 fixed inset-0" (click)="closeModalDataNotFound()"></div>
+            <div class="relative w-96 bg-white rounded-2xl shadow-lg p-6">
+              <div class="flex flex-col items-center justify-center gap-4">
+                <h2 class="text-2xl text-[#111928] font-semibold">Datos no encontrados</h2>
+                <p class="text-[#637381] font-base text-center">Aún no se han cargado los datos de la medición correspondiente para realizar la comparación.
+                </p>
+              </div>
+
+              <button (click)="closeModalDataNotFound()"
+                class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-8">
+                Aceptar
+              </button>
+
+            </div>
+          </div>
+          }
+
 
   </section>
 
