@@ -14,26 +14,32 @@ import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.
   styleUrl: './measurement-detail.component.css',
 })
 export class MeasurementDetailComponent {
-  measurementId!: number;
   measurement: Measurement | undefined;
 
   route = inject(ActivatedRoute);
   measurementService = inject(MeasurementService);
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.measurementId = +params['id']; // Obtener el id de la URL
-      this.measurementService
-        .getMeasurementById(this.measurementId)
-        .subscribe((measurement) => {
-          this.measurement = measurement;
-        });
+    this.getMeasurementDetail();
+  }
+
+  get measurementId(){
+    return this.route.snapshot.paramMap.get('id') || '';
+  }
+
+  getMeasurementDetail(){
+    this.measurementService.getMeasurementById(this.measurementId).subscribe({
+      next: (data) => {
+        this.measurement = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener el detalle de la medición:', err);
+      },
     });
   }
 
   calculateDaysBetweenDates(start: string, end: string): number {
     if (!start || !end) {
-      console.error('Las fechas de inicio o fin son inválidas:', start, end);
       return 0;
     }
 
@@ -52,13 +58,13 @@ export class MeasurementDetailComponent {
   }
 
 
-  //TODO: calculo de la cantidad a pagar¿?
+  //TODO: calculo de la cantidad a pagar, no viene en los datos del api¿?
   get estimatedAmount(){
     return '42';
   }
 
   get buttonText() {
-    return this.measurement?.comparison_status === 'Sin comparar'
+    return this.measurement?.comparison_status === 'Sin comparacion'
       ? 'Comparar'
       : 'Ver comparación';
   }
