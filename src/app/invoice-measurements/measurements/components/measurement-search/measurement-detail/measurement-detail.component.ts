@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MeasurementService } from '../../../services/measurement-service/measurement.service';
 import { Measurement } from '../../../../../core/model/measurement';
 import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.component';
@@ -15,9 +15,11 @@ import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.
 })
 export class MeasurementDetailComponent {
   measurement: Measurement | undefined;
+  modalDataNotFound: boolean = false;
 
   route = inject(ActivatedRoute);
   measurementService = inject(MeasurementService);
+  router = inject (Router);
 
   ngOnInit() {
     this.getMeasurementDetail();
@@ -68,4 +70,40 @@ export class MeasurementDetailComponent {
       ? 'Comparar'
       : 'Ver comparación';
   }
+
+
+  compareInvoice() {
+    if (this.measurement?.id) {
+      this.measurementService.compareInvoice(this.measurement?.id).subscribe({
+        next: (response) => {
+          console.log('Comparison Result:', response);
+        },
+        error: (error) => {
+          this.openModalDataNotFound();
+          console.error('Error comparing:', error);
+        }
+      });
+    } else {
+      console.log('Please enter a valid id');
+    }
+  }
+
+  goToComparisonDetail(id: number){
+    this.router.navigate([`measurement-compare/${id.toString()}`]);
+  }
+
+  compareOrGoToDetail(){
+    return this.measurement?.comparison_status === 'Sin comparacion'
+    ? this.compareInvoice()
+    : this.goToComparisonDetail(this.measurement?.id!);
+  }
+
+  openModalDataNotFound(){
+    this.modalDataNotFound = true;
+  }
+
+  closeModalDataNotFound(){
+    this.modalDataNotFound = false;
+  }
+
 }

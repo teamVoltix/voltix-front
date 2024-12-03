@@ -28,29 +28,54 @@
 
       <label for="initialDate" class="block mb-[10px] text-base font-medium text-dark-text">Período de medición</label>
       <div class="flex items-center gap-3 mb-[14px]">
-        <input readonly type="text" id="initialDate" [value]="measurement?.data?.periodo_medicion?.inicio  | date: 'dd/MM/YYYY'"
+        <input readonly type="text" id="initialDate"
+          [value]="measurement?.data?.periodo_medicion?.inicio  | date: 'dd/MM/YYYY'"
           class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
         <p>al</p>
-        <input readonly type="text" id="endDate" [value]="measurement?.data?.periodo_medicion?.fin  | date: 'dd/MM/YYYY'"
+        <input readonly type="text" id="endDate"
+          [value]="measurement?.data?.periodo_medicion?.fin  | date: 'dd/MM/YYYY'"
           class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border" />
 
       </div>
 
       <label for="measuredDays" class="block mb-[10px] text-base font-medium text-dark-text">Días medidos</label>
-      <input readonly type="text" id="measuredDays" [value]="calculateDaysBetweenDates(measurement?.data?.periodo_medicion?.inicio!, measurement?.data?.periodo_medicion?.fin!)"
+      <input readonly type="text" id="measuredDays"
+        [value]="calculateDaysBetweenDates(measurement?.data?.periodo_medicion?.inicio!, measurement?.data?.periodo_medicion?.fin!)"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
 
       <label for="consumption" class="block mb-[10px] text-base font-medium text-dark-text">Consumo (kWh)</label>
       <input readonly type="text" id="consumption" [value]="measurement?.data?.consumo_total"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
 
-      <label for="estimatedAmount" class="block mb-[10px] text-base font-medium text-dark-text">Importe estimado (€)</label>
+      <label for="estimatedAmount" class="block mb-[10px] text-base font-medium text-dark-text">Importe estimado
+        (€)</label>
       <input readonly type="text" id="estimatedAmount" [value]="estimatedAmount"
         class="w-full !bg-neutral-100 text-dark-text text-base border !border-neutral-100 rounded-lg px-5 py-3 focus:outline-none focus:ring-0 focus:border-input-border mb-[14px]" />
     </section>
 
     <button
-      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]">{{buttonText}}</button>
+      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]"
+      (click)="compareOrGoToDetail()">{{buttonText}}</button>
+
+    <!-- Modal Datos no encontrados -->
+    @if(modalDataNotFound){
+    <div class="fixed inset-0 flex items-center justify-center z-10">
+      <div class="bg-gray-900/50 fixed inset-0" (click)="closeModalDataNotFound()"></div>
+      <div class="relative w-96 bg-white rounded-2xl shadow-lg p-6">
+        <div class="flex flex-col items-center justify-center gap-4">
+          <h2 class="text-2xl text-[#111928] font-semibold">Datos no encontrados</h2>
+          <p class="text-[#637381] font-base text-center">Aún no se han cargado los datos de la medición correspondiente para realizar la comparación.
+          </p>
+        </div>
+
+        <button (click)="closeModalDataNotFound()"
+          class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-8">
+          Aceptar
+        </button>
+
+      </div>
+    </div>
+    }
 
   </section>
 </div>
