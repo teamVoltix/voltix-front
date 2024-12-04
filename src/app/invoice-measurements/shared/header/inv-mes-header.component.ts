@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './inv-mes-header.component.html',
   styleUrl: './inv-mes-header.component.css',
 })
@@ -14,7 +14,7 @@ export class InvMesHeaderComponent implements OnInit {
   selectedTab: string = '';
 
   ngOnInit() {
-    if (this.currentRoute.includes('invoce-listing')) {
+    if (this.currentRoute.includes('invoice')) {
       this.selectedTab = 'facturas';
     } else if (this.currentRoute.includes('measurement')) {
       this.selectedTab = 'mediciones';
@@ -35,7 +35,7 @@ export class InvMesHeaderComponent implements OnInit {
   selectTab(tab: string): void {
     this.selectedTab = tab;
     const route =
-      tab === 'facturas' ? '/invoce-listing' : '/measurement-search';
+      tab === 'facturas' ? '/invoice' : '/measurement-search';
     this.router.navigate([route]);
   }
 

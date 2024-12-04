@@ -1,4 +1,6 @@
 
+
+
 input[type="text"] {
     border: 1px solid #e5e5e5; /* Misma propiedad que el listado */
     
@@ -7,6 +9,8 @@ input[type="text"] {
 
 .factura-section {
     background-color: #f4f4f6; /* Color de fondo */
+    
+    
     
 }
 
