@@ -14,7 +14,6 @@ import { MeasurementSearchComponent } from './invoice-measurements/measurements/
 import { MeasurementDetailComponent } from './invoice-measurements/measurements/components/measurement-search/measurement-detail/measurement-detail.component';
 import { MeasurementCompareComponent } from './invoice-measurements/measurements/components/measurement-compare/measurement-compare.component';
 import { InvoiceDetailsComponent } from './invoice-measurements/invoice/components/invoice-details/invoice-details.component';
-import { InvoiceImageComponent } from './invoice-measurements/invoice/components/invoice-image/invoice-image.component';
 import { InvoiceUploadComponent } from './invoice-measurements/invoice/components/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
@@ -71,26 +70,24 @@ export const routes: Routes = [
     path: 'measurement-search',
     title: 'Measurement search',
     component: MeasurementSearchComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'measurement-search/:id',
     title: 'Measurement Detail',
     component: MeasurementDetailComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'measurement-compare',
+    path: 'measurement-compare/:comparisonId',
     title: 'Measurement compare',
     component: MeasurementCompareComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'invoice-details',
+    path: 'invoice-details/:id',
     title: 'Invoice Details',
     component: InvoiceDetailsComponent,
-  },
-  {
-    path: 'invoice-image',
-    title: 'Invoice Image',
-    component: InvoiceImageComponent,
   },
   {
     path: 'invoice-upload',

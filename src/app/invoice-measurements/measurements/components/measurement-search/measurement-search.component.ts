@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { Measurement } from '../../../../core/model/measurement';
     InvMesHeaderComponent,
     FormsModule,
   ],
+  providers: [DatePipe],
   templateUrl: './measurement-search.component.html',
   styleUrl: './measurement-search.component.css',
 })
@@ -32,6 +33,7 @@ export class MeasurementSearchComponent {
   router = inject(Router);
   measurementService = inject(MeasurementService);
   reportService = inject(ReportService);
+  datePipe = inject(DatePipe);
 
   ngOnInit() {
     this.getMeasurements();
@@ -41,10 +43,12 @@ export class MeasurementSearchComponent {
     this.measurementService.getMeasurements().subscribe({
       next: (data) => {
         this.measurementList = data.measurements;
-        this.measurementList = this.measurementList.map((measurement: Measurement) => ({
-          ...measurement,
-          checked: false,
-        }));
+        this.measurementList = this.measurementList.map(
+          (measurement: Measurement) => ({
+            ...measurement,
+            checked: false,
+          })
+        );
 
         this.filteredMeasurements = [...this.measurementList];
       },
@@ -145,6 +149,12 @@ export class MeasurementSearchComponent {
     this.currentPage = 1;
   }
 
+  measurementDateStart(measurementStart: string) {
+    return measurementStart
+      ? this.datePipe.transform(measurementStart, 'dd/MM/YYYY')
+      : '-';
+  }
+
   goToDetail(measurementId: number) {
     this.router.navigate([`measurement-search/${measurementId.toString()}`]);
   }
@@ -152,5 +162,4 @@ export class MeasurementSearchComponent {
   showModal() {
     this.reportService.showModal();
   }
-
 }

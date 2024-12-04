@@ -26,7 +26,13 @@
       'border-green-500': registerForm.get('fullname')?.touched
     }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="Juan Ríos" required />
+          <p *ngIf="registerForm.get('fullname')?.hasError('invalidFullName') && registerForm.get('fullname')?.touched" class="mt-2 text-sm text-red-600 dark:text-red-500">
+            Nombre y appellido no valido.
+          </p>
       </div>
+
+
+
       <div class="mb-4">
         <label for="email" class="block mb-2 text-sm text-gray-900 dark:text-white">Email</label>
         <input type="email" id="email" formControlName="email" (input)="isAllInputsValid()" 

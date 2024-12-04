@@ -7,6 +7,9 @@ import {
   FormBuilder,
   Validators,
   FormsModule,
+  AbstractControl,
+  ValidatorFn,
+  ValidationErrors,
 } from '@angular/forms';
 import { AuthService } from '../../service/auth-service.service';
 import Swal from 'sweetalert2';
@@ -43,12 +46,23 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      fullname: ['', Validators.required],
+      fullname: ['', [Validators.required, this.fullNameValidator()]],
       email: ['', Validators.required],
       dni: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
     });
+  }
+
+  fullNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value || '';
+      const isValid =
+        /^[a-zA-Z\s]+$/.test(value) &&
+        value.trim().length > 0 &&
+        value.trim().length < 20;
+      return !isValid ? { invalidFullName: true } : null;
+    };
   }
 
   passwordsMatch(): boolean {
@@ -231,32 +245,30 @@ export class RegisterComponent {
 
   sendVerificationCode() {
     const email = this.registerForm.value.email;
-    this.service.sendVerificationCode(email).subscribe(
-      (response) => {
-        // Salva il codice di verifica ricevuto dalla risposta del backend
+    this.service.sendVerificationCode(email).subscribe({
+      next: (response) => {
         console.log('send verificacion code:', response);
         this.verificationCode = response.code;
-        // Apri il modal per inserire il codice
         this.isModalOpen = true;
       },
-      (error) => {
-        console.error("Errore nell'invio del codice di verifica", error);
-        // Gestisci l'errore, es. mostra un messaggio all'utente
-      }
-    );
+      error: (error) => {
+        console.error('Error en el envío del código de verificación', error);
+      },
+    });
   }
+
   verifyCode() {
     const email = this.registerForm.value.email;
-    this.service.verifyCode(email, this.enteredCode).subscribe(
-      (response) => {
+    this.service.verifyCode(email, this.enteredCode).subscribe({
+      next: (response) => {
         console.log('Codice verificato:', response);
         this.onCodeVerified();
       },
-      (error) => {
-        console.error('Errore nella verifica del codice', error);
-        // Gestisci l'errore, es. mostra un messaggio all'utente
-      }
-    );
+      error: (error) => {
+        console.error('Error en la verificación del código', error);
+        // Manejar el error, como mostrar un mensaje al usuario
+      },
+    });
   }
   onCodeVerified() {
     this.isModalOpen = false;

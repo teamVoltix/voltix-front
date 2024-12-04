@@ -1,4 +1,8 @@
+import { User } from "./user";
+import { UserMeasurement } from "./measurement";
+
 export interface Invoice {
+  selected?: boolean;
   id: number,
   comparison_status: string,
   billing_period_start: Date,
@@ -32,4 +36,12 @@ export interface Invoice {
   created_at: Date,
   updated_at: Date,
   user: number
+
+}
+
+export interface InvoiceResponse {
+  invoices: Invoice[];
+  message: string;
+  status: string;
+  user: UserMeasurement;
 }
