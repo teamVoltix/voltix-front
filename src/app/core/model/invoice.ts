@@ -15,13 +15,13 @@ export interface Invoice {
     nombre_cliente: string,
     desglose_cargos: {
       impuestos: string,
-      descuento: string,
+      descuentos: string,
       costo_energia: string,
       total_a_pagar: string,
       costo_potencia: string
     },
     detalles_consumo: {
-    consumo_punta: string,
+      consumo_punta: string,
       consumo_total: string,
       consumo_valle: string,
       precio_efectivo_energia: string
@@ -36,6 +36,7 @@ export interface Invoice {
   created_at: Date,
   updated_at: Date,
   user: number
+
 }
 
 export interface InvoiceResponse {
