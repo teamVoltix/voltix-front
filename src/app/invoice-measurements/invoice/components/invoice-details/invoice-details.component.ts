@@ -38,7 +38,7 @@ export class InvoiceDetailsComponent implements OnInit {
     this.invoiceService.profile().subscribe({
       next: (data) => {
         console.log(data);
-        data = this.user;
+        this.user = data;
       },
       error: (err) => {
         console.error('Error al obtener el perfil', err);
