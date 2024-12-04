@@ -1,6 +1,8 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { InvoiceService } from '../../service/invoice.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-invoice-upload',
@@ -12,27 +14,24 @@ import { Router } from '@angular/router';
 export class InvoiceUploadComponent {
   selectedFile: File | null = null;
   isFileUploaded: boolean = false;
+  isLoading: boolean = false; 
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private location: Location, private router: Router) {}
+  constructor(private location: Location, private router: Router, private invoiceService: InvoiceService) {}
 
-  // Método para ir a la vista anterior
   goBack(): void {
     this.location.back();
   }
 
-  // Método para ir a la ruta de las facturas adjuntas
   goToAttachedInvoices(): void {
     this.router.navigate(['/invoce-listing']);
   }
 
-  // Método para ir al inicio
   goToHome(): void {
     this.router.navigate(['/home']); 
   }
 
-  // Método para manejar la selección de un archivo
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -48,10 +47,9 @@ export class InvoiceUploadComponent {
     }
 }
 
-  // Método para reiniciar el archivo seleccionado
 resetFile() {
-  this.selectedFile = null; // Reinicia el archivo seleccionado
-  this.fileInput.nativeElement.value = ''; // Resetea el valor del input file
+  this.selectedFile = null; 
+  this.fileInput.nativeElement.value = ''; 
   console.log('Archivo reseteado, listo para cargar uno nuevo');
 }
 
@@ -72,20 +70,67 @@ resetFile() {
     }
   }
 
-  // Método para cargar el archivo
   uploadFile() {
     if (this.selectedFile) {
-      console.log('Cargando archivo:', this.selectedFile);
-      this.isFileUploaded = true; // Cambia el estado a verdadero después de la carga
-      // Implementa tu lógica del post cuando tengamos el endpoint del backend
+        this.isLoading = true; 
+        console.log('Cargando archivo:', this.selectedFile);
+
+        this.invoiceService.uploadInvoice(this.selectedFile).subscribe({
+            next: (response) => {
+                console.log('Archivo cargado con éxito:', response);
+                
+                if (response.parsed_data && response.parsed_data.error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: "Documento no válido",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        width: '75%',
+                    });
+                    console.log('Error al subir la factura:', response.parsed_data.error)
+                    this.isLoading = false; 
+                    return;
+                }
+
+                this.isFileUploaded = true; 
+                this.isLoading = false; 
+            },
+            error: (error) => {
+                console.error('Error al cargar el archivo:', error);
+                this.isLoading = false;
+                
+                if (error.status === 400 && error.error.details) {
+                    const errorDetails: string[] = error.error.details.file || []; 
+                    let errorMessage = 'El documento no es válido: ';
+                    
+                    errorDetails.forEach((detail: string) => { 
+                        errorMessage += `${detail} `;
+                    });
+            
+                    Swal.fire({
+                        title: 'Error',
+                        text: errorMessage.trim(),
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        width: '75%',
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo cargar la factura. Inténtalo de nuevo más tarde.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        width: '75%',
+                    });
+                }
+            }
+        });
     } else {
-      console.error('No se ha seleccionado ningún archivo');
+        console.error('No se ha seleccionado ningún archivo');
     }
-  }
+}
 
-
-  // Método para verificar si se ha subido un archivo
   isInvoiceUpload(): boolean {
-    return this.selectedFile !== null; // Retorna verdadero si hay un archivo seleccionado
+    return this.selectedFile !== null; 
   }
 }
