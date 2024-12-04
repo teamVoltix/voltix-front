@@ -37,7 +37,7 @@
                 <input type="file" #fileInput accept="application/pdf, image/jpeg, image/png" (change)="onFileSelected($event)" class="hidden">
             </div>
   
-            <section class="buttons-section max-w-sm mx-auto px-3">
+            <section class="buttons-section max-w-sm mx-auto px-3 mb-5">
                 <button [ngClass]="{
                         'btn-upload': isInvoiceUpload(),
                         'bg-disabled': !isInvoiceUpload()
@@ -51,12 +51,17 @@
                     Volver a cargar
                 </button>
             </section>
+
+            <div *ngIf="isLoading" class="loading-message text-center mt-5">
+                <p>Cargando tu factura...</p>
+                <div class="spinner"></div>
+            </div>
         </div>
   
         <!-- Contenido después de cargar correctamente el archivo -->
         <div *ngIf="isFileUploaded" class="max-w-sm mx-auto text-center">
             <img src="/assets/images/uploadInvoiceSuccess.svg" alt="Success" class="mx-auto" />
-            <p>¡Tu factura se cargó con éxito!</p>
+            <p class="loading-message text-center">¡Tu factura se cargó con éxito!</p>
             <section class="buttons-section max-w-sm mx-auto px-3">
                 <button (click)="goToAttachedInvoices()" class="btn-view-invoices">Ver facturas adjuntas</button>
                 <button (click)="goToHome()" class="btn-return-home">Volver a inicio</button>
