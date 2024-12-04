@@ -15,6 +15,7 @@ import { InvoiceResponse } from '../../../../core/model/invoice';
 })
 export class InvoiceListingComponent {
   // Lista estática de facturas
+  private router = inject(Router);
 
   
   public invoiceService = inject(InvoiceService);
@@ -27,6 +28,10 @@ export class InvoiceListingComponent {
 
   ngOnInit() {
     this.getInvoices();
+  }
+
+  goToUploadInvoice(): void {
+    this.router.navigate(['/invoice-upload']);
   }
 
   getInvoices(): void {
