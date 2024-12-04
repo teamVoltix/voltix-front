@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, inject, Input, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { Invoice } from '../../../../core/model/invoice';
 import { RouterLink } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
 import { InvoiceService } from '../../service/invoice.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-details',
@@ -12,39 +13,42 @@ import { InvoiceService } from '../../service/invoice.service';
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.css',
 })
-export class InvoiceDetailsComponent  {
-  
-  @Input() invoice_id: string | null = null; // Recibe el ID de la factura desde el componente padre
-  invoice: any;
-  
+export class InvoiceDetailsComponent implements OnInit {
+
+
+  public route = inject(ActivatedRoute);
+  public invoiceService = inject(InvoiceService);
+  @Input() invoice: any
 
   constructor( 
-    // public invoice_id: string = '2',
+    
     public invoicePage: Boolean = true,
     public invoiceImage: Boolean = false,
-    private invoiceService: InvoiceService,
+    ) { }
     
-    ) {
-    
-  }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['invoiceId'] && this.invoiceId) {
-  //     this.loadInvoiceDetails();
-  //   }
-  // }
 
-  // Cargar detalles de la factura
-  loadInvoiceDetails(): void {
-    if (this.invoice_id) {
-      this.invoiceService.getInvoiceById(this.invoice_id).subscribe(
-        (data) => {
-          this.invoice_id = data;
-        },
-        (error) => {
-          console.error('Error al cargar los detalles de la factura', error);
-        }
-      );
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.invoiceService.getInvoiceById(this.invoice_id).subscribe((data) => {
+        this.invoice = data;
+      });
     }
+  }
+ 
+  get invoice_id(){
+    console.log(this.invoice.id)
+    return this.route.snapshot.paramMap.get('id') || '';
+  }
+  getInvoiceDetail(){
+    this.invoiceService.getInvoiceById(this.invoice_id).subscribe({
+      next: (data) => {
+        this.invoice = data
+      },
+      error: (err) => {
+        console.error('Error en detalle de factura', err)
+      }
+    })
   }
 //Cambiar vista a Imagen 
   getImage(){

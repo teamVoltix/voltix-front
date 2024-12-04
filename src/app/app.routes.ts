@@ -82,7 +82,7 @@ export const routes: Routes = [
     component: MeasurementCompareComponent,
   },
   {
-    path: 'invoice-details',
+    path: 'invoice-details/:id',
     title: 'Invoice Details',
     component: InvoiceDetailsComponent,
   },

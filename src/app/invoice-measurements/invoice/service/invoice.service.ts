@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Invoice } from '../../../core/model/invoice'
 import { InvoiceDetailsComponent } from '../components/invoice-details/invoice-details.component';
 
 @Injectable({
@@ -16,11 +17,11 @@ export class InvoiceService {
 
   constructor() {}
 
-  getInvoices(): Observable<any[]> {
-    return this.http.get<any[]>(this.url + 'api/invoices/');
+  getInvoices(): Observable<Invoice[]> {
+    return this.http.get<Invoice[]>(this.url + 'api/invoices/');
   }
 
-  getInvoiceById(invoice_id: string): Observable<any> {
-    return this.http.get<any>(this.url + 'api/invoices/'+ invoice_id);
+  getInvoiceById(invoice_id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(this.url + 'api/invoices/'+ invoice_id);
   }
 }
