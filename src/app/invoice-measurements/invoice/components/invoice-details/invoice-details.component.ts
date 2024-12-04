@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, Input } from '@angular/core';
+import { Component, OnInit, inject, Input, AfterViewInit } from '@angular/core';
 import { Invoice } from '../../../../core/model/invoice';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -17,7 +17,15 @@ import { User } from '../../../../core/model/user';
 export class InvoiceDetailsComponent implements OnInit {
   public route = inject(ActivatedRoute);
   public invoiceService = inject(InvoiceService);
-  public User!: User;
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
   @Input() invoice: Invoice | undefined;
 
   public invoicePage: Boolean = true;
@@ -29,7 +37,8 @@ export class InvoiceDetailsComponent implements OnInit {
     this.getInvoice(id);
     this.invoiceService.profile().subscribe({
       next: (data) => {
-        data = this.User;
+        console.log(data);
+        data = this.user;
       },
       error: (err) => {
         console.error('Error al obtener el perfil', err);
@@ -39,6 +48,7 @@ export class InvoiceDetailsComponent implements OnInit {
   getInvoice(id: any) {
     this.invoiceService.getInvoiceById(id).subscribe({
       next: (data) => {
+        console.log(data);
         this.invoice = data;
       },
       error: (err) => {
