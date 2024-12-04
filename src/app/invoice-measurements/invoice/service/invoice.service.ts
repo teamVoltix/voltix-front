@@ -1,11 +1,27 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Invoice, InvoiceResponse } from '../../../core/model/invoice'
 import { InvoiceDetailsComponent } from '../components/invoice-details/invoice-details.component';
-import { InvoiceImageComponent } from '../components/invoice-image/invoice-image.component';
-import { Invoice } from '../../core/model/invoice';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InvoiceService {
+  
+  private http = inject(HttpClient);
+  private url = environment.API_URL;
+  private router = inject(Router);
+
   constructor() {}
+
+  getInvoices(): Observable<InvoiceResponse> {
+    return this.http.get<InvoiceResponse>(this.url + 'api/invoices/');
+  }
+
+  getInvoiceById(invoice_id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(this.url + 'api/invoices/'+ invoice_id);
+  }
 }
