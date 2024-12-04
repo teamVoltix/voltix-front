@@ -3,6 +3,7 @@ import { UserMeasurement } from "./measurement";
 export interface Invoice {
   selected?: boolean;
   id: number,
+  image_url: string,
   comparison_status: string,
   billing_period_start: Date,
   billing_period_end: Date,
