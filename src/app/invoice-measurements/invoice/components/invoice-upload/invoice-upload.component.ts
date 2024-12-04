@@ -78,39 +78,52 @@ resetFile() {
         this.invoiceService.uploadInvoice(this.selectedFile).subscribe({
             next: (response) => {
                 console.log('Archivo cargado con éxito:', response);
+                
+                if (response.parsed_data && response.parsed_data.error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: "Documento no válido",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        width: '75%',
+                    });
+                    console.log('Error al subir la factura:', response.parsed_data.error)
+                    this.isLoading = false; 
+                    return;
+                }
+
                 this.isFileUploaded = true; 
                 this.isLoading = false; 
             },
             error: (error) => {
-              console.error('Error al cargar el archivo:', error);
-              this.isLoading = false;
-          
-              if (error.status === 400 && error.error.details) {
-                  const errorDetails: string[] = error.error.details.file || []; 
-                  let errorMessage = 'El documento no es válido: ';
-                  
-                  // Concatenar cada mensaje de error
-                  errorDetails.forEach((detail: string) => { 
-                      errorMessage += `${detail} `;
-                  });
-          
-                  Swal.fire({
-                      title: 'Error',
-                      text: errorMessage.trim(),
-                      icon: 'error',
-                      confirmButtonText: 'Aceptar',
-                      width: '75%',
-                  });
-              } else {
-                  Swal.fire({
-                      title: 'Error',
-                      text: 'No se pudo cargar la factura. Inténtalo de nuevo más tarde.',
-                      icon: 'error',
-                      confirmButtonText: 'Aceptar',
-                      width: '75%',
-                  });
-              }
-          }
+                console.error('Error al cargar el archivo:', error);
+                this.isLoading = false;
+                
+                if (error.status === 400 && error.error.details) {
+                    const errorDetails: string[] = error.error.details.file || []; 
+                    let errorMessage = 'El documento no es válido: ';
+                    
+                    errorDetails.forEach((detail: string) => { 
+                        errorMessage += `${detail} `;
+                    });
+            
+                    Swal.fire({
+                        title: 'Error',
+                        text: errorMessage.trim(),
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        width: '75%',
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo cargar la factura. Inténtalo de nuevo más tarde.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        width: '75%',
+                    });
+                }
+            }
         });
     } else {
         console.error('No se ha seleccionado ningún archivo');
