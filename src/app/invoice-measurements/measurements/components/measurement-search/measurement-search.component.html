@@ -41,7 +41,7 @@
         </div>
         <div class="texts me-2">
           <h4 class="text-dark-text text-base font-medium">ID {{measurement.id}}</h4>
-          <p class="text-gray-500 text-sm">{{measurement.measurement_start | date: 'dd/MM/YYYY'}}</p>
+          <p class="text-gray-500 text-sm h-5 min-w-[75px]">{{ measurementDateStart(measurement.measurement_start)}}</p>
         </div>
 
         <div class="min-w-32 flex justify-center">

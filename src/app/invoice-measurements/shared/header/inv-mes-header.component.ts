@@ -27,7 +27,7 @@ export class InvMesHeaderComponent implements OnInit {
 
   get showBackArrow(): boolean {
     return (
-      this.currentRoute === '/measurement-compare' ||
+      this.currentRoute.match(/^\/measurement-compare\/\d+$/) !== null ||
       this.currentRoute.match(/^\/measurement-search\/\d+$/) !== null
     );
   }

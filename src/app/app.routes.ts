@@ -71,16 +71,19 @@ export const routes: Routes = [
     path: 'measurement-search',
     title: 'Measurement search',
     component: MeasurementSearchComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'measurement-search/:id',
     title: 'Measurement Detail',
     component: MeasurementDetailComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'measurement-compare',
+    path: 'measurement-compare/:comparisonId',
     title: 'Measurement compare',
     component: MeasurementCompareComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'invoice-details',
