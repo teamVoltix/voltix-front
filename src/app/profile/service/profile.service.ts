@@ -35,11 +35,10 @@ export class ProfileService {
   uploadPhoto(file: File): Observable<{ photo_url: string }> {
     const formData = new FormData();
     formData.append('photo', file);
-
     return this.http.post<{ photo_url: string }>(
       this.url + 'api/profile/upload-photo/',
       formData
     );
   }
-  // (this.url + 'api/profile/upload-photo/' + url)
+  
 }
