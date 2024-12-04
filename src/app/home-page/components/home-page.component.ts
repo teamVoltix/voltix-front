@@ -9,7 +9,6 @@ import { User } from '../../core/model/user';
 import { Invoice } from '../../core/model/invoice';
 import { MeasurementsResponse, Measurement } from '../../core/model/measurement';
 
-
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -17,6 +16,7 @@ import { MeasurementsResponse, Measurement } from '../../core/model/measurement'
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
+
 export class HomePageComponent implements AfterViewInit {
   isDropdownOpen = false;
   private service = inject(HomepageService);
@@ -38,7 +38,7 @@ export class HomePageComponent implements AfterViewInit {
   percentChange: number = 0; 
   changeDirection: 'up' | 'down' | '' = ''; 
   changeColor: string = ''; 
-  invoiceData: number[] = []; 
+  invoiceData: number[] = Array(6).fill(0); 
   measurementData: number[] = []; 
   lastInvoiceDate?: Date;
 
@@ -70,7 +70,6 @@ export class HomePageComponent implements AfterViewInit {
     this.router.navigate(['/measurement-search']);
   }
 
-  // Método para obtener los últimos 6 meses
   getLastSixMonthsFromDate(startDate: Date): string[] {
     const months = [
       'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
@@ -93,10 +92,62 @@ export class HomePageComponent implements AfterViewInit {
     return monthNames[date.getMonth()];
 }
 
+private getConsumptionForLastSixMonths(invoices: Invoice[]): void {
+  const now = new Date();
+  const monthlyConsumption: number[] = Array(6).fill(0);
+  const latestInvoicesByMonth: { [key: string]: Invoice } = {}; 
+
+  invoices.forEach(invoice => {
+    const billingEnd = new Date(invoice.billing_period_end);
+    const monthDiff = (now.getFullYear() - billingEnd.getFullYear()) * 12 + now.getMonth() - billingEnd.getMonth();
+
+    if (monthDiff >= 0 && monthDiff < 6) {
+      const monthKey = billingEnd.toISOString().slice(0, 7); // 'YYYY-MM'
+
+      if (!latestInvoicesByMonth[monthKey] || invoice.id > latestInvoicesByMonth[monthKey].id) {
+        latestInvoicesByMonth[monthKey] = invoice;
+      }
+    }
+  });
+
+  Object.values(latestInvoicesByMonth).forEach(invoice => {
+    const consumption = parseFloat(invoice.data.detalles_consumo.consumo_total);
+    const billingEnd = new Date(invoice.billing_period_end);
+    const monthDiff = (now.getFullYear() - billingEnd.getFullYear()) * 12 + now.getMonth() - billingEnd.getMonth();
+    
+    if (!isNaN(consumption)) {
+      monthlyConsumption[5 - monthDiff] += consumption;
+    } else {
+      console.error('Valor de consumo no válido:', invoice.data.detalles_consumo.consumo_total);
+    }
+  });
+
+  console.log('Consumo mensual de facturas:', monthlyConsumption);
+  this.invoiceData = monthlyConsumption; 
+}
+
+private getMeasurementConsumptionForLastSixMonths(measurements: Measurement[]): void {
+  const now = new Date();
+  const monthlyMeasurementConsumption = Array(6).fill(0); 
+
+  measurements.forEach(measurement => {
+    const measurementEnd = new Date(measurement.measurement_end);
+    const monthDiff = (now.getFullYear() - measurementEnd.getFullYear()) * 12 + now.getMonth() - measurementEnd.getMonth();
+
+    if (monthDiff >= 0 && monthDiff < 6) {
+      monthlyMeasurementConsumption[5 - monthDiff] += measurement.data.consumo_total; 
+    }
+  });
+  
+  console.log('Consumo mensual de mediciones:', monthlyMeasurementConsumption);
+  this.measurementData = monthlyMeasurementConsumption; 
+}
 
 initializeChart(): void {
-  if (this.lastInvoiceDate) { // Verificar que lastInvoiceDate no sea undefined
-    const lastSixMonths = this.getLastSixMonthsFromDate(this.lastInvoiceDate); 
+  const lastSixMonths = this.getLastSixMonthsFromDate(this.lastInvoiceDate || new Date());
+
+  const emptyInvoiceData = this.invoiceData.every(value => value === 0);
+  const emptyMeasurementData = this.measurementData.every(value => value === 0);
 
   const options: ApexCharts.ApexOptions = {
     chart: {
@@ -126,7 +177,7 @@ initializeChart(): void {
       },
     },
     dataLabels: {
-      enabled: true,
+      enabled: false,
       formatter: (val) => Number(val).toFixed(0),
       offsetY: -20,
       style: {
@@ -142,11 +193,11 @@ initializeChart(): void {
     series: [
       {
         name: 'Facturas',
-        data: this.invoiceData, // Datos de facturas
+        data: this.invoiceData.length > 0 ? this.invoiceData : Array(6).fill(null),
       },
       {
         name: 'Mediciones',
-        data: this.measurementData, // Datos de mediciones
+        data: this.measurementData.length > 0 ? this.measurementData : Array(6).fill(null),
       },
     ],
     legend: {
@@ -180,7 +231,7 @@ initializeChart(): void {
     },
     tooltip: {
       y: {
-        formatter: (val) => `${val}`,
+        formatter: (val) => `${Number(val).toFixed(3)} kWh`,  
       },
     },
     colors: ['#01D4AD', '#0158A3'],
@@ -191,81 +242,74 @@ initializeChart(): void {
 
   const chart = new ApexCharts(
     document.querySelector('.containerGraphic'),
-    options
+    options,
   );
   chart.render();
 }
-}
+
   //esto es despues de haber cargado la vista
   ngAfterViewInit(): void {
     this.service.profile().subscribe({
-      next: (data) => {
-        this.user = data;
+        next: (data) => {
+            this.user = data;
 
-        // Obtener facturas
-        this.service.getInvoices().subscribe({
-          next: (invoiceData) => {
-            const expectedClientName = 'Cliente Generado';
-            const userInvoices = invoiceData.invoices.filter((invoice: Invoice) => {
-              return invoice.data.nombre_cliente === expectedClientName;
+            this.service.getInvoices().subscribe({
+                next: (invoiceData) => {
+                  console.log('Datos de facturas recibidos:', invoiceData);
+                    const expectedClientName = 'Cliente Generado';
+                    const userInvoices = invoiceData.invoices.filter((invoice: Invoice) => 
+                      invoice.data.nombre_cliente === expectedClientName || invoice.data.nombre_cliente === null
+                    );
+
+                    this.getConsumptionForLastSixMonths(userInvoices); 
+
+                    if (userInvoices.length > 1) {
+                        const latestInvoice = userInvoices[userInvoices.length - 1];
+                        const previousInvoice = userInvoices[userInvoices.length - 2];
+
+                        this.latestInvoiceKWh = parseFloat(latestInvoice.data.detalles_consumo.consumo_total);
+                        console.log('latestInvoiceKWh:', this.latestInvoiceKWh)
+                        this.latestInvoiceMonth = this.getMonthName(new Date(latestInvoice.billing_period_end));
+                        this.previousInvoiceKWh = parseFloat(previousInvoice.data.detalles_consumo.consumo_total);
+
+                        if (this.previousInvoiceKWh) {
+                            this.percentChange = ((this.latestInvoiceKWh - this.previousInvoiceKWh) / this.previousInvoiceKWh) * 100;
+                        } else if (this.latestInvoiceKWh > 0) {
+                            this.percentChange = 100;
+                        } else {
+                            this.percentChange = 0;
+                        }
+
+                        this.changeDirection = this.percentChange > 0 ? 'up' : (this.percentChange < 0 ? 'down' : '');
+                        this.changeColor = this.percentChange > 0 ? 'text-green-600' : (this.percentChange < 0 ? 'text-red-600' : 'text-gray-500');
+                    } else {
+                        this.latestInvoiceKWh = 0;
+                        this.latestInvoiceMonth = 'No disponible';
+                        this.percentChange = 0; 
+                    }
+
+                    // Obtener mediciones
+                    this.service.getMeasurements().subscribe({
+                      next: (measurementsData: MeasurementsResponse) => {
+                        const userMeasurements = measurementsData.measurements; 
+                        this.getMeasurementConsumptionForLastSixMonths(userMeasurements); 
+                        this.initializeChart();
+          
+                      },
+                        error: (err) => {
+                            console.error('Error al obtener mediciones', err);
+                        }
+                    });
+                },
+                error: (err) => {
+                    console.error('Error al obtener facturas', err);
+                }
             });
-
-            if (userInvoices.length > 1) {
-              const latestInvoice = userInvoices[userInvoices.length - 1];
-              const previousInvoice = userInvoices[userInvoices.length - 2];
-
-              this.latestInvoiceKWh = parseFloat(latestInvoice.data.detalles_consumo.consumo_total);
-              this.previousInvoiceKWh = parseFloat(previousInvoice.data.detalles_consumo.consumo_total);
-
-              if (this.previousInvoiceKWh !== 0) {
-                  this.percentChange = ((this.latestInvoiceKWh - this.previousInvoiceKWh) / this.previousInvoiceKWh) * 100;
-              } else {
-                  this.percentChange = this.latestInvoiceKWh > 0 ? 100 : -100; 
-              }
-
-              if (this.percentChange > 0) {
-                  this.changeDirection = 'up'; 
-                  this.changeColor = 'text-green-600'; 
-              } else if (this.percentChange < 0) {
-                  this.changeDirection = 'down'; 
-                  this.changeColor = 'text-red-600'; 
-              } else {
-                  this.changeDirection = ''; 
-                  this.changeColor = 'text-gray-500';
-              }
-
-              this.latestInvoiceMonth = this.getMonthName(new Date(latestInvoice.billing_period_end));
-            } else {
-              this.latestInvoiceKWh = 0;
-              this.previousInvoiceKWh = 0;
-              this.latestInvoiceMonth = 'No disponible';
-            }
-
-            // Obtener mediciones
-            this.service.getMeasurements().subscribe({
-              next: (measurementsData: MeasurementsResponse) => {
-                // Extraer consumos totales desde las mediciones
-                this.measurementData = measurementsData.measurements.map((measurement: Measurement) => 
-                  measurement.data.consumo_total
-                );
-
-                this.initializeChart(); 
-              },
-              error: (err) => {
-                console.error('Error al obtener mediciones', err);
-              }
-            });
-          },
-          error: (err) => {
-            console.error('Error al obtener facturas', err);
-          }
-        });
-      },
-      error: (err) => {
-        console.error('Error al obtener perfil', err);
-      }
+        },
+        error: (err) => {
+            console.error('Error al obtener perfil', err);
+        }
     });
-
 
     const swiper = new Swiper('.swiper-container', {
       modules: [Navigation],
@@ -292,9 +336,5 @@ initializeChart(): void {
         },
       },
     });
-    setTimeout(() => {
-      this.initializeChart();
-    }, 100);
   }
-
 }
