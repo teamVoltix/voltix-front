@@ -1,3 +1,4 @@
+
 :host{
     display: flex;
     flex-direction: column;
@@ -33,13 +34,13 @@
 }
 .avatar{
     position:absolute;
+    min-width: 128px;
+    height: 128px;
     border: white 3px groove;
     border-radius:100%;
-    top: 159px;
-    left: 20px;
-}
-.profilePhoto{
-    object-fit: cover;
+    top: -80px;
+    left: -80px;
+    object-fit: contain;
 }
 .modificar-pics{
     position:absolute;
@@ -108,3 +109,4 @@
 .cerrar:active {
     transform: scale(0.95); 
 }
+

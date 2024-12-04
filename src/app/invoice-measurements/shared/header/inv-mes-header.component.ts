@@ -14,7 +14,7 @@ export class InvMesHeaderComponent implements OnInit {
   selectedTab: string = '';
 
   ngOnInit() {
-    if (this.currentRoute.includes('invoce-listing')) {
+    if (this.currentRoute.includes('invoice')) {
       this.selectedTab = 'facturas';
     } else if (this.currentRoute.includes('measurement')) {
       this.selectedTab = 'mediciones';
@@ -27,7 +27,7 @@ export class InvMesHeaderComponent implements OnInit {
 
   get showBackArrow(): boolean {
     return (
-      this.currentRoute === '/measurement-compare' ||
+      this.currentRoute.match(/^\/measurement-compare\/\d+$/) !== null ||
       this.currentRoute.match(/^\/measurement-search\/\d+$/) !== null
     );
   }
@@ -35,7 +35,7 @@ export class InvMesHeaderComponent implements OnInit {
   selectTab(tab: string): void {
     this.selectedTab = tab;
     const route =
-      tab === 'facturas' ? '/invoce-listing' : '/measurement-search';
+      tab === 'facturas' ? '/invoice' : '/measurement-search';
     this.router.navigate([route]);
   }
 

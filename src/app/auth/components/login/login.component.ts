@@ -102,7 +102,6 @@ export class LoginComponent {
       },
       error: (error) => {
         console.error('Error en el inicio de sesión', error);
-        this.userNotFound = true;
         this.passwordNotFound = true;
       },
     });

@@ -4,7 +4,6 @@ import { AuthEntryComponent } from './auth/components/AuthEntry/AuthEntry.compon
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { ForgotPasswordComponent } from './auth/components/recover/forgot-password/forgot-password.component';
 import { NewPasswordComponent } from './auth/components/recover/new-password/new-password.component';
-import { ProfileSettingsComponent } from './profile/components/profile-settings/profile-settings.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { HomePageComponent } from './home-page/components/home-page.component';
 import { StartComponent } from './auth/components/start/start.component';
@@ -15,7 +14,6 @@ import { MeasurementSearchComponent } from './invoice-measurements/measurements/
 import { MeasurementDetailComponent } from './invoice-measurements/measurements/components/measurement-search/measurement-detail/measurement-detail.component';
 import { MeasurementCompareComponent } from './invoice-measurements/measurements/components/measurement-compare/measurement-compare.component';
 import { InvoiceDetailsComponent } from './invoice-measurements/invoice/components/invoice-details/invoice-details.component';
-import { InvoiceImageComponent } from './invoice-measurements/invoice/components/invoice-image/invoice-image.component';
 import { InvoiceUploadComponent } from './invoice-measurements/invoice/components/invoice-upload/invoice-upload.component';
 
 export const routes: Routes = [
@@ -43,11 +41,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'profile-settings',
-    title: 'Profile Settings',
-    component: ProfileSettingsComponent,
-  },
-  {
     path: 'forgot-password',
     title: 'Forgot Password Page',
     component: ForgotPasswordComponent,
@@ -69,7 +62,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'invoice-listing',
+    path: 'invoice',
     title: 'invoice listing',
     component: InvoiceListingComponent,
   },
@@ -77,26 +70,24 @@ export const routes: Routes = [
     path: 'measurement-search',
     title: 'Measurement search',
     component: MeasurementSearchComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'measurement-search/:id',
     title: 'Measurement Detail',
     component: MeasurementDetailComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'measurement-compare',
+    path: 'measurement-compare/:comparisonId',
     title: 'Measurement compare',
     component: MeasurementCompareComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'invoice-details',
+    path: 'invoice-details/:id',
     title: 'Invoice Details',
     component: InvoiceDetailsComponent,
-  },
-  {
-    path: 'invoice-image',
-    title: 'Invoice Image',
-    component: InvoiceImageComponent,
   },
   {
     path: 'invoice-upload',

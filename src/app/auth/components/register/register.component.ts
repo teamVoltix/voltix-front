@@ -6,19 +6,25 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
+  FormsModule,
+  AbstractControl,
+  ValidatorFn,
+  ValidationErrors,
 } from '@angular/forms';
 import { AuthService } from '../../service/auth-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FormsModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   private service = inject(AuthService);
   private router = inject(Router);
+
   isPasswordVisible: boolean = false;
   isRepeatPasswordVisible: boolean = false;
   registerForm: FormGroup;
@@ -34,15 +40,44 @@ export class RegisterComponent {
   hasSpecialChar: boolean = false;
   hasUpperCaseAndLowerCase: boolean = false;
 
+  isModalOpen = false;
+  enteredCode: string = '';
+  verificationCode: string = '';
+
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      fullname: ['', Validators.required],
+      fullname: ['', [Validators.required, this.fullNameValidator()]],
       email: ['', Validators.required],
       dni: ['', Validators.required],
       password: ['', Validators.required],
-      /*  repeatPassword: ['', Validators.required],
-      terms: [false, Validators.requiredTrue], */
+      repeatPassword: ['', Validators.required],
     });
+  }
+
+  fullNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value || '';
+      const isValid =
+        /^[a-zA-Z\s]+$/.test(value) &&
+        value.trim().length > 0 &&
+        value.trim().length < 20;
+      return !isValid ? { invalidFullName: true } : null;
+    };
+  }
+
+  passwordsMatch(): boolean {
+    const password = this.registerForm.get('password')?.value;
+    const repeatPassword = this.registerForm.get('repeatPassword')?.value;
+    return password === repeatPassword;
+  }
+  onPasswordInput(): void {
+    this.passwordTouched = true;
+    this.isAllInputsValid();
+  }
+
+  onRepeatPasswordInput(): void {
+    this.repeatPasswordTouched = true;
+    this.isAllInputsValid();
   }
 
   checkEmptyFields(): void {
@@ -66,6 +101,8 @@ export class RegisterComponent {
 
   // Llama a este método en cada input
   onInputChange(): void {
+    this.passwordsMatch();
+    this.isPasswordValid();
     this.checkEmptyFields();
     this.checkUpperAndLowerCase();
   }
@@ -96,11 +133,6 @@ export class RegisterComponent {
     );
   }
 
-  passwordsMatch(): boolean {
-    return (
-      this.registerForm.value.password === this.registerForm.value.password
-    );
-  }
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
@@ -111,11 +143,11 @@ export class RegisterComponent {
 
   isAllInputsValid(): boolean {
     return (
+      this.isPasswordValid() &&
+      this.passwordsMatch() &&
       (this.registerForm.get('fullname')?.valid ?? false) &&
       (this.registerForm.get('email')?.valid ?? false) &&
-      (this.registerForm.get('dni')?.valid ?? false) &&
-      this.isPasswordValid() &&
-      this.passwordsMatch()
+      (this.registerForm.get('dni')?.valid ?? false)
     );
   }
 
@@ -126,7 +158,7 @@ export class RegisterComponent {
     this.errorFieldsEmpty = '';
     this.errorEmail = '';
 
-    console.log(this.registerForm);
+    console.log(this.registerForm.value);
 
     if (this.registerForm.invalid) {
       this.checkEmptyFields(); // Verifica si hay campos vacíos
@@ -152,16 +184,94 @@ export class RegisterComponent {
 
     // Aquí puedes continuar con el registro
     console.log(this.registerForm.value);
+    this.registerForm.removeControl('repeatPassword');
+    console.log(this.registerForm.value);
     this.service.register(this.registerForm.value).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
+        this.showSuccessAlert();
         this.registerForm.reset();
+
         this.router.navigate(['/login']);
       },
       error: (error) => {
+        this.showErrorAlert();
         console.error('Error en el registro:', error);
         // Manejar el error de registro aquí, como mostrar un mensaje de error al usuario
       },
     });
+  }
+
+  /*   showSuccessAlert() {
+    Swal.fire({
+      title: 'Profil creado correctamente',
+      text: 'Bienvenido a Voltix!',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      position: 'top-end',
+      width: 500,
+    });
+  } */
+  showSuccessAlert() {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Profil creado correctamente',
+      text: 'Bienvenido a Voltix!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+  showErrorAlert() {
+    Swal.fire({
+      title: 'Hay un error nel registro',
+      text: 'OPS! Algo a salido mal!',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      position: 'top-end',
+      width: 600,
+    });
+  }
+
+  openModal() {
+    if (this.isAllInputsValid()) {
+      this.isModalOpen = true;
+    }
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  sendVerificationCode() {
+    const email = this.registerForm.value.email;
+    this.service.sendVerificationCode(email).subscribe({
+      next: (response) => {
+        console.log('send verificacion code:', response);
+        this.verificationCode = response.code;
+        this.isModalOpen = true;
+      },
+      error: (error) => {
+        console.error('Error en el envío del código de verificación', error);
+      },
+    });
+  }
+
+  verifyCode() {
+    const email = this.registerForm.value.email;
+    this.service.verifyCode(email, this.enteredCode).subscribe({
+      next: (response) => {
+        console.log('Codice verificato:', response);
+        this.onCodeVerified();
+      },
+      error: (error) => {
+        console.error('Error en la verificación del código', error);
+        // Manejar el error, como mostrar un mensaje al usuario
+      },
+    });
+  }
+  onCodeVerified() {
+    this.isModalOpen = false;
+    this.onSubmit();
   }
 }

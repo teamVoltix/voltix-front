@@ -26,7 +26,13 @@
       'border-green-500': registerForm.get('fullname')?.touched
     }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="Juan Ríos" required />
+          <p *ngIf="registerForm.get('fullname')?.hasError('invalidFullName') && registerForm.get('fullname')?.touched" class="mt-2 text-sm text-red-600 dark:text-red-500">
+            Nombre y appellido no valido.
+          </p>
       </div>
+
+
+
       <div class="mb-4">
         <label for="email" class="block mb-2 text-sm text-gray-900 dark:text-white">Email</label>
         <input type="email" id="email" formControlName="email" (input)="isAllInputsValid()" 
@@ -49,83 +55,86 @@
     }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="DNI/NIF/CIF" required />
       </div>
+
       <div class="mb-4">
         <label for="password" class="block mb-2 text-sm text-gray-900 dark:text-white">Contraseña</label>
         <div class="relative">
-          <input type="password" id="password" formControlName="password" (input)="isAllInputsValid()"
-            [type]="isPasswordVisible ? 'text' : 'password'" [ngClass]="{
-        'border-red-500': (registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || errorFieldsEmpty)) || !isPasswordValid() && passwordTouched,
-        'border-green-500': isPasswordValid() && passwordTouched,
-      }" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          <input type="password" id="password" formControlName="password" (input)="onPasswordInput()"
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            [ngClass]="{
+              'border-red-500': (registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || errorFieldsEmpty)) || !isPasswordValid() && passwordTouched,
+              'border-green-500': isPasswordValid() && passwordTouched,
+            }"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             placeholder="Ingresar contraseña" (input)="passwordTouched = true" required />
-            <button type="button" (click)="togglePasswordVisibility()"
-            class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <button type="button" (click)="togglePasswordVisibility()" class="absolute inset-y-0 right-0 flex items-center pr-3">
             <img [src]="isPasswordVisible ? '/assets/icons/eye-alt.svg' : '/assets/icons/eye-slash.svg'" alt="Toggle Password Visibility" class="w-5 h-5" />
-        </button>
-    </div>
+          </button>
+        </div>
         <p *ngIf="errorPassword" class="mt-2 text-sm text-red-600 dark:text-red-500">
           <span>{{ errorPassword }}</span>
         </p>
         <div class="flex flex-col mt-2 text-xs text-gray-600 dark:text-gray-400">
-            <span>
-              <i [ngClass]="isPasswordValid() ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Mínimo 8 caracteres y máximo 15 caracteres.
-            </span>
-            <span>
-              <i [ngClass]="hasUpperCaseAndLowerCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Al menos 1 mayúscula y 1 minúscula.
+          <span>
+            <i [ngClass]="isPasswordValid() ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+            Mínimo 8 caracteres y máximo 15 caracteres.
           </span>
-            <span>
-              <i [ngClass]="hasSpecialChar ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Al menos 1 carácter especial.
-            </span>
-            <span>
-              <i [ngClass]="hasNumber ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
-              Al menos 1 número.
-            </span>
-
-          </div>
+          <span>
+            <i [ngClass]="hasUpperCaseAndLowerCase ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+            Al menos 1 mayúscula y 1 minúscula.
+          </span>
+          <span>
+            <i [ngClass]="hasSpecialChar ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+            Al menos 1 carácter especial.
+          </span>
+          <span>
+            <i [ngClass]="hasNumber ? 'fa-regular fa-circle-check text-green-500' : 'fa-regular fa-circle-xmark text-red-500'"></i>
+            Al menos 1 número.
+          </span>
+        </div>
       </div>
+      
       <div class="mb-4">
         <label for="repeat-password" class="block mb-2 text-sm">Repita la contraseña</label>
         <div class="relative">
-            <input type="password" id="repeat-password"  (input)="isAllInputsValid()"
-                [type]="isRepeatPasswordVisible ? 'text' : 'password'" [ngClass]="{
-                'border-red-500': (!passwordsMatch() && repeatPasswordTouched) || (registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)),
-                'border-gray-300': !(registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)) && passwordsMatch(),
-                'border-green-500': passwordsMatch() && repeatPasswordTouched,
-            }" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Repetir contraseña" (input)="repeatPasswordTouched = true" required />
-            <button type="button" (click)="toggleRepeatPasswordVisibility()"
-                class="absolute inset-y-0 right-0 flex items-center pr-3">
-                <img [src]="isRepeatPasswordVisible ? '/assets/icons/eye-alt.svg' : '/assets/icons/eye-slash.svg'" alt="Toggle Password Visibility" class="w-5 h-5" />
-            </button>
+          <input type="password" id="repeat-password" formControlName="repeatPassword" (input)="onRepeatPasswordInput()"
+            [type]="isRepeatPasswordVisible ? 'text' : 'password'"
+            [ngClass]="{
+              'border-red-500': (!passwordsMatch() && repeatPasswordTouched) || (registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)),
+              'border-gray-300': !(registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.touched || errorFieldsEmpty)) && passwordsMatch(),
+              'border-green-500': passwordsMatch() && repeatPasswordTouched,
+            }"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Repetir contraseña" (input)="repeatPasswordTouched = true" required />
+          <button type="button" (click)="toggleRepeatPasswordVisibility()" class="absolute inset-y-0 right-0 flex items-center pr-3">
+            <img [src]="isRepeatPasswordVisible ? '/assets/icons/eye-alt.svg' : '/assets/icons/eye-slash.svg'" alt="Toggle Password Visibility" class="w-5 h-5" />
+          </button>
         </div>
         <p *ngIf="!passwordsMatch() && repeatPasswordTouched" class="mt-2 text-sm text-red-600 dark:text-red-500">
-            ¡Error! Las contraseñas no coinciden.
+          ¡Error! Las contraseñas no coinciden.
         </p>
-    </div>
-      <!-- <div class="flex items-start mb-5">
-        <div class="flex items-center h-5">
-          <input id="terms" type="checkbox" formControlName="terms" [ngClass]="{
-    'border-red-500': !registerForm.get('terms')?.value && (registerForm.invalid && errorFieldsEmpty),
-    'border-gray-300': registerForm.get('terms')?.value || !(registerForm.invalid && errorFieldsEmpty)
-  }" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-            required />
-        </div>
-        <label for="terms" class="ms-2 text-sm text-gray-900 dark:text-gray-300">Acepto los <a href="#"
-            class="text-blue-600 hover:underline dark:text-blue-500">términos y condiciones de uso</a></label>
-      </div> -->
+      </div>
       <p *ngIf="errorFieldsEmpty" class="my-2 text-sm text-red-600 dark:text-red-500">
         <span>{{ errorFieldsEmpty }}</span>
       </p>
-      <button type="submit"
-      [ngClass]="{
+      
+      <button type="button" [ngClass]="{
           'bg-custom': isAllInputsValid(),
           'bg-disabled': !isAllInputsValid()
-      }"
-      class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      [disabled]="!isAllInputsValid()">Aceptar</button>
-    </form>
-  </section>
+        }"
+        class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        (click)="sendVerificationCode()">Invia codice di verifica</button>
+      </form>
+      </section>
+      </div>
+
+
+<!-- Modal per l'inserimento del codice -->
+<div class="modal" [ngClass]="{'show': isModalOpen}">
+  <div class="modal-content">
+    <span class="close" (click)="isModalOpen = false">&times;</span>
+    <p>Inserta el codigo enviado por email:</p>
+    <input type="text" [(ngModel)]="enteredCode" placeholder="Codigo de 6 digito"/>
+    <button (click)="verifyCode()" class="modalButton">Invia</button>
+  </div>
 </div>

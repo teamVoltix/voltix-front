@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
+import { Invoice } from '../../../../core/model/invoice';
+import { InvoiceService } from '../../service/invoice.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -12,71 +14,65 @@ import { FormsModule } from '@angular/forms';
 })
 export class InvoiceListingComponent {
   // Lista estática de facturas
-  invoices = [
-    { id: '123456', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '654321', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '987654', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '456789', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '234567', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '345678', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '876543', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '567890', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '345123', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '789012', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '210987', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '543210', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '678901', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '890123', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '135792', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
-    { id: '246801', billing_period_start: '01/08/2024', billing_period_end: '31/08/2024', selected: false },
 
-  ];
-
-  filteredInvoices = [...this.invoices]; // Lista inicial, muestra todas las facturas
+  public invoiceService = inject(InvoiceService);
+  invoices: Invoice[] = [];
+  filteredInvoices = [...this.invoices];
+  searchMessage: string | null = '';
   searchTerm: string = '';
-  searchMessage: string | null = null;
+  // hasSelectedInvoices(): boolean {
+  //   return this.invoices.some((invoice) => invoice.selected);
+  // }
+  currentPage = 1;
+  invoicesPerPage = 5;
+  totalPages: number = 10; //da acabar de definir
 
-  // Método para buscar una factura
-  searchInvoice() {
+  ngOnInit() {
+    this.getInvoices();
+  }
+
+  getInvoices(): void {
+    this.invoiceService.getInvoices().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.invoices = data.invoices;
+      },
+      error: (err) => {
+        console.error('Error al obtener las mediciones:', err);
+      },
+    });
+  }
+
+  searchInvoice(): void {
     const term = this.searchTerm.trim();
 
     if (term) {
-      this.filteredInvoices = this.invoices.filter(invoice => invoice.id === term);
+      this.filteredInvoices = this.invoices.filter(
+        (invoice) =>
+          invoice.id.toString() === term || invoice.id.toString().includes(term)
+      );
 
       if (this.filteredInvoices.length === 0) {
-        this.searchMessage = 'No se ha encontrado la factura que buscas, intenta nuevamente';
+        this.searchMessage =
+          'No se ha encontrado la factura que buscas, intenta nuevamente';
       } else {
         this.searchMessage = null;
       }
     } else {
-      this.filteredInvoices = [...this.invoices]; // Restablece la lista si no hay término
+      this.filteredInvoices = [...this.invoices];
       this.searchMessage = null;
     }
-
-    // Actualiza el total de páginas después de filtrar
-    this.totalPages = Math.ceil(this.filteredInvoices.length / this.invoicesPerPage);
-    this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-    this.currentPage = 1; // Reinicia la página actual al filtrar
   }
-
-  hasSelectedInvoices(): boolean {
-    return this.filteredInvoices.some((invoice) => invoice.selected);
-  }
-  // Método para visualizar los detalles de una factura
-  viewInvoice(id: string) {
-    console.log(`Ver detalles de la factura con ID: ${id}`);
-  }
-
   // Variables para el paginador
-  currentPage = 1; // Página actual
-  invoicesPerPage = 5; // Número de facturas por página
-  totalPages = Math.ceil(this.invoices.length / this.invoicesPerPage); // Total de páginas
-  pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Números de página
+  // currentPage = 1; // Página actual
+  // invoicesPerPage = 5; // Número de facturas por página
+  // totalPages = Math.ceil(this.invoices?.length / this.invoicesPerPage); // Total de páginas
+  // pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Números de página
 
   // Método para obtener las facturas de la página actual
-  get paginatedInvoices() {
+  paginatedInvoices() {
     const startIndex = (this.currentPage - 1) * this.invoicesPerPage;
-    return this.filteredInvoices.slice(startIndex, startIndex + this.invoicesPerPage);
+    return this.invoices.slice(startIndex, startIndex + this.invoicesPerPage);
   }
 
   // Variables para efectos hover
@@ -85,8 +81,12 @@ export class InvoiceListingComponent {
 
   // Método para marcar o desmarcar todas las facturas
   selectAll() {
-    const allSelected = this.filteredInvoices.every((invoice) => invoice.selected);
-    this.filteredInvoices.forEach((invoice) => (invoice.selected = !allSelected));
+    const allSelected = this.filteredInvoices.every(
+      (invoice) => invoice.selected
+    );
+    this.filteredInvoices.forEach(
+      (invoice) => (invoice.selected = !allSelected)
+    );
   }
 
   // Método para alternar selección individual de una factura
@@ -112,21 +112,18 @@ export class InvoiceListingComponent {
     }
   }
 
-  // Método para abrir el selector de archivo
-  openFileUploader() {
-    const fileUploader: HTMLElement | null = document.getElementById('fileUploader');
-    if (fileUploader) {
-      fileUploader.click(); // Simula el clic en el input de archivo
-    }
+  // Método para visualizar los detalles de una factura
+  viewInvoice(id: number) {
+    console.log(`Ver detalles de la factura con ID: ${id}`);
   }
 
   // Método para eliminar las facturas seleccionadas
-  deleteSelectedInvoices() {
-    this.filteredInvoices = this.filteredInvoices.filter((invoice) => !invoice.selected);
-    this.totalPages = Math.ceil(this.filteredInvoices.length / this.invoicesPerPage); // Actualiza el total de páginas
-    this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Actualiza los números de página
-    console.log('Facturas eliminadas');
-  }
+  // deleteSelectedInvoices() {
+  //   this.invoices = this.invoices.filter((invoice) => !invoice.selected);
+  //   this.totalPages = Math.ceil(this.invoices.length / this.invoicesPerPage); // Actualiza el total de páginas
+  //   this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Actualiza los números de página
+  //   console.log('Facturas eliminadas');
+  // }
 
   // Método para cambiar de página en el paginador
   goToPage(event: Event, page: number) {
@@ -144,5 +141,13 @@ export class InvoiceListingComponent {
   // Método para identificar páginas únicas en el paginador (opcional)
   trackByIndex(index: number): number {
     return index;
+  }
+
+  openFileUploader() {
+    const fileUploader: HTMLElement | null =
+      document.getElementById('fileUploader');
+    if (fileUploader) {
+      fileUploader.click(); // Simula el clic en el input de archivo
+    }
   }
 }

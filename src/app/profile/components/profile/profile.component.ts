@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../core/model/user';
-import { RouterLink } from '@angular/router';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -18,40 +19,47 @@ import {
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  user!: User;
-  /* public userTest: User; */
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
+
+  originalUser!: User;
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
+  public photoForm: FormGroup;
   public edit: Boolean = true;
   public save: Boolean = false;
   public newPasswordPage: Boolean = false;
   public profileInputs: Boolean = true;
-  public currentPassword: string = '';
-  public newPassword: string = '';
-  public confirmPassword: string = '';
+  public current_password: string = '';
+  public new_password: string = '';
+  public confirm_new_password: string = '';
+  public selectedFile: File | null = null;
+  public previewUrl: string | null = null;
+  public modalProfileOpen = false;
+  public modalPasswordOpen = false;
+  file: File | null = null;
 
   private service = inject(ProfileService);
-  private location = inject(Location);
-  photo = 'https://images.pexels.com/photos/4129015/pexels-photo-4129015.jpeg';
+  private router = inject(Router);
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      user: [],
-      fullname: [{ value: '', disabled: true }],
-      dni: { value: '', disabled: true },
       phone_number: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
-      email: [
-        { value: '', disabled: true },
-        [, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
-      ],
-      password: [{ value: '', disabled: true }, []],
+      birth_date: [{ value: '', disabled: true }],
     });
 
     this.passwordForm = this.fb.group(
       {
-        currentPassword: ['', [Validators.required]],
-        newPassword: [
+        current_password: ['', [Validators.required]],
+        new_password: [
           '',
           [
             Validators.required,
@@ -62,21 +70,136 @@ export class ProfileComponent implements OnInit {
             ),
           ],
         ],
-        confirmPassword: ['', [Validators.required, this.passwordsMatch]],
+        confirm_new_password: ['', [Validators.required, this.passwordsMatch]],
       },
       {
         validators: this.passwordsMatch,
       }
     );
+
+    this.photoForm = this.fb.group({
+      photo: [null],
+    });
+  }
+  formatDate(date: string): string {
+    return new Date(date).toLocaleDateString();
   }
 
-  passwordsMatch(group: FormGroup) {
-    const newPassword = group.get('newPassword')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return newPassword === confirmPassword ? null : { passwordMismatch: true };
+  enable(phone_number: string, address: string, birth_date: string): void {
+    this.profileForm.get(phone_number)?.enable();
+    this.profileForm.get(address)?.enable();
+    this.profileForm.get(birth_date)?.enable();
+    this.edit = false;
+    this.save = true;
   }
-  get email() {
-    return this.profileForm.get('email');
+
+  //Deshabilitar campos y guardar datos
+  disable(phone_number: string, address: string, birth_date: string): void {
+    this.profileForm.get(phone_number)?.disable();
+    this.profileForm.get(address)?.disable();
+    this.profileForm.get(birth_date)?.disable();
+
+    this.edit = true;
+    this.save = false;
+  }
+  ngOnInit(): void {
+    this.service.profile().subscribe((data) => {
+      console.log(data);
+      this.user = data;
+      this.originalUser = { ...data };
+    });
+  }
+  saveUser() {
+    const updatedUser: Partial<User> = {};
+
+    if (this.profileForm.get('phone_number')?.dirty) {
+      updatedUser.phone_number = this.profileForm.get('phone_number')?.value;
+    } else {
+      updatedUser.phone_number = this.originalUser.phone_number;
+    }
+
+    if (this.profileForm.get('address')?.dirty) {
+      updatedUser.address = this.profileForm.get('address')?.value;
+    } else {
+      updatedUser.address = this.originalUser.address;
+    }
+
+    if (this.profileForm.get('birth_date')?.dirty) {
+      updatedUser.birth_date = this.profileForm.get('birth_date')?.value;
+    } else {
+      updatedUser.birth_date = this.originalUser.birth_date;
+    }
+    this.service.editUser(updatedUser).subscribe({
+      next: () => {
+        this.closeModalProfile();
+        this.ngOnInit();
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      },
+    });
+  }
+
+  onSubmit() {
+    if (this.passwordForm.valid) {
+      const { current_password, new_password, confirm_new_password } =
+        this.passwordForm.value;
+      console.log('Componente:', this.passwordForm.value);
+
+      this.service
+        .editPassword(current_password, new_password, confirm_new_password)
+        .subscribe({
+          next: (res) => (
+            console.log('Respuesta del servicio:', res), this.showSuccessAlert()
+          ),
+          error: (error) => {
+            console.error('Error:', error), this.showErrorAlert();
+          },
+        });
+      this.closeModalPassword();
+      this.profileInputs = true;
+      this.newPasswordPage = false;
+    } else {
+      console.error('Inválido');
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      this.photoForm.patchValue({ photo: file });
+      this.uploadPhoto(file);
+    }
+  }
+
+  uploadPhoto(file: File): void {
+    this.service.uploadPhoto(file).subscribe(
+      (response) => {
+        if (response.photo_url) {
+          this.user.photo = response.photo_url; // Aggiorna l'immagine dell'utente
+        } else {
+          console.log('Upload fallito');
+        }
+      },
+      (error) => {
+        console.log("Errore durante l'upload", error);
+        this.showErrorPhotoAlert();
+      }
+    );
+  }
+
+  openModalProfile() {
+    this.modalProfileOpen = true;
+  }
+  closeModalProfile() {
+    this.modalProfileOpen = false;
+  }
+  openModalPassword() {
+    this.modalPasswordOpen = true;
+  }
+  closeModalPassword() {
+    this.modalPasswordOpen = false;
   }
 
   changepassword() {
@@ -85,62 +208,10 @@ export class ProfileComponent implements OnInit {
     this.profileInputs = false;
   }
 
-  enable(
-    fullname: string,
-    dni: string,
-    phone_number: string,
-    address: string,
-    email: string,
-    password: string
-  ): void {
-    this.profileForm.get(fullname)?.enable();
-    this.profileForm.get(dni)?.enable();
-    this.profileForm.get(phone_number)?.enable();
-    this.profileForm.get(address)?.enable();
-    this.profileForm.get(email)?.enable();
-
-    this.edit = false;
-    this.save = true;
-  }
-
-  //Deshabilitar campos y guardar datos
-  disable(
-    fullname: string,
-    dni: string,
-    phone_number: string,
-    address: string,
-    email: string,
-    password: string
-  ): void {
-    this.profileForm.get(fullname)?.disable();
-    this.profileForm.get(dni)?.disable();
-    this.profileForm.get(phone_number)?.disable();
-    this.profileForm.get(address)?.disable();
-    this.profileForm.get(email)?.disable();
-
-    this.edit = true;
-    this.save = false;
-  }
-
-  editUser(
-    fullname: string,
-    dni: string,
-    phone_number: string,
-    address: string,
-    email: string
-  ) {
-    console.log(fullname, dni, phone_number, address, email);
-  }
-
-  editPhoto(photo: string) {
-    console.log(photo);
-  }
-
-  ngOnInit(): void {
-    this.service.profile().subscribe((data) => {
-      console.log(data);
-      this.user = data;
-    });
+  passwordsMatch(group: FormGroup) {
+    const newPassword = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return newPassword === confirmPassword ? null : { passwordMismatch: true };
   }
 
   getPhonePlaceholder(): string {
@@ -153,16 +224,40 @@ export class ProfileComponent implements OnInit {
     this.service.logout();
   }
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
-  onSubmit() {
-    if (this.passwordForm.valid) {
-      const { currentPassword, newPassword } = this.passwordForm.value;
-      console.log('Contraseña actual:', currentPassword);
-      console.log('Nueva contraseña:', newPassword);
-    } else {
-      console.log('Formulario inválido');
-    }
+  showSuccessAlert() {
+    Swal.fire({
+      title: 'Actualizado correctamente',
+      text: 'Actualiza el sitio para ver los cambios.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      position: 'top-end',
+      width: 500,
+    });
   }
+  showErrorAlert() {
+    Swal.fire({
+      title: 'La contraseña actual no coincide',
+      text: 'Actualiza el sitio para ver los cambios.',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      position: 'top-end',
+      width: 600,
+    });
+  }
+  showErrorPhotoAlert() {
+    Swal.fire({
+      title: 'Error en cargar la foto',
+      text: 'OOPS! Algo salió mal!',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      position: 'top',
+      width: 300,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+
 }

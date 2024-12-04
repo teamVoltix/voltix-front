@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MeasurementService } from '../../../services/measurement-service/measurement.service';
 import { Measurement } from '../../../../../core/model/measurement';
 import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.component';
@@ -14,26 +14,34 @@ import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.
   styleUrl: './measurement-detail.component.css',
 })
 export class MeasurementDetailComponent {
-  measurementId!: number;
   measurement: Measurement | undefined;
+  modalDataNotFound: boolean = false;
 
   route = inject(ActivatedRoute);
   measurementService = inject(MeasurementService);
+  router = inject (Router);
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.measurementId = +params['id']; // Obtener el id de la URL
-      this.measurementService
-        .getMeasurementById(this.measurementId)
-        .subscribe((measurement) => {
-          this.measurement = measurement;
-        });
+    this.getMeasurementDetail();
+  }
+
+  get measurementId(){
+    return this.route.snapshot.paramMap.get('id') || '';
+  }
+
+  getMeasurementDetail(){
+    this.measurementService.getMeasurementById(this.measurementId).subscribe({
+      next: (data) => {
+        this.measurement = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener el detalle de la medición:', err);
+      },
     });
   }
 
   calculateDaysBetweenDates(start: string, end: string): number {
     if (!start || !end) {
-      console.error('Las fechas de inicio o fin son inválidas:', start, end);
       return 0;
     }
 
@@ -52,14 +60,50 @@ export class MeasurementDetailComponent {
   }
 
 
-  //TODO: calculo de la cantidad a pagar¿?
+  //TODO: calculo de la cantidad a pagar, no viene en los datos del api¿?
   get estimatedAmount(){
     return '42';
   }
 
   get buttonText() {
-    return this.measurement?.comparison_status === 'Sin comparar'
+    return this.measurement?.comparison_status === 'Sin comparacion'
       ? 'Comparar'
       : 'Ver comparación';
   }
+
+
+  compareInvoice() {
+    if (this.measurement?.id) {
+      this.measurementService.compareInvoice(this.measurement?.id).subscribe({
+        next: (response) => {
+          console.log('Comparison Result:', response);
+        },
+        error: (error) => {
+          this.openModalDataNotFound();
+          console.error('Error comparing:', error);
+        }
+      });
+    } else {
+      console.log('Please enter a valid id');
+    }
+  }
+
+  goToComparisonDetail(id: number){
+    this.router.navigate([`measurement-compare/${id.toString()}`]);
+  }
+
+  compareOrGoToDetail(){
+    return this.measurement?.comparison_status === 'Sin comparacion'
+    ? this.compareInvoice()
+    : this.goToComparisonDetail(this.measurement?.id!);
+  }
+
+  openModalDataNotFound(){
+    this.modalDataNotFound = true;
+  }
+
+  closeModalDataNotFound(){
+    this.modalDataNotFound = false;
+  }
+
 }

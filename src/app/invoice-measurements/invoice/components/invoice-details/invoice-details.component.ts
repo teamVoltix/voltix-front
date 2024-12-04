@@ -1,29 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, Input, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { Invoice } from '../../../../core/model/invoice';
 import { RouterLink } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
+import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
+import { InvoiceService } from '../../service/invoice.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-details',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule, InvMesHeaderComponent],
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.css',
 })
-export class InvoiceDetailsComponent {
-  public invoice: Invoice;
+export class InvoiceDetailsComponent implements OnInit {
 
-  constructor() {
-    this.invoice = {
-      invoiceNumber: '4580',
-      cif: '43412',
-      date: '12/09/2024',
-      startDate: '20/01/2024',
-      endDate: '21/02/2024',
-      days: '30',
-      consumption: '336',
-      amount: '25',
-      image:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Feleiaenergia.com%2Fentiende-factura-luz%2F&psig=AOvVaw1p_mwKtxB4pbg3WFHBhq3O&ust=1732811266787000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPiq_ZL3_IkDFQAAAAAdAAAAABAE',
-    };
+
+  public route = inject(ActivatedRoute);
+  public invoiceService = inject(InvoiceService);
+  @Input() invoice: any
+
+  constructor( 
+    
+    public invoicePage: Boolean = true,
+    public invoiceImage: Boolean = false,
+    ) { }
+    
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.invoiceService.getInvoiceById(this.invoice_id).subscribe((data) => {
+        this.invoice = data;
+      });
+    }
+  }
+ 
+  get invoice_id(){
+    console.log(this.invoice.id)
+    return this.route.snapshot.paramMap.get('id') || '';
+  }
+  getInvoiceDetail(){
+    this.invoiceService.getInvoiceById(this.invoice_id).subscribe({
+      next: (data) => {
+        this.invoice = data
+      },
+      error: (err) => {
+        console.error('Error en detalle de factura', err)
+      }
+    })
+  }
+//Cambiar vista a Imagen 
+  getImage(){
+    this.invoicePage = false;
+    this.invoiceImage = true;
   }
 }
