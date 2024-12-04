@@ -23,7 +23,7 @@
       <div class="flex gap-2 items-center self-stretch my-auto w-11">
         <button type="button" class="flex overflow-hidden gap-1.5 justify-center items-center self-stretch my-auto w-11 min-h-[44px]"
           aria-label="User profile">
-          <img src="assets/images/imgUser.svg"
+          <img [src]="user.photo ? user.photo : 'assets/avatar-default.png'" 
             class="object-contain self-stretch my-auto w-8 rounded-full aspect-square" alt="User profile picture" />
         </button>
       </div>

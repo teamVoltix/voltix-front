@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { User } from '../../../core/model/user';
+import { HomepageService } from '../../../home-page/service/homepage.service';
 
 @Component({
   selector: 'app-invoice-header',
@@ -11,9 +13,19 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class InvMesHeaderComponent implements OnInit {
   router = inject(Router);
+  service = inject(HomepageService);
   selectedTab: string = '';
+  user!: User;
 
   ngOnInit() {
+    this.service.profile().subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
     if (this.currentRoute.includes('invoice')) {
       this.selectedTab = 'facturas';
     } else if (this.currentRoute.includes('measurement')) {
@@ -34,13 +46,11 @@ export class InvMesHeaderComponent implements OnInit {
 
   selectTab(tab: string): void {
     this.selectedTab = tab;
-    const route =
-      tab === 'facturas' ? '/invoice' : '/measurement-search';
+    const route = tab === 'facturas' ? '/invoice' : '/measurement-search';
     this.router.navigate([route]);
   }
 
   goToMeasurementSearch() {
     this.router.navigate(['/measurement-search']);
   }
-
 }
