@@ -4,6 +4,7 @@ import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.com
 import { Invoice } from '../../../../core/model/invoice';
 import { InvoiceService } from '../../service/invoice.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-listing',
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class InvoiceListingComponent {
   // Lista estática de facturas
-
+  public router = inject(Router);
   public invoiceService = inject(InvoiceService);
   invoices: Invoice[] = [];
   filteredInvoices = [...this.invoices];
@@ -114,7 +115,7 @@ export class InvoiceListingComponent {
 
   // Método para visualizar los detalles de una factura
   viewInvoice(id: number) {
-    console.log(`Ver detalles de la factura con ID: ${id}`);
+    this.router.navigate([`/invoice-details/${id}/`]);
   }
 
   // Método para eliminar las facturas seleccionadas
