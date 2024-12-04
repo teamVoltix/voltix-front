@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Invoice, InvoiceResponse } from '../../../core/model/invoice';
 import { InvoiceDetailsComponent } from '../components/invoice-details/invoice-details.component';
 import { User } from '../../../core/model/user';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,16 @@ export class InvoiceService {
   }
   profile(): Observable<User> {
     return this.http.get<User>(this.url + 'api/profile/');
+  }
+
+  uploadInvoice(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.post<any>(this.url + 'api/invoices/upload/', formData, {
+      headers: new HttpHeaders({
+        'Accept': 'application/json'
+      })
+    });
   }
 }
