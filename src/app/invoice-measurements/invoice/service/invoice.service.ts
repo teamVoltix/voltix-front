@@ -3,15 +3,15 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Invoice, InvoiceResponse } from '../../../core/model/invoice'
+import { Invoice, InvoiceResponse } from '../../../core/model/invoice';
 import { InvoiceDetailsComponent } from '../components/invoice-details/invoice-details.component';
+import { User } from '../../../core/model/user';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InvoiceService {
-  
   private http = inject(HttpClient);
   private url = environment.API_URL;
   private router = inject(Router);
@@ -22,8 +22,11 @@ export class InvoiceService {
     return this.http.get<InvoiceResponse>(this.url + 'api/invoices/');
   }
 
-  getInvoiceById(invoice_id: string): Observable<Invoice> {
-    return this.http.get<Invoice>(this.url + 'api/invoices/'+ invoice_id);
+  getInvoiceById(id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(this.url + 'api/invoices/' + id + '/');
+  }
+  profile(): Observable<User> {
+    return this.http.get<User>(this.url + 'api/profile/');
   }
 
   uploadInvoice(file: File): Observable<any> {

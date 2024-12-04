@@ -1,4 +1,3 @@
-import { User } from "./user";
 import { UserMeasurement } from "./measurement";
 
 export interface Invoice {
