@@ -58,7 +58,7 @@ export class RegisterComponent {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value || '';
       const isValid =
-        /^[a-zA-Z\s]+$/.test(value) &&
+      /^[a-zA-ZÑñÁáÉéÍíÓóÚú\s]+$/.test(value) &&
         value.trim().length > 0 &&
         value.trim().length < 20;
       return !isValid ? { invalidFullName: true } : null;
