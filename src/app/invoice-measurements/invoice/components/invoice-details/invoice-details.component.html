@@ -1,5 +1,15 @@
 <div class="w-full bg-gray-100 relative overflow-auto">
-  <app-invoice-header></app-invoice-header>
+  <div class="header">
+    <div class="navbar">
+      <button> <img src="/assets/back-button.svg" alt="go to home" (click)="goToHome()"></button>
+      <img src="assets/images/VoltixLoginBlanco.svg" alt="logo voltix" >
+      <button><img [src]="user.photo ? user.photo : 'assets/avatar-default.png'"  alt="Avatar" class="avatar" width="30px" height="30px"></button>
+    </div>
+    <div class="select">
+      <button class="factura button" (click)="goToInvoice()">Facturas</button>
+      <button class="mediciones button" (click)="goToMeasurements()">Mediciones</button>
+    </div>
+  </div>
   
   <ng-container *ngIf="invoicePage; else invoiceImage">
   <div *ngIf="!isLoading && invoicePage">
@@ -10,7 +20,7 @@
           <div class="mb-4 relative ">
             <label for="cif" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CIF/NIF</label>
             <input type="text" id="cif" disabled 
-            value="{{this.User.dni}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            value="{{this.user.dni}}" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
             <h2> </h2></div>
           <div class="mb-4 relative">
             <label for="fecha_cargo" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fecha de carga</label>
