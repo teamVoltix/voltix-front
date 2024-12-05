@@ -27,11 +27,9 @@
     }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="Juan Ríos" required />
           <p *ngIf="registerForm.get('fullname')?.hasError('invalidFullName') && registerForm.get('fullname')?.touched" class="mt-2 text-sm text-red-600 dark:text-red-500">
-            Nombre y appellido no valido.
+            Nombre y appellido no válido.
           </p>
       </div>
-
-
 
       <div class="mb-4">
         <label for="email" class="block mb-2 text-sm text-gray-900 dark:text-white">Email</label>
@@ -123,7 +121,7 @@
           'bg-disabled': !isAllInputsValid()
         }"
         class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        (click)="sendVerificationCode()">Invia codice di verifica</button>
+        (click)="sendVerificationCode()">Enviar código de verificación</button>
       </form>
       </section>
       </div>
@@ -135,6 +133,6 @@
     <span class="close" (click)="isModalOpen = false">&times;</span>
     <p>Inserta el codigo enviado por email:</p>
     <input type="text" [(ngModel)]="enteredCode" placeholder="Codigo de 6 digito"/>
-    <button (click)="verifyCode()" class="modalButton">Invia</button>
+    <button (click)="verifyCode()" class="modalButton">Enviar</button>
   </div>
 </div>
