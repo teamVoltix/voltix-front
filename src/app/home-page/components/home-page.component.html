@@ -8,7 +8,7 @@
     
     <div class="user-container">
       <div class="user-avatar" (click)="toggleDropdown()">
-          <img src="/assets/avatar-default.png" alt="Avatar" class="avatar" />
+          <img [src]="user.photo ? user.photo : 'assets/avatar-default.png'"  alt="Avatar" class="avatar" />
       </div>
       
       <!-- Dropdown -->
@@ -25,6 +25,7 @@
           </ul>
       </div>
     </div>
+    
   </section>
   <div class="body-section">
     <!-- Bienvenida -->
