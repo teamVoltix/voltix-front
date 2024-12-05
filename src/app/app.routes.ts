@@ -65,6 +65,7 @@ export const routes: Routes = [
     path: 'invoice',
     title: 'invoice listing',
     component: InvoiceListingComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'measurement-search',
@@ -88,11 +89,13 @@ export const routes: Routes = [
     path: 'invoice-details/:id',
     title: 'Invoice Details',
     component: InvoiceDetailsComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'invoice-upload',
     title: 'Upload Invoice',
     component: InvoiceUploadComponent,
+    canActivate: [authGuard],
   },
   {
     path: '**',
