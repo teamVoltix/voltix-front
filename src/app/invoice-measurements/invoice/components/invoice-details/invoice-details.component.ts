@@ -1,23 +1,31 @@
 import { Component, OnInit, inject, Input } from '@angular/core';
 import { Invoice } from '../../../../core/model/invoice';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
 import { InvoiceService } from '../../service/invoice.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../../core/model/user';
 
 @Component({
   selector: 'app-invoice-details',
   standalone: true,
-  imports: [CommonModule, InvMesHeaderComponent],
+  imports: [CommonModule],
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.css',
 })
 export class InvoiceDetailsComponent implements OnInit {
   public route = inject(ActivatedRoute);
+  public router = inject(Router);
   public invoiceService = inject(InvoiceService);
-  public User!: User;
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
   @Input() invoice: Invoice | undefined;
 
   public invoicePage: Boolean = true;
@@ -32,7 +40,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
     this.invoiceService.profile().subscribe({
       next: (data) => {
-        this.User = data;
+        this.user = data;
       },
       error: (err) => {
         console.error('Error al obtener el perfil', err);
@@ -59,7 +67,6 @@ export class InvoiceDetailsComponent implements OnInit {
 
   getInvoiceDetail() {
     this.invoiceService.getInvoiceById(this.invoice_id()).subscribe({
-      
       next: (data) => {
         this.invoice = data;
       },
@@ -72,5 +79,15 @@ export class InvoiceDetailsComponent implements OnInit {
   getImage() {
     this.invoicePage = false;
     this.invoiceImage = true;
+  }
+
+  goToInvoice() {
+    this.router.navigate(['/invoice']);
+  }
+  goToMeasurements() {
+    this.router.navigate(['measurement-search']);
+  }
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 }

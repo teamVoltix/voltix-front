@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { MeasurementService } from '../../services/measurement-service/measurement.service';
@@ -8,27 +8,32 @@ import { ReportDownloadComponent } from '../report-download/report-download.comp
 import { FormsModule } from '@angular/forms';
 import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.component';
 import { Measurement } from '../../../../core/model/measurement';
+import { User } from '../../../../core/model/user';
 
 @Component({
   selector: 'app-measurement-search',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReportDownloadComponent,
-    InvMesHeaderComponent,
-    FormsModule,
-  ],
+  imports: [CommonModule, ReportDownloadComponent, FormsModule],
   providers: [DatePipe],
   templateUrl: './measurement-search.component.html',
   styleUrl: './measurement-search.component.css',
 })
-export class MeasurementSearchComponent {
+export class MeasurementSearchComponent implements OnInit {
   isHoverPrevious = false;
   isHoverNext = false;
   measurementList: Measurement[] = [];
   searchQuery: string = '';
   filteredMeasurements: Measurement[] = [];
   timeout: any;
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
 
   router = inject(Router);
   measurementService = inject(MeasurementService);
@@ -37,6 +42,14 @@ export class MeasurementSearchComponent {
 
   ngOnInit() {
     this.getMeasurements();
+    this.measurementService.profile().subscribe({
+      next: (data) => {
+        this.user = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener el perfil', err);
+      },
+    });
   }
 
   getMeasurements(): void {
@@ -161,5 +174,14 @@ export class MeasurementSearchComponent {
 
   showModal() {
     this.reportService.showModal();
+  }
+  goToInvoice() {
+    this.router.navigate(['/invoice']);
+  }
+  goToMeasurements() {
+    this.router.navigate(['measurement-search']);
+  }
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 }

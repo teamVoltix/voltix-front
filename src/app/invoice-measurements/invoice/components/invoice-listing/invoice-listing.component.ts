@@ -5,20 +5,27 @@ import { Invoice } from '../../../../core/model/invoice';
 import { InvoiceService } from '../../service/invoice.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../../../core/model/user';
 
 @Component({
   selector: 'app-invoice-listing',
   standalone: true,
-  imports: [CommonModule, InvMesHeaderComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './invoice-listing.component.html',
   styleUrls: ['./invoice-listing.component.css'],
 })
 export class InvoiceListingComponent {
-  // Lista estática de facturas
   private router = inject(Router);
-
-  
   public invoiceService = inject(InvoiceService);
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
   invoices: Invoice[] = [];
   filteredInvoices = [...this.invoices];
   searchMessage: string | null = '';
@@ -32,6 +39,14 @@ export class InvoiceListingComponent {
 
   ngOnInit() {
     this.getInvoices();
+    this.invoiceService.profile().subscribe({
+      next: (data) => {
+        this.user = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener el perfil', err);
+      },
+    });
   }
 
   goToUploadInvoice(): void {
@@ -156,5 +171,14 @@ export class InvoiceListingComponent {
     if (fileUploader) {
       fileUploader.click(); // Simula el clic en el input de archivo
     }
+  }
+  goToInvoice() {
+    this.router.navigate(['/invoice']);
+  }
+  goToMeasurements() {
+    this.router.navigate(['measurement-search']);
+  }
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 }
