@@ -1,78 +1,100 @@
 <div class="factura">
 
-    <div class="header">
+    <div class="header user-container">
         <div class="navbar">
-          <button> <img src="/assets/back-button.svg" alt="" (click)="goToHome()"></button>
-          <img src="assets/images/VoltixLoginBlanco.svg" alt="" >
-          <button><img [src]="user.photo ? user.photo : 'assets/avatar-default.png'"  alt="Avatar" class="avatar" width="30px" height="30px"></button>
-        </div>
+            <button type="button" aria-label="back button"> <img src="/assets/back-button.svg" alt=""
+                    (click)="goToHome()"></button>
+            <img src="assets/images/VoltixLoginBlanco.svg" alt="">
+            <button type="button" (click)="toggleDropdown()"><img
+                    [src]="user.photo ? user.photo : 'assets/avatar-default.png'" alt="Avatar" class="avatar"
+                    width="30px" height="30px"></button>
+        </div>        
         <div class="select">
-          <button class="factura button" (click)="goToInvoice()">Facturas</button>
-          <button class="mediciones button " (click)="goToMeasurements()">Mediciones</button>
+            <button type="button" class="factura button" (click)="goToInvoice()">Facturas</button>
+            <button type="button" class="mediciones button " (click)="goToMeasurements()">Mediciones</button>
+        </div>
+        <!-- Dropdown -->
+        <div class="dropdown" [ngClass]="{ 'hidden': !isDropdownOpen }">
+            <ul>
+                <li class="dropdown-item" (click)="closeDropdown()">
+                    <img src="/assets/icons/close-x.svg" alt="Close Ico" class="closeX" />
+                </li>
+                <li class="dropdown-item mb-4" (click)="goToProfile()"><img src="/assets/icons/user.svg" alt="User Ico"
+                        class="icon" />Mi perfil <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+                <li class="dropdown-item my-4"><img src="/assets/icons/alerts.svg" alt="Alerts Ico"
+                        class="icon" />Notificaciones <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+                <li class="dropdown-item my-4"><img src="/assets/icons/question-circle.svg" alt="Question Circle Ico"
+                        class="icon" />Ayuda <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+                <hr />
+                <li class="dropdown-item my-4" (click)="logout()"><img src="/assets/icons/exit.svg" alt="Exit Ico"
+                        class="icon" />Cerrar Sesión <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+            </ul>
+        </div>        
     </div>
-    </div>
 
-<div class="w-full ">
-    <!-- Header de Facturas -->
 
-    <!-- Sección de Facturas -->
-    <section class="bg-neutral-50 px-5 pt-5 pb-14 factura-section">
-        <h2 class="text-dark-text text-2xl font-semibold">Facturas</h2>
+    <div class="w-full ">
+        <!-- Header de Facturas -->
 
-        <!-- Campo de búsqueda -->
-        <form (ngSubmit)="searchInvoice()">
-            <div class="relative w-full mt-4 mb-3">
-              <div class="absolute inset-y-0 start-1 flex items-center ps-3 pointer-events-none">
-                <img src="/assets/icons/search.svg" alt="icono de lupa" height="16px" width="16px">
-              </div>
-              <input type="text" 
-                     [(ngModel)]="searchTerm" 
-                     name="searchTerm" 
-                     class="bg-neutral-50 border border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded-lg block w-full ps-10 p-3"
-                     placeholder="Buscar por ID de factura" 
-                     required />
-            </div>
-        </form>
-        
-        <p *ngIf="searchMessage" class=" text-sm mt-2">{{ searchMessage }}</p>
-        
-        <!-- Listado de facturas filtradas -->
-        <section class="bg-white border border-neutral-100 rounded-lg p-4">
-            <section class="flex items-center justify-between bg-neutral-100 px-4 py-[10px] mb-3 mark">
-                <input id="selectAll" type="checkbox" value="" (change)="selectAll()"
-                    class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0" />
-                <!-- <div *ngIf="hasSelectedInvoices()" class="flex items-center gap-2" (click)="deleteSelectedInvoices()"> -->
+        <!-- Sección de Facturas -->
+        <section class="bg-neutral-50 px-5 pt-5 pb-14 factura-section">
+            <h2 class="text-dark-text text-2xl font-semibold">Facturas</h2>
+
+            <!-- Campo de búsqueda -->
+            <form (ngSubmit)="searchInvoice()">
+                <div class="relative w-full mt-4 mb-3">
+                    <div class="absolute inset-y-0 start-1 flex items-center ps-3 pointer-events-none">
+                        <img src="/assets/icons/search.svg" alt="icono de lupa" height="16px" width="16px">
+                    </div>
+                    <input type="text" [(ngModel)]="searchTerm" name="searchTerm"
+                        class="bg-neutral-50 border border-neutral-100 text-dark-text text-base placeholder:text-neutral-500 rounded-lg block w-full ps-10 p-3"
+                        placeholder="Buscar por ID de factura" required />
+                </div>
+            </form>
+
+            <p *ngIf="searchMessage" class=" text-sm mt-2">{{ searchMessage }}</p>
+
+            <!-- Listado de facturas filtradas -->
+            <section class="bg-white border border-neutral-100 rounded-lg p-4">
+                <section class="flex items-center justify-between bg-neutral-100 px-4 py-[10px] mb-3 mark">
+                    <input id="selectAll" type="checkbox" value="" (change)="selectAll()" placeholder="trash"
+                        class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0" />
+                    <!-- <div *ngIf="hasSelectedInvoices()" class="flex items-center gap-2" (click)="deleteSelectedInvoices()"> -->
                     <img src="/assets/icons/trash.svg" alt="icono para borrar">
-                <!-- </div> -->
+                    <!-- </div> -->
+                </section>
+
+
+
+                <!-- Facturas individuales -->
+                <section *ngFor="let invoice of invoices; trackBy: trackById"
+                    class="flex items-center justify-between py-2 px-4 mb-[10px] rounded"
+                    [ngClass]="{'selected-invoice': invoice.selected}">
+                    <div class="flex items-center">
+                        <input [id]="invoice.id" type="checkbox" [checked]="invoice.selected" placeholder="invoice"
+                            (change)="toggleSelection(invoice)"
+                            class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2" />
+                    </div>
+                    <div class="texts me-2">
+                        <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
+                        <p class="text-gray-500 text-sm">{{invoice.data.fecha_cargo}}</p>
+                    </div>
+                    <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="detalle factura"
+                        (click)="viewInvoice(invoice.id)" />
+
+                </section>
             </section>
 
 
-
-            <!-- Facturas individuales -->
-            <section *ngFor="let invoice of invoices; trackBy: trackById"
-                class="flex items-center justify-between py-2 px-4 mb-[10px] rounded"
-                [ngClass]="{'selected-invoice': invoice.selected}">
-                <div class="flex items-center">
-                    <input [id]="invoice.id" type="checkbox" [checked]="invoice.selected"
-                        (change)="toggleSelection(invoice)"
-                        class="w-4 h-4 !text-primary bg-white !border-neutral-200 rounded focus:ring-transparent focus:ring-0 me-2" />
-                </div>
-                <div class="texts me-2">
-                    <h4 class="text-dark-text text-base font-medium">ID {{invoice.id}}</h4>
-                    <p class="text-gray-500 text-sm">{{invoice.data.fecha_cargo}}</p>
-                </div>
-                <img class="rotate-180" src="/assets/icons/blackBackButton.svg" alt="detalle factura"
-                    (click)="viewInvoice(invoice.id)" />
-
-            </section>
-        </section>
-        
-
-        <!-- Paginador -->
-        <!-- <nav class="mt-3">
+            <!-- Paginador -->
+            <!-- <nav class="mt-3">
             <ul class="w-full h-12 flex items-center justify-between p-3 bg-white rounded-lg"> -->
-                <!-- Botón Anterior -->
-                <!-- <li>
+            <!-- Botón Anterior -->
+            <!-- <li>
                     <a href="#" (click)="goToPage($event, currentPage - 1)"
                         class="flex items-center justify-center gap-1 px-2 py-[6px] rounded" [ngClass]="{
             'pagination-disabled': currentPage === 1,
@@ -82,9 +104,9 @@
                             alt="flecha anterior">
                         Anterior
                     </a> -->
-                <!-- </li> -->
-                <!-- Páginas -->
-                <!-- <li *ngFor="let page of pageNumbers; trackBy: trackByIndex">
+            <!-- </li> -->
+            <!-- Páginas -->
+            <!-- <li *ngFor="let page of pageNumbers; trackBy: trackByIndex">
                     <a href="#" (click)="goToPage($event, page)"
                         class="w-6 h-6 rounded flex items-center justify-center text-base text-neutral-500"
                         [ngClass]="{'bg-primary text-white': currentPage === page}">
@@ -92,8 +114,8 @@
                     </a>
                 </li>
  -->
-                <!-- Botón Siguiente -->
-                <!-- <li>
+            <!-- Botón Siguiente -->
+            <!-- <li>
                     <a href="#" (click)="goToPage($event, currentPage + 1)"
                         class="flex items-center justify-center gap-1 px-2 py-[6px] rounded" [ngClass]="{
             'pagination-disabled': currentPage === totalPages,
@@ -107,16 +129,16 @@
             </ul>
         </nav> -->
 
-        <!-- Botón para cargar facturas -->
-        <button class="w-full bg-[#0058a3] text-white py-2 rounded mt-4 flex items-center justify-center gap-2"
-        (click)="goToUploadInvoice()" >
-            <img src="assets/icons/circlePlus.svg" alt="icono cargar más" class="h-5 w-5">
-            Cargar factura
-        </button>
+            <!-- Botón para cargar facturas -->
+            <button class="w-full bg-[#0058a3] text-white py-2 rounded mt-4 flex items-center justify-center gap-2"
+                (click)="goToUploadInvoice()">
+                <img src="assets/icons/circlePlus.svg" alt="icono cargar más" class="h-5 w-5">
+                Cargar factura
+            </button>
 
-        <!-- Input oculto para cargar archivos -->
-        <input type="file" id="fileUploader" (change)="handleFileUpload($event)" accept=".pdf" multiple hidden
-            placeholder="Añadir archivo">
-    </section>
-</div>
+            <!-- Input oculto para cargar archivos -->
+            <input type="file" id="fileUploader" (change)="handleFileUpload($event)" accept=".pdf" multiple hidden
+                placeholder="Añadir archivo">
+        </section>
+    </div>
 </div>

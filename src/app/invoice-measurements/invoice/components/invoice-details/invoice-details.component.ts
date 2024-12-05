@@ -26,6 +26,24 @@ export class InvoiceDetailsComponent implements OnInit {
     fullname: '',
     dni: '',
   };
+    //funcion de menu
+    isDropdownOpen = false;
+    logout(): void {
+      this.invoiceService.logout();
+    }
+  
+    toggleDropdown(): void {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }
+  
+    closeDropdown(): void {
+      this.isDropdownOpen = false;
+    }
+  
+    goToProfile(): void {
+      this.router.navigate(['/profile']);
+    }
+
   @Input() invoice: Invoice | undefined;
 
   public invoicePage: Boolean = true;
