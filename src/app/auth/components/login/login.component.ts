@@ -74,60 +74,64 @@ export class LoginComponent {
     this.camposIncompletos = !dni || !password;
   }
 
+  goToForgotPassword(): void {
+    this.router.navigate(['/forgot-password']);
+  }
+
   // Manejo del evento de envío del formulario
   onSubmit(): void {
     // Verifica primero si los campos están completos
     this.actualizarEstadoCampos();
     if (this.camposIncompletos) {
-        this.userNotFound = false;
-        this.passwordNotFound = false;
-        console.log('Faltan campos por completar.');
-        return;
+      this.userNotFound = false;
+      this.passwordNotFound = false;
+      console.log('Faltan campos por completar.');
+      return;
     }
 
     // Extraemos los valores ingresados
     const credentials = {
-        dni: this.login.get('dni')?.value,
-        password: this.login.get('password')?.value,
+      dni: this.login.get('dni')?.value,
+      password: this.login.get('password')?.value,
     };
 
     this.service.login(credentials).subscribe({
-        next: (response: LoginResponse) => {
-            console.log('Inicio de sesión exitoso', response);
-            this.stateService.setLogin(
-                response.access_token,
-                response.refresh_token
-            );
-            this.router.navigate(['/home']);
-        },
-        error: (error) => {
-            console.error('Error en el inicio de sesión', error);
+      next: (response: LoginResponse) => {
+        console.log('Inicio de sesión exitoso', response);
+        this.stateService.setLogin(
+          response.access_token,
+          response.refresh_token
+        );
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error('Error en el inicio de sesión', error);
 
-            if (error.status === 401) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Usuario o contraseña incorrectos.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                });
-            } else if (error.status === 0) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Problema de conexión. Por favor verifica tu conexión a Internet.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Ocurrió un error inesperado. Intenta nuevamente más tarde.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                });
-            }
-            
-            this.passwordNotFound = true; 
-        },
+        if (error.status === 401) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Usuario o contraseña incorrectos.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          });
+        } else if (error.status === 0) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Problema de conexión. Por favor verifica tu conexión a Internet.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          });
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error inesperado. Intenta nuevamente más tarde.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          });
+        }
+
+        this.passwordNotFound = true;
+      },
     });
-}
+  }
 }

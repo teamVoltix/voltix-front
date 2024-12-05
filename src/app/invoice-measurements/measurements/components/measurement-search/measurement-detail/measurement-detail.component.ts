@@ -1,35 +1,50 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MeasurementService } from '../../../services/measurement-service/measurement.service';
 import { Measurement } from '../../../../../core/model/measurement';
 import { InvMesHeaderComponent } from '../../../../shared/header/inv-mes-header.component';
-
+import { User } from '../../../../../core/model/user';
 
 @Component({
   selector: 'app-measurement-detail',
   standalone: true,
-  imports: [CommonModule, InvMesHeaderComponent],
+  imports: [CommonModule],
   templateUrl: './measurement-detail.component.html',
   styleUrl: './measurement-detail.component.css',
 })
-export class MeasurementDetailComponent {
+export class MeasurementDetailComponent implements OnInit {
   measurement: Measurement | undefined;
   modalDataNotFound: boolean = false;
-
   route = inject(ActivatedRoute);
   measurementService = inject(MeasurementService);
-  router = inject (Router);
-
+  router = inject(Router);
+  user: User = {
+    address: '',
+    birth_date: '',
+    phone_number: '',
+    photo: '',
+    email: '',
+    fullname: '',
+    dni: '',
+  };
   ngOnInit() {
     this.getMeasurementDetail();
+    this.measurementService.profile().subscribe({
+      next: (data) => {
+        this.user = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener el perfil', err);
+      },
+    });
   }
 
-  get measurementId(){
+  get measurementId() {
     return this.route.snapshot.paramMap.get('id') || '';
   }
 
-  getMeasurementDetail(){
+  getMeasurementDetail() {
     this.measurementService.getMeasurementById(this.measurementId).subscribe({
       next: (data) => {
         this.measurement = data;
@@ -59,9 +74,8 @@ export class MeasurementDetailComponent {
     return diffDays;
   }
 
-
   //TODO: calculo de la cantidad a pagar, no viene en los datos del api¿?
-  get estimatedAmount(){
+  get estimatedAmount() {
     return '42';
   }
 
@@ -70,7 +84,6 @@ export class MeasurementDetailComponent {
       ? 'Comparar'
       : 'Ver comparación';
   }
-
 
   compareInvoice() {
     if (this.measurement?.id) {
@@ -81,29 +94,37 @@ export class MeasurementDetailComponent {
         error: (error) => {
           this.openModalDataNotFound();
           console.error('Error comparing:', error);
-        }
+        },
       });
     } else {
       console.log('Please enter a valid id');
     }
   }
 
-  goToComparisonDetail(id: number){
+  goToComparisonDetail(id: number) {
     this.router.navigate([`measurement-compare/${id.toString()}`]);
   }
 
-  compareOrGoToDetail(){
+  compareOrGoToDetail() {
     return this.measurement?.comparison_status === 'Sin comparacion'
-    ? this.compareInvoice()
-    : this.goToComparisonDetail(this.measurement?.id!);
+      ? this.compareInvoice()
+      : this.goToComparisonDetail(this.measurement?.id!);
   }
 
-  openModalDataNotFound(){
+  openModalDataNotFound() {
     this.modalDataNotFound = true;
   }
 
-  closeModalDataNotFound(){
+  closeModalDataNotFound() {
     this.modalDataNotFound = false;
   }
-
+  goToInvoice() {
+    this.router.navigate(['/invoice']);
+  }
+  goToMeasurements() {
+    this.router.navigate(['measurement-search']);
+  }
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
 }

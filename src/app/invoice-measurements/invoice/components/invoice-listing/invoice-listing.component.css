@@ -1,26 +1,18 @@
-
-
-
 input[type="text"] {
-    border: 1px solid #e5e5e5; /* Misma propiedad que el listado */
-    
-    
+    border: 1px solid #e5e5e5; /* Misma propiedad que el listado */  
 }
 
 .factura-section {
-    background-color: #f4f4f6; /* Color de fondo */
-    
-    
-    
+    background-color: #f4f4f6; /* Color de fondo */   
 }
 
 .mark {
     background-color: #e8e9ed;
     border-radius: 8px;
 }
+
 .selected-invoice {
     background-color: #f0f7ff; /* Fondo para facturas seleccionadas */
-   
     transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
@@ -43,4 +35,49 @@ input[type="text"] {
 .pagination-active:hover {
     background-color: #dcdce0; /* Fondo ligeramente más oscuro al pasar el cursor */
 }
+
+.header {
+    display: flex;
+    width: 100%;
+    height: 150px;
+    background-color:#0072CE;
+    flex-direction: column;
+    justify-content:space-between;
+}
+.navbar{
+    display: flex;
+    width: 95%;
+    height: 50px;
+    background-color:#0072CE;
+    justify-content: space-between;
+    align-self: center;
+    margin-top: 15px;
+}
+.select {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    background-color:#0072CE;
+    justify-content: space-around;
+    align-self: flex-end;
+}
+.button{
+    width: 40%;
+    height: 50px;
+    background-color:#F3F4F6;
+    color: #0058a3;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px;
+}
+.button.mediciones { 
+    background-color: #005baa;
+    color: white;
+}
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+}
+
+
 

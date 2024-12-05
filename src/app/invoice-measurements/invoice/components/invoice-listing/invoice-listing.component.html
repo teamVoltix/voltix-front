@@ -1,6 +1,16 @@
 <div class="factura">
 
-<app-invoice-header></app-invoice-header>
+    <div class="header">
+        <div class="navbar">
+          <button> <img src="/assets/back-button.svg" alt="" (click)="goToHome()"></button>
+          <img src="assets/images/VoltixLoginBlanco.svg" alt="" >
+          <button><img [src]="user.photo ? user.photo : 'assets/avatar-default.png'"  alt="Avatar" class="avatar" width="30px" height="30px"></button>
+        </div>
+        <div class="select">
+          <button class="factura button" (click)="goToInvoice()">Facturas</button>
+          <button class="mediciones button " (click)="goToMeasurements()">Mediciones</button>
+    </div>
+    </div>
 
 <div class="w-full ">
     <!-- Header de Facturas -->
