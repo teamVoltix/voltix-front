@@ -10,7 +10,7 @@ import { User } from '../../../../core/model/user';
 @Component({
   selector: 'app-invoice-listing',
   standalone: true,
-  imports: [CommonModule, InvMesHeaderComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './invoice-listing.component.html',
   styleUrls: ['./invoice-listing.component.css'],
 })

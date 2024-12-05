@@ -9,7 +9,7 @@ import { User } from '../../../../core/model/user';
 @Component({
   selector: 'app-invoice-details',
   standalone: true,
-  imports: [CommonModule, InvMesHeaderComponent],
+  imports: [CommonModule],
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.css',
 })
