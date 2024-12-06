@@ -10,6 +10,7 @@ import { InvMesHeaderComponent } from '../../../shared/header/inv-mes-header.com
 import { Measurement } from '../../../../core/model/measurement';
 import { User } from '../../../../core/model/user';
 
+
 @Component({
   selector: 'app-measurement-search',
   standalone: true,
@@ -19,6 +20,7 @@ import { User } from '../../../../core/model/user';
   styleUrl: './measurement-search.component.css',
 })
 export class MeasurementSearchComponent implements OnInit {
+  public MeasurementService = inject(MeasurementService);
   isHoverPrevious = false;
   isHoverNext = false;
   measurementList: Measurement[] = [];
@@ -34,6 +36,23 @@ export class MeasurementSearchComponent implements OnInit {
     fullname: '',
     dni: '',
   };
+    //funcion de menu
+    isDropdownOpen = false;
+    logout(): void {
+      this.MeasurementService.logout();
+    }
+  
+    toggleDropdown(): void {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }
+  
+    closeDropdown(): void {
+      this.isDropdownOpen = false;
+    }
+  
+    goToProfile(): void {
+      this.router.navigate(['/profile']);
+    }
 
   router = inject(Router);
   measurementService = inject(MeasurementService);

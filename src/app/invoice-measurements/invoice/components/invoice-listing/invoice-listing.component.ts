@@ -17,6 +17,7 @@ import { User } from '../../../../core/model/user';
 export class InvoiceListingComponent {
   private router = inject(Router);
   public invoiceService = inject(InvoiceService);
+
   user: User = {
     address: '',
     birth_date: '',
@@ -26,6 +27,24 @@ export class InvoiceListingComponent {
     fullname: '',
     dni: '',
   };
+  //funcion de menu
+  isDropdownOpen = false;
+  logout(): void {
+    this.invoiceService.logout();
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
   invoices: Invoice[] = [];
   filteredInvoices = [...this.invoices];
   searchMessage: string | null = '';
