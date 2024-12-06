@@ -11,11 +11,13 @@ import {
   ComparisonResults,
 } from '../../../../core/model/comparison';
 import { User } from '../../../../core/model/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeasurementService {
+  private router = inject(Router);
   http = inject(HttpClient);
 
   getMeasurements(): Observable<MeasurementsResponse> {
@@ -49,5 +51,9 @@ export class MeasurementService {
   }
   profile(): Observable<User> {
     return this.http.get<User>(`${environment.API_URL}api/profile/`);
+  }
+  logout(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }
