@@ -1,3 +1,3 @@
 export const environment = {
-  API_URL: 'http://ec2-54-234-84-49.compute-1.amazonaws.com/',
+  API_URL: 'http://ec2-3-81-229-130.compute-1.amazonaws.com/',
 };
