@@ -39,4 +39,8 @@ export class InvoiceService {
       })
     });
   }
+  logout(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 }

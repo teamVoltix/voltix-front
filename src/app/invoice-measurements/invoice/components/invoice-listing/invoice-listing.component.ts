@@ -17,6 +17,8 @@ import { User } from '../../../../core/model/user';
 export class InvoiceListingComponent {
   private router = inject(Router);
   public invoiceService = inject(InvoiceService);
+  
+
   user: User = {
     address: '',
     birth_date: '',
@@ -26,6 +28,24 @@ export class InvoiceListingComponent {
     fullname: '',
     dni: '',
   };
+  //funcion de menu
+  isDropdownOpen = false;
+  logout(): void {
+    this.invoiceService.logout();
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
   invoices: Invoice[] = [];
   filteredInvoices = [...this.invoices];
   searchMessage: string | null = '';
@@ -33,21 +53,35 @@ export class InvoiceListingComponent {
   // hasSelectedInvoices(): boolean {
   //   return this.invoices.some((invoice) => invoice.selected);
   // }
-  currentPage = 1;
-  invoicesPerPage = 5;
-  totalPages: number = 10; //da acabar de definir
+  
 
   ngOnInit() {
     this.getInvoices();
     this.invoiceService.profile().subscribe({
       next: (data) => {
         this.user = data;
+        this.loadInvoices();
+        
       },
       error: (err) => {
         console.error('Error al obtener el perfil', err);
       },
     });
   }
+  loadInvoices(): void {
+    this.invoiceService.getInvoices().subscribe({
+      next: (data) => {
+        this.invoices = data.invoices;
+        this.filteredInvoices = [...this.invoices];
+        this.updatePagination(); // Recalcula las páginas
+      },
+      error: (err) => {
+        console.error('Error al cargar las facturas:', err);
+      },
+    });
+  }
+  
+
 
   goToUploadInvoice(): void {
     this.router.navigate(['/invoice-upload']);
@@ -67,29 +101,55 @@ export class InvoiceListingComponent {
 
   searchInvoice(): void {
     const term = this.searchTerm.trim();
-
+  
     if (term) {
-      this.filteredInvoices = this.invoices.filter(
-        (invoice) =>
-          invoice.id.toString() === term || invoice.id.toString().includes(term)
+      this.filteredInvoices = this.invoices.filter(invoice =>
+        invoice.id.toString().includes(term)
       );
-
-      if (this.filteredInvoices.length === 0) {
-        this.searchMessage =
-          'No se ha encontrado la factura que buscas, intenta nuevamente';
-      } else {
-        this.searchMessage = null;
-      }
+      this.searchMessage = this.filteredInvoices.length
+        ? null
+        : 'No se ha encontrado la factura que buscas, intenta nuevamente.';
     } else {
+      // Restaurar el listado completo si el término está vacío
       this.filteredInvoices = [...this.invoices];
       this.searchMessage = null;
     }
+  
+    this.updatePagination(); // Recalcula las páginas
   }
-  // Variables para el paginador
-  // currentPage = 1; // Página actual
-  // invoicesPerPage = 5; // Número de facturas por página
-  // totalPages = Math.ceil(this.invoices?.length / this.invoicesPerPage); // Total de páginas
-  // pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Números de página
+  
+// Recalcula el total de páginas y actualiza los números de página
+updatePagination(): void {
+  this.totalPages = Math.ceil(this.filteredInvoices.length / this.invoicesPerPage);
+  this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
+
+
+
+hasSelectedInvoices(): boolean {
+  return this.filteredInvoices.some(invoice => invoice.selected);
+}
+
+selectAll(): void {
+  const allSelected = this.filteredInvoices.every(invoice => invoice.selected);
+  this.filteredInvoices.forEach(invoice => (invoice.selected = !allSelected));
+}
+
+deleteSelectedInvoices(): void {
+  this.invoices = this.invoices.filter(invoice => !invoice.selected);
+  this.filteredInvoices = [...this.invoices];
+  this.updatePagination(); // Recalcula las páginas
+  console.log('Facturas seleccionadas eliminadas');
+}
+
+
+
+
+  //Variables para el paginador
+   currentPage = 1; // Página actual
+   invoicesPerPage = 5; // Número de facturas por página
+   totalPages = Math.ceil(this.invoices?.length / this.invoicesPerPage); // Total de páginas
+   pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Números de página
 
   // Método para obtener las facturas de la página actual
   paginatedInvoices() {
@@ -102,14 +162,7 @@ export class InvoiceListingComponent {
   isHoverNext = false;
 
   // Método para marcar o desmarcar todas las facturas
-  selectAll() {
-    const allSelected = this.filteredInvoices.every(
-      (invoice) => invoice.selected
-    );
-    this.filteredInvoices.forEach(
-      (invoice) => (invoice.selected = !allSelected)
-    );
-  }
+
 
   // Método para alternar selección individual de una factura
   toggleSelection(invoice: any) {
@@ -139,22 +192,16 @@ export class InvoiceListingComponent {
     this.router.navigate([`/invoice-details/${id}/`]);
   }
 
-  // Método para eliminar las facturas seleccionadas
-  // deleteSelectedInvoices() {
-  //   this.invoices = this.invoices.filter((invoice) => !invoice.selected);
-  //   this.totalPages = Math.ceil(this.invoices.length / this.invoicesPerPage); // Actualiza el total de páginas
-  //   this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Actualiza los números de página
-  //   console.log('Facturas eliminadas');
-  // }
+
 
   // Método para cambiar de página en el paginador
-  goToPage(event: Event, page: number) {
+  goToPage(event: Event, page: number): void {
     event.preventDefault();
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     console.log(`Cambiando a la página ${page}`);
   }
-
+  
   // Método para identificar elementos únicos en el *ngFor (mejora el rendimiento)
   trackById(index: number, invoice: any) {
     return invoice.id;

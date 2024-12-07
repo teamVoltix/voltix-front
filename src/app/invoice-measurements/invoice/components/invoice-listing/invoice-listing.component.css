@@ -1,9 +1,11 @@
 input[type="text"] {
-    border: 1px solid #e5e5e5; /* Misma propiedad que el listado */  
+    border: 1px solid #e5e5e5;
+    /* Misma propiedad que el listado */
 }
 
 .factura-section {
-    background-color: #f4f4f6; /* Color de fondo */   
+    background-color: #f4f4f6;
+    /* Color de fondo */
 }
 
 .mark {
@@ -12,72 +14,141 @@ input[type="text"] {
 }
 
 .selected-invoice {
-    background-color: #f0f7ff; /* Fondo para facturas seleccionadas */
-    transition: background-color 0.3s ease; /* Efecto de transición */
+    background-color: #f0f7ff;
+    /* Fondo para facturas seleccionadas */
+    transition: background-color 0.3s ease;
+    /* Efecto de transición */
 }
 
 /* Estado deshabilitado */
 .pagination-disabled {
-    color: #6b7280; /* Gris para el texto */
-    background-color: transparent; /* Fondo transparente */
-    cursor: not-allowed; /* Cursor no permitido */
-    pointer-events: none; /* Desactiva los clics */
+    color: #6b7280;
+    /* Gris para el texto */
+    background-color: transparent;
+    /* Fondo transparente */
+    cursor: not-allowed;
+    /* Cursor no permitido */
+    pointer-events: none;
+    /* Desactiva los clics */
 }
 
 /* Estado activo */
 .pagination-active {
-    color: #26272c; /* Texto negro */
-    background-color: #e8e9ed; /* Fondo activo */
-    cursor: pointer; /* Cursor de clic */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Efecto de transición */
+    color: #26272c;
+    /* Texto negro */
+    background-color: #e8e9ed;
+    /* Fondo activo */
+    cursor: pointer;
+    /* Cursor de clic */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Efecto de transición */
 }
 
 .pagination-active:hover {
-    background-color: #dcdce0; /* Fondo ligeramente más oscuro al pasar el cursor */
+    background-color: #dcdce0;
+    /* Fondo ligeramente más oscuro al pasar el cursor */
 }
 
 .header {
     display: flex;
     width: 100%;
     height: 150px;
-    background-color:#0072CE;
+    background-color: #0072CE;
     flex-direction: column;
-    justify-content:space-between;
+    justify-content: space-between;
 }
-.navbar{
+
+.navbar {
     display: flex;
     width: 95%;
     height: 50px;
-    background-color:#0072CE;
+    background-color: #0072CE;
     justify-content: space-between;
     align-self: center;
     margin-top: 15px;
 }
+
 .select {
     display: flex;
     width: 100%;
     height: 50px;
-    background-color:#0072CE;
+    background-color: #0072CE;
     justify-content: space-around;
     align-self: flex-end;
 }
-.button{
+
+.button {
     width: 40%;
     height: 50px;
-    background-color:#F3F4F6;
+    background-color: #F3F4F6;
     color: #0058a3;
     align-items: center;
     border-radius: 10px 10px 0px 0px;
 }
-.button.mediciones { 
+
+.button.mediciones {
     background-color: #005baa;
     color: white;
 }
+
 .avatar {
     width: 34px;
     height: 34px;
     border-radius: 50%;
 }
 
+/* dropdown */
 
+.dropdown {
+    position: absolute;
+    right: 15px;
+    top: 70px;
+    margin-top: 0.5rem;
+    width: 40vh;
+    background-color: #0072CE;
+    border: 1px solid #F3F4F6;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+}
 
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #0158A3;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem;
+    cursor: pointer;
+    color: white;
+}
+
+.closeX {
+    margin-left: auto;
+}
+
+.user-container {
+    position: relative;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+.chevronRight {
+    margin-left: auto;
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+}
