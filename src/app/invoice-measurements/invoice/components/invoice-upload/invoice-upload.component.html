@@ -1,14 +1,38 @@
 <div class="background">
-    <div class="header">
+    <div class="header user-container">
         <div class="navbar">
-          <button> <img src="/assets/back-button.svg" alt="" (click)="goToHome()"></button>
-          <img src="assets/images/VoltixLoginBlanco.svg" alt="" >
-          <button><img [src]="user.photo ? user.photo : 'assets/avatar-default.png'"  alt="Avatar" class="avatar" width="30px" height="30px"></button>
+            <button type="button" aria-label="back button"> <img src="/assets/back-button.svg" alt=""
+                    (click)="goToHome()"></button>
+            <img src="assets/images/VoltixLoginBlanco.svg" alt="">
+            <button type="button" (click)="toggleDropdown()"><img
+                    [src]="user.photo ? user.photo : 'assets/avatar-default.png'" alt="Avatar" class="avatar"
+                    width="30px" height="30px"></button>
         </div>
         <div class="select">
-          <button class="factura button" (click)="goToInvoice()">Facturas</button>
-          <button class="mediciones button " (click)="goToMeasurements()">Mediciones</button>
-    </div>
+            <button type="button" class="factura button" (click)="goToInvoice()">Facturas</button>
+            <button type="button" class="mediciones button " (click)="goToMeasurements()">Mediciones</button>
+        </div>
+        <!-- Dropdown -->
+        <div class="dropdown" [ngClass]="{ 'hidden': !isDropdownOpen }">
+            <ul>
+                <li class="dropdown-item" (click)="closeDropdown()">
+                    <img src="/assets/icons/close-x.svg" alt="Close Ico" class="closeX" />
+                </li>
+                <li class="dropdown-item mb-4" (click)="goToProfile()"><img src="/assets/icons/user.svg" alt="User Ico"
+                        class="icon" />Mi perfil <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+                <li class="dropdown-item my-4"><img src="/assets/icons/alerts.svg" alt="Alerts Ico"
+                        class="icon" />Notificaciones <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+                <li class="dropdown-item my-4"><img src="/assets/icons/question-circle.svg" alt="Question Circle Ico"
+                        class="icon" />Ayuda <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+                <hr />
+                <li class="dropdown-item my-4" (click)="logout()"><img src="/assets/icons/exit.svg" alt="Exit Ico"
+                        class="icon" />Cerrar Sesión <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico"
+                        class="chevronRight" /></li>
+            </ul>
+        </div>
     </div>
   
     <section class="body-section px-4 py-6">
