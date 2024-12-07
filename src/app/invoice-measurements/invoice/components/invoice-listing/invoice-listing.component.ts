@@ -17,7 +17,12 @@ import { User } from '../../../../core/model/user';
 export class InvoiceListingComponent {
   private router = inject(Router);
   public invoiceService = inject(InvoiceService);
-  
+  //search
+  invoices: Invoice[] = [];
+  filteredInvoices = [...this.invoices];
+  searchMessage: string | null = '';
+  searchTerm: string = '';
+  searchMonthYear: string = '';
 
   user: User = {
     address: '',
@@ -46,14 +51,9 @@ export class InvoiceListingComponent {
     this.router.navigate(['/profile']);
   }
 
-  invoices: Invoice[] = [];
-  filteredInvoices = [...this.invoices];
-  searchMessage: string | null = '';
-  searchTerm: string = '';
   // hasSelectedInvoices(): boolean {
   //   return this.invoices.some((invoice) => invoice.selected);
   // }
-  
 
   ngOnInit() {
     this.getInvoices();
@@ -61,7 +61,6 @@ export class InvoiceListingComponent {
       next: (data) => {
         this.user = data;
         this.loadInvoices();
-        
       },
       error: (err) => {
         console.error('Error al obtener el perfil', err);
@@ -80,8 +79,6 @@ export class InvoiceListingComponent {
       },
     });
   }
-  
-
 
   goToUploadInvoice(): void {
     this.router.navigate(['/invoice-upload']);
@@ -98,58 +95,90 @@ export class InvoiceListingComponent {
       },
     });
   }
-
+  //ricerca por ID
   searchInvoice(): void {
     const term = this.searchTerm.trim();
-  
+
     if (term) {
-      this.filteredInvoices = this.invoices.filter(invoice =>
+      this.filteredInvoices = this.invoices.filter((invoice) =>
         invoice.id.toString().includes(term)
       );
       this.searchMessage = this.filteredInvoices.length
         ? null
         : 'No se ha encontrado la factura que buscas, intenta nuevamente.';
     } else {
-      // Restaurar el listado completo si el término está vacío
       this.filteredInvoices = [...this.invoices];
       this.searchMessage = null;
     }
-  
-    this.updatePagination(); // Recalcula las páginas
+
+    this.updatePagination();
   }
-  
-// Recalcula el total de páginas y actualiza los números de página
-updatePagination(): void {
-  this.totalPages = Math.ceil(this.filteredInvoices.length / this.invoicesPerPage);
-  this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-}
 
+  searchInvoiceByMonthAndYear(): void {
+    const term = this.searchMonthYear.trim();
 
+    if (term) {
+      const match = term.match(/^(\d{2})\/(\d{4})$/);
+      if (match) {
+        const searchMonth = parseInt(match[1], 10);
+        const searchYear = parseInt(match[2], 10);
 
-hasSelectedInvoices(): boolean {
-  return this.filteredInvoices.some(invoice => invoice.selected);
-}
+        this.filteredInvoices = this.invoices.filter((invoice) => {
+          const measurementDate = new Date(invoice.billing_period_start);
+          const measurementMonth = measurementDate.getMonth() + 1;
+          const measurementYear = measurementDate.getFullYear();
+          return (
+            measurementMonth === searchMonth && measurementYear === searchYear
+          );
+        });
 
-selectAll(): void {
-  const allSelected = this.filteredInvoices.every(invoice => invoice.selected);
-  this.filteredInvoices.forEach(invoice => (invoice.selected = !allSelected));
-}
+        this.searchMessage = this.filteredInvoices.length
+          ? null
+          : 'No se han encontrado facturas para ese mes y año.';
+      } else {
+        this.searchMessage = 'Formato de fecha inválido, usa MM/AAAA';
+      }
+    } else {
+      this.filteredInvoices = [...this.invoices];
+      this.searchMessage = null;
+    }
 
-deleteSelectedInvoices(): void {
-  this.invoices = this.invoices.filter(invoice => !invoice.selected);
-  this.filteredInvoices = [...this.invoices];
-  this.updatePagination(); // Recalcula las páginas
-  console.log('Facturas seleccionadas eliminadas');
-}
+    this.updatePagination();
+  }
 
+  // Recalcula el total de páginas y actualiza los números de página
+  updatePagination(): void {
+    this.totalPages = Math.ceil(
+      this.filteredInvoices.length / this.invoicesPerPage
+    );
+    this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
 
+  hasSelectedInvoices(): boolean {
+    return this.filteredInvoices.some((invoice) => invoice.selected);
+  }
 
+  selectAll(): void {
+    const allSelected = this.filteredInvoices.every(
+      (invoice) => invoice.selected
+    );
+    this.filteredInvoices.forEach(
+      (invoice) => (invoice.selected = !allSelected)
+    );
+  }
+
+  deleteSelectedInvoices(): void {
+    this.invoices = this.invoices.filter((invoice) => !invoice.selected);
+    this.filteredInvoices = [...this.invoices];
+    this.updatePagination(); // Recalcula las páginas
+    console.log('Facturas seleccionadas eliminadas');
+  }
 
   //Variables para el paginador
-   currentPage = 1; // Página actual
-   invoicesPerPage = 5; // Número de facturas por página
-   totalPages = Math.ceil(this.invoices?.length / this.invoicesPerPage); // Total de páginas
-   pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Números de página
+  currentPage = 1; // Página actual
+  invoicesPerPage = 5; // Número de facturas por página
+  totalPages = Math.ceil(this.invoices?.length / this.invoicesPerPage); // Total de páginas
+  pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1); // Números de página
 
   // Método para obtener las facturas de la página actual
   paginatedInvoices() {
@@ -162,7 +191,6 @@ deleteSelectedInvoices(): void {
   isHoverNext = false;
 
   // Método para marcar o desmarcar todas las facturas
-
 
   // Método para alternar selección individual de una factura
   toggleSelection(invoice: any) {
@@ -192,8 +220,6 @@ deleteSelectedInvoices(): void {
     this.router.navigate([`/invoice-details/${id}/`]);
   }
 
-
-
   // Método para cambiar de página en el paginador
   goToPage(event: Event, page: number): void {
     event.preventDefault();
@@ -201,7 +227,7 @@ deleteSelectedInvoices(): void {
     this.currentPage = page;
     console.log(`Cambiando a la página ${page}`);
   }
-  
+
   // Método para identificar elementos únicos en el *ngFor (mejora el rendimiento)
   trackById(index: number, invoice: any) {
     return invoice.id;
