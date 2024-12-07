@@ -27,11 +27,10 @@
     }" class="shadow-sm bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="Juan Ríos" required />
           <p *ngIf="registerForm.get('fullname')?.hasError('invalidFullName') && registerForm.get('fullname')?.touched" class="mt-2 text-sm text-red-600 dark:text-red-500">
-            Nombre y appellido no valido.
+            Nombre y apellido no valido.
+
           </p>
       </div>
-
-
 
       <div class="mb-4">
         <label for="email" class="block mb-2 text-sm text-gray-900 dark:text-white">Email</label>
@@ -123,18 +122,36 @@
           'bg-disabled': !isAllInputsValid()
         }"
         class="w-full mb-4 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        (click)="sendVerificationCode()">Invia codice di verifica</button>
+        (click)="sendVerificationCode()" (click)="openModalNumber()">Enviar código de verificación</button>
+
       </form>
       </section>
       </div>
 
 
 <!-- Modal per l'inserimento del codice -->
-<div class="modal" [ngClass]="{'show': isModalOpen}">
+<!-- <div class="modal" [ngClass]="{'show': isModalOpen}">
   <div class="modal-content">
     <span class="close" (click)="isModalOpen = false">&times;</span>
     <p>Inserta el codigo enviado por email:</p>
     <input type="text" [(ngModel)]="enteredCode" placeholder="Codigo de 6 digito"/>
-    <button (click)="verifyCode()" class="modalButton">Invia</button>
+    <button (click)="verifyCode()" class="modalButton">Enviar</button>
+  </div>
+</div> -->
+<div *ngIf="modalNumberOpen" class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="bg-black bg-opacity-50 absolute inset-0" (click)="closeModalNumber()"></div>
+  <div class="relative w-96 bg-white rounded-lg shadow-lg">
+    <div class="p-6 flex-col justify-center items-center ">
+      <!-- <h2 class="text-xl font-semibold"></h2> -->
+      <p class="mt-6 mb-6 font-semibold ">Inserta el codigo recibido en el email:</p>
+      <input type="text" [(ngModel)]="enteredCode" placeholder="Código de 6 dígitos" class="items-center border-gray-300 rounded-md" />
+    </div>
+    <div class="p-6 flex justify-center space-x-4">
+      <button type="submit" (click)="verifyCode()" class="botonAzul">Enviar</button>
+      <button (click)="closeModalNumber()" class="bg-white border border-gray-200  rounded-lg px-4 py-2 rounded">
+        Cancelar
+      </button>
+    </div>
   </div>
 </div>
+

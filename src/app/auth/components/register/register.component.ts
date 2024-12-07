@@ -40,7 +40,7 @@ export class RegisterComponent {
   hasSpecialChar: boolean = false;
   hasUpperCaseAndLowerCase: boolean = false;
 
-  isModalOpen = false;
+  public modalNumberOpen = false;
   enteredCode: string = '';
   verificationCode: string = '';
 
@@ -48,7 +48,7 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       fullname: ['', [Validators.required, this.fullNameValidator()]],
       email: ['', Validators.required],
-      dni: ['', Validators.required],
+      dni: ['', Validators.required,],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
     });
@@ -58,7 +58,7 @@ export class RegisterComponent {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value || '';
       const isValid =
-        /^[a-zA-Z\s]+$/.test(value) &&
+      /^[a-zA-ZÑñÁáÉéÍíÓóÚú\s]+$/.test(value) &&
         value.trim().length > 0 &&
         value.trim().length < 20;
       return !isValid ? { invalidFullName: true } : null;
@@ -112,7 +112,7 @@ export class RegisterComponent {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
-
+  
   isPasswordValid(): boolean {
     const password = this.registerForm.value.password;
     const minLength = 8;
@@ -233,14 +233,14 @@ export class RegisterComponent {
     });
   }
 
-  openModal() {
-    if (this.isAllInputsValid()) {
-      this.isModalOpen = true;
+  openModalNumber() {
+    if (this.isAllInputsValid()){
+    this.modalNumberOpen = true;
     }
   }
 
-  closeModal() {
-    this.isModalOpen = false;
+  closeModalNumber() {
+    this.modalNumberOpen = false;
   }
 
   sendVerificationCode() {
@@ -249,7 +249,7 @@ export class RegisterComponent {
       next: (response) => {
         console.log('send verificacion code:', response);
         this.verificationCode = response.code;
-        this.isModalOpen = true;
+        this.modalNumberOpen = true;
       },
       error: (error) => {
         console.error('Error en el envío del código de verificación', error);
@@ -271,7 +271,7 @@ export class RegisterComponent {
     });
   }
   onCodeVerified() {
-    this.isModalOpen = false;
+    this.modalNumberOpen = false;
     this.onSubmit();
   }
 }
