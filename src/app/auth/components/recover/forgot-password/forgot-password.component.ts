@@ -59,7 +59,15 @@ export class ForgotPasswordComponent implements OnInit {
   goToLogin() {
     this.router.navigate(['/login']);
   }
+  
   resetPassword(email: string) {
-    this.service.recoverPassword(email);
+    this.service.recoverPassword(email).subscribe({
+      next: (response) => {
+        console.log('Password reset email sent successfully', response);
+      },
+      error: (error) => {
+        console.error('Error sending password reset email', error);
+      },
+    });
   }
 }

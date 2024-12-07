@@ -18,7 +18,6 @@ export class AuthService {
   private url = environment.API_URL;
   private stateService = inject(StateService);
 
-
   login(credentials: Credentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
       this.url + 'api/auth/login/',
