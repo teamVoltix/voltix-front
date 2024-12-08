@@ -35,12 +35,13 @@ export class InvoiceService {
 
     return this.http.post<any>(this.url + 'api/invoices/upload/', formData, {
       headers: new HttpHeaders({
-        'Accept': 'application/json'
-      })
+        Accept: 'application/json',
+      }),
     });
   }
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }
 }

@@ -16,6 +16,8 @@ export class InvoiceUploadComponent implements OnInit {
   selectedFile: File | null = null;
   isFileUploaded: boolean = false;
   isLoading: boolean = false;
+  isDropdownOpen = false;
+  
   user: User = {
     address: '',
     birth_date: '',
@@ -41,6 +43,22 @@ export class InvoiceUploadComponent implements OnInit {
         console.error('Error al obtener el perfil', err);
       },
     });
+  }
+
+  logout(): void {
+    this.invoiceService.logout();
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/profile']);
   }
 
   onFileSelected(event: Event) {

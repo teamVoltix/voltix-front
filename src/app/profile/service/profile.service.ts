@@ -15,7 +15,8 @@ export class ProfileService {
   private router = inject(Router);
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }
   profile(): Observable<User> {
@@ -25,10 +26,18 @@ export class ProfileService {
     console.log('Usuario en servicio:', userData);
     return this.http.patch<any>(this.url + 'api/profile/update/', userData);
   }
-  editPassword(old_password:string, new_password:string, confirm_password:string): Observable<any>{
-    let editedPassword ={old_password, new_password, confirm_password}
-    console.log('Contraseña en servicio' + editedPassword)
-    return this.http.post(this.url + 'api/auth/profile/change-password/', {old_password,new_password,confirm_password});
+  editPassword(
+    old_password: string,
+    new_password: string,
+    confirm_password: string
+  ): Observable<any> {
+    let editedPassword = { old_password, new_password, confirm_password };
+    console.log('Contraseña en servicio' + editedPassword);
+    return this.http.post(this.url + 'api/auth/profile/change-password/', {
+      old_password,
+      new_password,
+      confirm_password,
+    });
   }
 
   //uploadphoto
@@ -40,5 +49,4 @@ export class ProfileService {
       formData
     );
   }
-  
 }

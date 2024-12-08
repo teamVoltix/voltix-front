@@ -26,23 +26,23 @@ export class InvoiceDetailsComponent implements OnInit {
     fullname: '',
     dni: '',
   };
-    //funcion de menu
-    isDropdownOpen = false;
-    logout(): void {
-      this.invoiceService.logout();
-    }
-  
-    toggleDropdown(): void {
-      this.isDropdownOpen = !this.isDropdownOpen;
-    }
-  
-    closeDropdown(): void {
-      this.isDropdownOpen = false;
-    }
-  
-    goToProfile(): void {
-      this.router.navigate(['/profile']);
-    }
+  //funcion de menu
+  isDropdownOpen = false;
+  logout(): void {
+    this.invoiceService.logout();
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/profile']);
+  }
 
   @Input() invoice: Invoice | undefined;
 
@@ -107,5 +107,30 @@ export class InvoiceDetailsComponent implements OnInit {
   }
   goToHome() {
     this.router.navigate(['/home']);
+  }
+
+  formatDate(date: Date | undefined): string {
+    if (!date) {
+      return 'Invalid date';
+    }
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0'); // Mesi da 0 a 11
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+  
+  formatStringDate(dateStr: string | undefined): string {
+    if (!dateStr) {
+      return 'Invalid date';
+    }
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Mesi da 0 a 11
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   }
 }

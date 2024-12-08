@@ -46,7 +46,7 @@ export const routes: Routes = [
     component: ForgotPasswordComponent,
   },
   {
-    path: 'new-password',
+    path: 'password/reset/:uidb64/:token',
     title: 'New Password Page',
     component: NewPasswordComponent,
   },

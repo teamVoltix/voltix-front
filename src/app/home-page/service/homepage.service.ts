@@ -12,7 +12,7 @@ import { Measurement } from '../../core/model/measurement';
 })
 export class HomepageService {
   private http = inject(HttpClient);
-  private url = environment.API_URL; 
+  private url = environment.API_URL;
   private router = inject(Router);
 
   profile(): Observable<User> {
@@ -23,12 +23,13 @@ export class HomepageService {
     return this.http.get<{ invoices: Invoice[] }>(this.url + 'api/invoices/');
   }
 
-  getMeasurements(): Observable<any> { 
+  getMeasurements(): Observable<any> {
     return this.http.get<any>(this.url + 'api/measurements/');
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }
 }

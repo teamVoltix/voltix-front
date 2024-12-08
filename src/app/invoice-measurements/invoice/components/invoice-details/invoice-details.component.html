@@ -51,17 +51,17 @@
           <div class="mb-4 relative">
             <label for="fecha_cargo" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fecha de
               carga</label>
-            <input type="text" id="fecha_cargo" disabled value="{{this.invoice?.data?.fecha_cargo}}"
+            <input type="text" id="fecha_cargo" disabled value="{{formatDate(this.invoice?.created_at)}}"
               class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           <div class="mb-4 relative">
             <label for="period" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Periodo de
               facturación</label>
             <div class="flex space-x-4">
-              <input type="text" id="inicio" disabled value="{{this.invoice?.data?.periodo_facturacion?.inicio}}"
+              <input type="text" id="inicio" disabled value="{{formatStringDate(this.invoice?.data?.periodo_facturacion?.inicio)}}"
                 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
               <h5 class="text-center pt-2 text-sm">al</h5>
-              <input type="text" id="fin" disabled value="{{this.invoice?.data?.periodo_facturacion?.fin}}"
+              <input type="text" id="fin" disabled value="{{formatStringDate(this.invoice?.data?.periodo_facturacion?.fin)}}"
                 class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
           </div>

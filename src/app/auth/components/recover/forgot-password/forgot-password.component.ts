@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../service/auth-service.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,44 +17,57 @@ import { Router } from '@angular/router';
   styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent implements OnInit {
-  resetPasswordForm!: FormGroup;
+  resetForm: FormGroup;
   showSuccessSection: boolean = false;
 
-  fb = inject(FormBuilder);
   router = inject(Router);
+  public service = inject(AuthService);
 
-  ngOnInit(): void {
-    this.buildForm();
-  }
-
-  buildForm() {
-    this.resetPasswordForm = this.fb.group({
+  constructor(private fb: FormBuilder) {
+    this.resetForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
   }
-
-  onSubmit() {
-    if (this.resetPasswordForm.valid) {
-      const email = this.resetPasswordForm.get('email')?.value;
-      console.log('Restablecer contraseña para:', email);
-      // Lógica para enviar el correo de restablecimiento de contraseña
-      //Si se ha enviado todo ok, mostrar sección de se ha enviado el correo para restablecer contraseña
-      this.showSuccessSection = true;
-    } else {
-      this.resetPasswordForm.markAllAsTouched();
-      return;
-    }
+  get isFormValid() {
+    return this.resetForm.valid;
   }
 
-  get isFormValid() {
-    return this.resetPasswordForm.valid;
+  ngOnInit(): void {}
+
+  onSubmit() {
+    if (this.resetForm.invalid) {
+      return;
+    }
+    const email = this.resetForm.get('email')?.value;
+    console.log('Restablecer contraseña para:', email);
+
+    this.service.recoverPassword(email).subscribe({
+      next: (response) => {
+        console.log('Respuesta:', response);
+        this.showSuccessSection = true;
+      },
+      error: (error) => {
+        console.log('Error:', error);
+      },
+    });
   }
 
   get email() {
-    return this.resetPasswordForm.get('email');
+    return this.resetForm.get('email');
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigate(['/login']);
+  }
+  
+  resetPassword(email: string) {
+    this.service.recoverPassword(email).subscribe({
+      next: (response) => {
+        console.log('Password reset email sent successfully', response);
+      },
+      error: (error) => {
+        console.error('Error sending password reset email', error);
+      },
+    });
   }
 }

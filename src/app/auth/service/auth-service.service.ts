@@ -18,27 +18,6 @@ export class AuthService {
   private url = environment.API_URL;
   private stateService = inject(StateService);
 
-  /* auth/email-verification/request/ */
-  /*
-    {
-      "email": "string"
-    } 
-   */
-  /* tiene que enviar solo la email */
-
-  /* auth/email-verification/validate/ */
-  /* 
-    {
-      email: "string",
-      code: "string"
-    }
-  */
-  /* enviar email ty codigo por confirmacion */
-
-  /* auth/email-verification/register/ */
-  /* campo de registracione normale */
-  /* si la mail es verificada permite registrar */
-
   login(credentials: Credentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
       this.url + 'api/auth/login/',
@@ -77,6 +56,27 @@ export class AuthService {
       {
         email,
         code,
+      }
+    );
+  }
+
+  recoverPassword(email: string) {
+    return this.http.post<any>(this.url + 'api/auth/password/reset/', {
+      email,
+    });
+  }
+
+  newPassword(
+    new_password: string,
+    confirm_password: string,
+    token: string,
+    uidb64: string
+  ) {
+    return this.http.post<any>(
+      `${this.url}api/auth/password/reset/${uidb64}/${token}/`,
+      {
+        new_password,
+        confirm_password,
       }
     );
   }
