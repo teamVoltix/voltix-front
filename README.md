@@ -1,27 +1,72 @@
-# TemplateAngularTs
+![Logo del proyecto](src\assets\images\voltixLogo.svg)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
+### **Descripción**
+___
+Voltix es una app de verificación y comparación de facturas eléctricas mediante tecnología OCR (Reconocimiento Óptico de Caracteres).
 
-## Development server
+La aplicación permite cargar y escanear las facturas, comparar automáticamente datos relevantes como el consumo y la tarifa, y detectar discrepancias en tiempo real, ofreciendo así una solución que reduce los tiempos de verificación manual.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### **Características principales**
+___
+•	**Módulo de autenticación.** Gestiona tanto el registro de usuarios nuevos como el log in y log out de los usuarios ya registrados. Para completar dicho registro será necesario incluir un código de verificación que será enviado al correo electrónico del usuario. También es posible crear una nueva contraseña, si se ha olvidado la actual, a través de un enlace que se enviará al correo eléctronico del usuario.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+• **Modulo de perfil.** Muestra los datos personales de cada usuario y permite editar datos como la imagen de perfil, la dirección, el número de teléfono, la fecha de nacimiento y la contraseña.
 
-## Build
+• **Módulo de facturas.** Permite cargar nuevas facturas en formato PDF. Analiza y extrae la información principal y la almacena.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+• **Módulo de mediciones.** Contiene los datos de las facturas y los compara con los obtenidos en las mediciones internas. Permite buscar datos filtrando por la fecha de carga.
 
-## Running unit tests
+• **Navegación.** El diseño implementado está optimizado para que la aplicación sea mobile first e intuitiva para el usuario final.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+### **Técnologías Front-end**
+___
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+• Angular CLI 18.2.13
 
-## Further help
+• Node 20.10.0
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+• Package Manager npm 10.2.3
+
+• Typescript
+
+• Flowbite CSS
+
+• Git y Github
+
+
+
+### **Instalación de Voltix**
+___
+
+#### Clonar el repositorio de GitHub.
+
+     git clone https://github.com/igrowker/i003-eventmap-front.git
+     
+#### Instala las dependencias necesarias.
+    npm install
+    
+#### Instala flowbite 
+    
+    npm install flowbite
+
+#### Ejecuta el proyecto desde la raiz
+    ng serve
+
+
+### **Colaboradores**
+___
+- **Project Manager**
+
+- **Equipo de diseño UX-UI**
+
+- **Equipo de Front-End**
+
+- **Equipo de Back-End**
+
+- **DevOps**
+
+- **Equipo de QA**
+
+
