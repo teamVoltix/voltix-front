@@ -65,4 +65,19 @@ export class AuthService {
       email,
     });
   }
+
+  newPassword(
+    new_password: string,
+    confirm_password: string,
+    token: string,
+    uidb64: string
+  ) {
+    return this.http.post<any>(
+      `${this.url}api/auth/password/reset/${uidb64}/${token}/`,
+      {
+        new_password,
+        confirm_password,
+      }
+    );
+  }
 }
