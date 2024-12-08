@@ -69,7 +69,7 @@ export class InvoiceUploadComponent implements OnInit {
       const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
       if (validTypes.includes(selectedFile.type)) {
         this.selectedFile = selectedFile;
-        console.log('Archivo seleccionado:', this.selectedFile);
+        
       } else {
         console.error(
           'Tipo de archivo no admitido. Solo se permiten archivos PDF, JPG y PNG.'
@@ -81,7 +81,7 @@ export class InvoiceUploadComponent implements OnInit {
   resetFile() {
     this.selectedFile = null;
     this.fileInput.nativeElement.value = '';
-    console.log('Archivo reseteado, listo para cargar uno nuevo');
+    
   }
 
   onDragOver(event: DragEvent) {
@@ -97,18 +97,18 @@ export class InvoiceUploadComponent implements OnInit {
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
       this.selectedFile = files[0];
-      console.log('Archivo soltado:', this.selectedFile);
+      
     }
   }
 
   uploadFile() {
     if (this.selectedFile) {
       this.isLoading = true;
-      console.log('Cargando archivo:', this.selectedFile);
+      
 
       this.invoiceService.uploadInvoice(this.selectedFile).subscribe({
         next: (response) => {
-          console.log('Archivo cargado con éxito:', response);
+          
 
           if (response.parsed_data && response.parsed_data.error) {
             Swal.fire({
@@ -118,10 +118,7 @@ export class InvoiceUploadComponent implements OnInit {
               confirmButtonText: 'Aceptar',
               width: '75%',
             });
-            console.log(
-              'Error al subir la factura:',
-              response.parsed_data.error
-            );
+            
             this.isLoading = false;
             return;
           }

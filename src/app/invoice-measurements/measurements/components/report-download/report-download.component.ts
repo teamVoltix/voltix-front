@@ -25,7 +25,7 @@ export class ReportDownloadComponent {
   }
 
   downloadReport() {
-    console.log('Descarga');
+    
     this.reportService.downloadReport();
     this.hideModal();
   }

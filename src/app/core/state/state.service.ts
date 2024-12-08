@@ -77,11 +77,9 @@ export class StateService {
 
   getLogged() {
     if (this.isAuthenticated()) {
-      console.log('Token found, navigating to /home');
       this.router.navigate(['/home']);
     } else {
-      console.log('No token found');
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/start']);
     }
   }
 

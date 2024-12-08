@@ -61,10 +61,7 @@ export class NewPasswordComponent implements OnInit {
     this.uidb64 = this.route.snapshot.paramMap.get('uidb64');
     this.token = this.route.snapshot.paramMap.get('token');
 
-    if (this.uidb64 && this.token) {
-      console.log('uidb64:', this.uidb64);
-      console.log('token:', this.token);
-    }
+    
   }
   passwordsMatch(): boolean {
     const password = this.newPasswordForm.get('new_password')?.value;
@@ -164,15 +161,12 @@ export class NewPasswordComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
-            console.log('Password reset successful', response);
+            
             this.showSuccessSection = true;
           },
           error: (error) => {
             console.error('Error resetting password', error);
-            console.log('new_password:', this.newPasswordForm.value);
-            console.log('confirm_password:', this.confirm_password);
-            console.log('token:', this.token);
-            console.log('uidb64:', this.uidb64);
+            
           },
         });
     } else {

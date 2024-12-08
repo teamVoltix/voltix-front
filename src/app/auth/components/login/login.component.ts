@@ -85,7 +85,7 @@ export class LoginComponent {
     if (this.camposIncompletos) {
       this.userNotFound = false;
       this.passwordNotFound = false;
-      console.log('Faltan campos por completar.');
+      
       return;
     }
 
@@ -97,7 +97,7 @@ export class LoginComponent {
 
     this.service.login(credentials).subscribe({
       next: (response: LoginResponse) => {
-        console.log('Inicio de sesión exitoso', response);
+        
         this.stateService.setLogin(
           response.access_token,
           response.refresh_token

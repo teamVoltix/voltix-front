@@ -104,7 +104,6 @@ export class ProfileComponent implements OnInit {
   }
   ngOnInit(): void {
     this.service.profile().subscribe((data) => {
-      console.log(data);
       this.user = data;
       this.originalUser = { ...data };
     });
@@ -144,14 +143,11 @@ export class ProfileComponent implements OnInit {
     if (this.passwordForm.valid) {
       const { current_password, new_password, confirm_new_password } =
         this.passwordForm.value;
-      console.log('Componente:', this.passwordForm.value);
 
       this.service
         .editPassword(current_password, new_password, confirm_new_password)
         .subscribe({
-          next: (res) => (
-            console.log('Respuesta del servicio:', res), this.showSuccessAlert()
-          ),
+          next: (res) => this.showSuccessAlert(),
           error: (error) => {
             console.error('Error:', error), this.showErrorAlert();
           },
@@ -174,19 +170,17 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadPhoto(file: File): void {
-    this.service.uploadPhoto(file).subscribe(
-      (response) => {
+    this.service.uploadPhoto(file).subscribe({
+      next: (response) => {
         if (response.photo_url) {
-          this.user.photo = response.photo_url; // Aggiorna l'immagine dell'utente
-        } else {
-          console.log('Upload fallito');
+          this.user.photo = response.photo_url;
         }
       },
-      (error) => {
-        console.log("Errore durante l'upload", error);
+      error: (error) => {
+        console.error('Error al subir la foto', error);
         this.showErrorPhotoAlert();
-      }
-    );
+      },
+    });
   }
 
   openModalProfile() {
@@ -203,7 +197,6 @@ export class ProfileComponent implements OnInit {
   }
 
   changepassword() {
-    console.log('Pasamos a cambiar contraseña');
     this.newPasswordPage = true;
     this.profileInputs = false;
   }
@@ -259,5 +252,4 @@ export class ProfileComponent implements OnInit {
       timer: 1500,
     });
   }
-
 }
