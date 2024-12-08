@@ -23,7 +23,7 @@ export class ProfileService {
     return this.http.get<User>(this.url + 'api/profile/');
   }
   editUser(userData: any): Observable<any> {
-    console.log('Usuario en servicio:', userData);
+    
     return this.http.patch<any>(this.url + 'api/profile/update/', userData);
   }
   editPassword(
@@ -32,7 +32,7 @@ export class ProfileService {
     confirm_password: string
   ): Observable<any> {
     let editedPassword = { old_password, new_password, confirm_password };
-    console.log('Contraseña en servicio' + editedPassword);
+    
     return this.http.post(this.url + 'api/auth/profile/change-password/', {
       old_password,
       new_password,

@@ -39,15 +39,13 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
     const email = this.resetForm.get('email')?.value;
-    console.log('Restablecer contraseña para:', email);
 
     this.service.recoverPassword(email).subscribe({
       next: (response) => {
-        console.log('Respuesta:', response);
         this.showSuccessSection = true;
       },
       error: (error) => {
-        console.log('Error:', error);
+        console.error('Error:', error);
       },
     });
   }
@@ -59,7 +57,7 @@ export class ForgotPasswordComponent implements OnInit {
   goToLogin() {
     this.router.navigate(['/login']);
   }
-  
+
   resetPassword(email: string) {
     this.service.recoverPassword(email).subscribe({
       next: (response) => {

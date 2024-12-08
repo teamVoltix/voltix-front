@@ -96,8 +96,6 @@ export class MeasurementDetailComponent implements OnInit {
           console.error('Error comparing:', error);
         },
       });
-    } else {
-      console.log('Please enter a valid id');
     }
   }
 

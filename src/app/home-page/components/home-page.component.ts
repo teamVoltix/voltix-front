@@ -158,7 +158,7 @@ export class HomePageComponent implements AfterViewInit {
   private loadInvoices(): void {
     this.service.getInvoices().subscribe({
         next: (invoiceData) => {
-            console.log('Datos de facturas recibidos:', invoiceData);
+            
             const userInvoices = invoiceData.invoices; 
 
             this.getConsumptionForLastSixMonths(userInvoices);
@@ -226,7 +226,7 @@ export class HomePageComponent implements AfterViewInit {
       }
     });
   
-    console.log('Consumo mensual de facturas:', monthlyConsumption);
+    
     this.invoiceData = monthlyConsumption; 
   }
   
@@ -246,7 +246,7 @@ export class HomePageComponent implements AfterViewInit {
       }
     });
   
-    console.log('Consumo mensual de mediciones:', monthlyMeasurementConsumption);
+    
     this.measurementData = monthlyMeasurementConsumption; 
   }
 

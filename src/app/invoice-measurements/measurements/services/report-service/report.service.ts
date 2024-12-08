@@ -17,13 +17,13 @@ export class ReportService {
     backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
     closable: true,
     onHide: () => {
-      console.log('modal is hidden');
+      
     },
     onShow: () => {
-      console.log('modal is shown');
+      
     },
     onToggle: () => {
-      console.log('modal has been toggled');
+      
     },
   };
 
@@ -58,8 +58,8 @@ export class ReportService {
     }
   }
 
-   // TODO: Método para simular la descarga, cambiar cuando el backend esté listo
-   downloadReport() {
+  // TODO: Método para simular la descarga, cambiar cuando el backend esté listo
+  downloadReport() {
     this.downloading = true;
 
     setTimeout(() => {
@@ -67,5 +67,4 @@ export class ReportService {
       this.downloadFinished = true;
     }, 3000); // Simulamos 3 segundos de descarga
   }
-
 }

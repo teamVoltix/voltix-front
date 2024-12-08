@@ -158,7 +158,7 @@ export class RegisterComponent {
     this.errorFieldsEmpty = '';
     this.errorEmail = '';
 
-    console.log(this.registerForm.value);
+    
 
     if (this.registerForm.invalid) {
       this.checkEmptyFields(); // Verifica si hay campos vacíos
@@ -183,12 +183,12 @@ export class RegisterComponent {
     }
 
     // Aquí puedes continuar con el registro
-    console.log(this.registerForm.value);
+    
     this.registerForm.removeControl('repeatPassword');
-    console.log(this.registerForm.value);
+    
     this.service.register(this.registerForm.value).subscribe({
       next: (response) => {
-        console.log('Registro exitoso:', response);
+        
         this.showSuccessAlert();
         this.registerForm.reset();
 
@@ -247,7 +247,7 @@ export class RegisterComponent {
     const email = this.registerForm.value.email;
     this.service.sendVerificationCode(email).subscribe({
       next: (response) => {
-        console.log('send verificacion code:', response);
+        
         this.verificationCode = response.code;
         this.modalNumberOpen = true;
       },
@@ -261,7 +261,6 @@ export class RegisterComponent {
     const email = this.registerForm.value.email;
     this.service.verifyCode(email, this.enteredCode).subscribe({
       next: (response) => {
-        console.log('Codice verificato:', response);
         this.onCodeVerified();
       },
       error: (error) => {

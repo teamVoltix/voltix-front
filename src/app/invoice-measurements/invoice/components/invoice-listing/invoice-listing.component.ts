@@ -87,7 +87,7 @@ export class InvoiceListingComponent {
   getInvoices(): void {
     this.invoiceService.getInvoices().subscribe({
       next: (data) => {
-        console.log(data);
+        
         this.invoices = data.invoices;
       },
       error: (err) => {
@@ -171,7 +171,7 @@ export class InvoiceListingComponent {
     this.invoices = this.invoices.filter((invoice) => !invoice.selected);
     this.filteredInvoices = [...this.invoices];
     this.updatePagination(); // Recalcula las páginas
-    console.log('Facturas seleccionadas eliminadas');
+    
   }
 
   //Variables para el paginador
@@ -202,12 +202,12 @@ export class InvoiceListingComponent {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const files = Array.from(input.files);
-      console.log('Archivos seleccionados:', files);
+      
 
       // Validar y procesar los archivos cargados
       files.forEach((file) => {
         if (file.type === 'application/pdf') {
-          console.log(`Cargando archivo: ${file.name}`);
+          
         } else {
           console.warn(`El archivo ${file.name} no es un PDF válido.`);
         }
@@ -225,7 +225,7 @@ export class InvoiceListingComponent {
     event.preventDefault();
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    console.log(`Cambiando a la página ${page}`);
+    
   }
 
   // Método para identificar elementos únicos en el *ngFor (mejora el rendimiento)
