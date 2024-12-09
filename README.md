@@ -31,6 +31,8 @@ ___
 
 • Swiper 11.1.15
 
+• ApexCharts 4.1.0
+
 • Flowbite 2.5.2
 
 • Sweetalert2 11.14.5
