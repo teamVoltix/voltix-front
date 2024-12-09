@@ -27,13 +27,13 @@ ___
 
 • Angular CLI 18.2.13
 
-• Node 20.10.0
+• Json web token 9.0.2
 
-• Package Manager npm 10.2.3
+• Swiper 11.1.15
 
-• Typescript
+• Flowbite 2.5.2
 
-• Flowbite CSS
+• Sweetalert2 11.14.5
 
 • Git y Github
 
