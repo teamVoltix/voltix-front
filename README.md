@@ -44,11 +44,13 @@ ___
 ### **Instalación de Voltix**
 ___
 
-#### Clonar el repositorio de GitHub.
+#### Clonar ambos repositorios de GitHub
 
      git clone https://github.com/igrowker/i003-eventmap-front.git
+
+     git clone https://github.com/igrowker/i004-voltix-back.git
      
-#### Instala las dependencias necesarias.
+#### Instala las dependencias necesarias
     npm install
     
 #### Instala flowbite 
