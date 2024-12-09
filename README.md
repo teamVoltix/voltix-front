@@ -1,6 +1,6 @@
 
 
-![Logo del proyecto](https://github.com/igrowker/i004-voltix-front/blob/develop/src/assets/images/VoltixLoginBlanco.svg)
+![Logo del proyecto](https://github.com/igrowker/i004-voltix-front/blob/develop/src/assets/images/VoltixLoginAzul.svg)
 
 ### **Descripción**
 ___
