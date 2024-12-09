@@ -1,4 +1,6 @@
-![Logo del proyecto](src\assets\images\voltixLogo.svg)
+
+
+![Logo del proyecto](https://github.com/igrowker/i004-voltix-front/blob/develop/src/assets/images/VoltixLoginBlanco.svg)
 
 ### **Descripción**
 ___
@@ -20,7 +22,7 @@ ___
 • **Navegación.** El diseño implementado está optimizado para que la aplicación sea mobile first e intuitiva para el usuario final.
 
 
-### **Técnologías Front-end**
+### **Tecnologías Front-end**
 ___
 
 • Angular CLI 18.2.13
@@ -57,16 +59,28 @@ ___
 
 ### **Colaboradores**
 ___
-- **Project Manager**
 
-- **Equipo de diseño UX-UI**
+| **Rol**              | **Miembro**                                                                  | **LinkedIn**               | **Git Hub**       |
+|----------------------|----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|
+| **Líder del Proyecto**  | Waldir Márquez Espíritu        | https://www.linkedin.com/in/waldir-marquez-espiritu/         |                  |
+| **Desarrolladora Frontend** | Marianela Landoni           | https://www.linkedin.com/in/marianelalandoni/          | https://github.com/MarianelaLandoni |
+| **Desarrollador Frontend**  | Daniele Quintiliani   | https://www.linkedin.com/in/daniele-quintiliani/ |   https://github.com/malethik        |
+| **Desarrolladora Frontend**    | Davinia Pérez | https://www.linkedin.com/in/davinia-p-delgado/  | https://github.com/daviniapd  |
+| **Desarrollador Frontend**     | José Carlos Bertomeu  | https://www.linkedin.com/in/jcbertomeu/  |https://github.com/bertomeu        |
+| **Desarrolladora Frontend** | Silvia de la Barrera | https://www.linkedin.com/in/sil-delabarrera/ | https://github.com/SildelaBarrera  |
+| **Desarrolladora Backend**  | Natalia Iacono | https://www.linkedin.com/in/natalia-iacono/ |     https://github.com/nataliaIacono        |
+| **Desarrollador Backend** | Dário Duarte  | https://www.linkedin.com/in/darioduarte1/          | https://github.com/darioduarte1      |
+| **Desarrollador Backend**  | Denis Diaz Romero | https://www.linkedin.com/in/denis-diaz-romero-1b7055165/ | https://github.com/denis9diaz           |
+| **Desarrolladora Backend**| Anzhela Kapliienko  | https://www.linkedin.com/in/anzhela-kapliienko/ | https://github.com/ILMPI    |
+| **Desarrollador Backend** |  Matías Kamelman | https://www.linkedin.com/in/matias-kamelman/ |  https://github.com/kamelmat  |
+| **Desarrollador Backend** | Eduardo Ribeiro  | http://www.linkedin.com/in/eduardoribeiro-eiahrjay | https://github.com/EIAHRJAY   |
+| **DevOps**    | Ariel Lima Pérez  |https://www.linkedin.com/in/ariellprez/           |   https://github.com/arielprez      |
+| **QA**    | Stephanie Mata Toyo |https://www.linkedin.com/in/stephaniemtoyo/         |   https://github.com/Stephaniemtoyo      |
+| **QA**    |  Camille Patrizia Gravina  |    https://www.linkedin.com/in/camillepatriziagravina/     |         |
+| **Diseñadora UI/UX**    |  Laura Rus  |   https://www.linkedin.com/in/laura-rus/    |         |
+| **Diseñador UI/UX**     |  Sebastián Gómez  |   https://www.linkedin.com/in/sebasr-gomez90/  |         |
+| **Diseñadora UI/UX**    | Sofia Ludmila Hilarión| https://www.linkedin.com/in/sofialudmilahilarion/ |         |
+| **Diseñadora UI/UX**    | Victoria Vera Alsina | https://www.linkedin.com/in/victoriaveraalsina/  |         |
 
-- **Equipo de Front-End**
-
-- **Equipo de Back-End**
-
-- **DevOps**
-
-- **Equipo de QA**
 
 
