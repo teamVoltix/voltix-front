@@ -46,10 +46,16 @@ ___
 
 #### Clonar ambos repositorios de GitHub
 
-     git clone https://github.com/igrowker/i003-eventmap-front.git
+     git clone https://github.com/igrowker/i004-voltix-front.git
 
      git clone https://github.com/igrowker/i004-voltix-back.git
-     
+
+#### Para desplegar el back primero leer la documentacion referenciado en el mismo
+    https://github.com/igrowker/i004-voltix-back/blob/develop/README.md
+
+
+### Despliegue del front
+
 #### Instala las dependencias necesarias
     npm install
     
@@ -61,6 +67,30 @@ ___
     ng serve
 
 
+---
+
+## Despliegue con Docker:
+
+#### Recomendado Desplegar primero el backend
+    git clone https://github.com/igrowker/i004-voltix-back.git
+
+#### Clonar el repositorio
+    git clone https://github.com/igrowker/i004-voltix-front.git
+
+#### Editar los archivos Enviroment.ts para referenciar la url del backend:
+    i004-voltix-front\src\environments
+
+#### Construir la imagen de docker
+    docker-compose build
+
+#### Ejecutar el servicio
+    docker-compose up -d
+
+#### Acceso al front
+    http://localhost:8080
+
+
+---
 ### **Colaboradores**
 ___
 
