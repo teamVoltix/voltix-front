@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InstanceOptions, Modal, ModalInterface, ModalOptions } from 'flowbite';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class ReportService {
     override: true,
   };
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   initializeModal() {
     this.$modalElement = document.querySelector('#reportDownloadModal');
@@ -58,13 +59,29 @@ export class ReportService {
     }
   }
 
-  // TODO: Método para simular la descarga, cambiar cuando el backend esté listo
-  downloadReport() {
+  downloadReport(comparisonId: number) {
+    const url = `http://127.0.0.1:8000/api/measurements/report/download/?id=${comparisonId}`;
     this.downloading = true;
 
-    setTimeout(() => {
-      this.downloading = false;
-      this.downloadFinished = true;
-    }, 3000); // Simulamos 3 segundos de descarga
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: (blob) => {
+        this.downloading = false;
+        this.downloadFinished = true;
+
+        // Trigger download in the browser
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `comparison_report_${comparisonId}.pdf`; // Adjust filename as needed
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Error downloading the report:', error);
+        this.downloading = false;
+      },
+    });
   }
+
+  
 }

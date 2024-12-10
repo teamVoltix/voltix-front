@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReportService } from '../../services/report-service/report.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ReportService } from '../../services/report-service/report.service';
   styleUrl: './report-download.component.css',
 })
 export class ReportDownloadComponent {
-
+  @Input() comparisonId!: number;
   constructor(private reportService: ReportService) {}
 
   ngAfterViewInit() {
@@ -24,9 +24,12 @@ export class ReportDownloadComponent {
     this.reportService.hideModal();
   }
 
+
   downloadReport() {
-    
-    this.reportService.downloadReport();
-    this.hideModal();
+    if (this.comparisonId) {
+      this.reportService.downloadReport(this.comparisonId);
+    } else {
+      console.error('Comparison ID is not provided.');
+    }
   }
 }
