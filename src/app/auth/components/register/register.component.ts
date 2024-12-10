@@ -25,6 +25,7 @@ export class RegisterComponent {
   private service = inject(AuthService);
   private router = inject(Router);
 
+  showPasswordRequirements: boolean = false;
   isPasswordVisible: boolean = false;
   isRepeatPasswordVisible: boolean = false;
   registerForm: FormGroup;
@@ -71,8 +72,12 @@ export class RegisterComponent {
     return password === repeatPassword;
   }
   onPasswordInput(): void {
-    this.passwordTouched = true;
-    this.isAllInputsValid();
+  this.passwordTouched = true;
+  this.isAllInputsValid();
+}
+
+  togglePasswordRequirements(state: boolean): void {
+    this.showPasswordRequirements = state;
   }
 
   onRepeatPasswordInput(): void {
