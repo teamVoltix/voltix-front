@@ -16,6 +16,7 @@ export interface ComparisonResponse {
   created_at: string;
   invoice_id: number;
   measurement_id: number;
+  comparison_id: number;
   result: ComparisonMeasurementInvoice;
 }
 

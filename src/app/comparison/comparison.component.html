@@ -1,0 +1,151 @@
+<div class="w-full">
+  <app-invoice-header></app-invoice-header>
+
+  <section class="bg-neutral-50 px-5 pt-5 pb-14">
+    <h2 class="text-dark-text text-2xl font-semibold mb-4">Comparación</h2>
+
+    <div class="relative overflow-x-auto rounded-lg">
+      <table class="w-full text-sm text-dark-text">
+        <thead class="text-base bg-primary-darkBg border border-primary-br">
+          <tr>
+            <th class="p-4 text-primary border-r border-primary-br">
+              <div class="flex items-center justify-center gap-2">
+                <img src="/assets/icons/invoiceCompare.svg" alt="Factura">
+                Factura
+              </div>
+            </th>
+            <th class="p-4 text-primary  border-r border-primary-br">
+              <div class="flex items-center justify-center gap-2">
+                <img src="/assets/icons/measurementCompare.svg" alt="Medición">
+                Medición
+              </div>
+            </th>
+            <th class="w-14 p-4"></th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white">
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">ID</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceId }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementId }}</td>
+            <td></td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Fecha de carga</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ dataLoaded }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ dataLoaded }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="dataLoaded ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Período de medición
+            </td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoicePeriod }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementPeriod }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="periodMatches ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Días medidos</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoicedDays }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ invoicedDays }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="invoicedDays ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Consumo (kWh)</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceConsumption }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementConsumption }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="consumptionMatches ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+
+          <tr class="bg-neutral-100 border border-neutral-200">
+            <td colspan="2" class="py-2 px-3 text-base font-semibold text-dark-text text-center">Importe (€)</td>
+            <td class="py-2 px-3 border-l border-l-neutral-200"></td>
+          </tr>
+          <tr>
+            <td class="p-4 text-center">{{ invoiceAmount }}</td>
+            <td class="p-4 text-center border-x border-x-neutral-200">{{ measurementAmount }}</td>
+            <td class="p-4">
+              <img class="w-6 min-w-6 h-6 min-h-6"
+                [src]="amountMatches ? '/assets/icons/greenCheckCircle.svg' : '/assets/icons/redCrossCircle.svg'"
+                alt="check o cross">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button
+      class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-[60px]"
+      (click)="showModal()">Descargar
+      PDF</button>
+
+    <!-- Modal de descarga -->
+    <app-report-download></app-report-download>
+
+    <!-- Toast de descargas -->
+    @if(reportService.downloading){
+    <app-downloading-toast></app-downloading-toast>
+    }
+    @if(reportService.downloadFinished){
+    <app-download-toast></app-download-toast>
+    }
+
+        <!-- Modal Datos no encontrados -->
+        @if(modalDataNotFound){
+          <div class="fixed inset-0 flex items-center justify-center z-10">
+            <div class="bg-gray-900/50 fixed inset-0" (click)="closeModalDataNotFound()"></div>
+            <div class="relative w-96 bg-white rounded-2xl shadow-lg p-6">
+              <div class="flex flex-col items-center justify-center gap-4">
+                <h2 class="text-2xl text-[#111928] font-semibold">Datos no encontrados</h2>
+                <p class="text-[#637381] font-base text-center">Aún no se han cargado los datos de la medición correspondiente para realizar la comparación.
+                </p>
+              </div>
+
+              <button (click)="closeModalDataNotFound()"
+                class="w-full p-[14px] text-base font-medium text-white rounded-lg bg-primary hover:bg-primary-hover focus:bg-primary-focus focus:outline-none mt-8">
+                Aceptar
+              </button>
+
+            </div>
+          </div>
+          }
+
+
+  </section>
+
+</div>

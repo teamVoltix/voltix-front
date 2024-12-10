@@ -12,6 +12,7 @@ import {
 } from '../../../../core/model/comparison';
 import { User } from '../../../../core/model/user';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -36,13 +37,36 @@ export class MeasurementService {
    * @param invoiceId
    * @returns POST para la comparación medición/factura
    */
-  compareInvoice(invoiceId: number): Observable<ComparisonResults> {
-    const body = { invoice: invoiceId };
+  // compareInvoice(invoiceId: number): Observable<ComparisonResults> {
+  //   const body = { invoice: invoiceId };
+  //   return this.http.post<ComparisonResults>(
+  //     `${environment.API_URL}comparations/compare/`,
+  //     body
+  //   );
+  // }
+  
+  // compareCurrentMeasurement(route: ActivatedRoute): Observable<ComparisonResults> {
+  //   const measurementId = Number(route.snapshot.paramMap.get('measurementId')); // Retrieve measurement ID from route
+  //   if (!measurementId) {
+  //     throw new Error('Measurement ID not found in the route parameters.');
+  //   }
+  
+  //   const body = { invoice: measurementId }; // Send the measurement ID directly
+  //   return this.http.post<ComparisonResults>(
+  //     `${environment.API_URL}comparations/compare/`,
+  //     body
+  //   );
+  // }
+  
+  compareCurrentMeasurement(measurementId: number): Observable<ComparisonResults> {
+    const body = { invoice: measurementId }; // Send the measurement ID directly in the body
     return this.http.post<ComparisonResults>(
       `${environment.API_URL}comparations/compare/`,
       body
     );
   }
+  
+  
 
   getComparisonDetails(comparisonId: number): Observable<ComparisonResponse> {
     return this.http.get<ComparisonResponse>(
