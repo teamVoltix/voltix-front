@@ -33,7 +33,6 @@ export class ComparisonComponent  implements OnInit {
   comparisonMesInv!: ComparisonResponse;
   modalDataNotFound: boolean = false;
 
-
   ngOnInit() {
     this.getComparison();
   }
@@ -128,8 +127,17 @@ export class ComparisonComponent  implements OnInit {
     return this.comparisonMesInv?.result.total_a_pagar.coincide_total;
   }
 
+  // showModal() {
+  //   this.reportService.showModal();
+  // }
+
   showModal() {
-    this.reportService.showModal();
+    const comparisonId = this.comparisonId;
+    if (comparisonId) {
+      this.reportService.downloadReport(comparisonId); // Pass the ID to the service
+    } else {
+      console.error('Comparison ID is not available.');
+    }
   }
 
   openModalDataNotFound(){
@@ -140,5 +148,6 @@ export class ComparisonComponent  implements OnInit {
     this.modalDataNotFound = false;
     this.router.navigate(['/measurement-search']);
   }
+
 
 }
