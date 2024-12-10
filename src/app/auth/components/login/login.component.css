@@ -78,7 +78,7 @@
 .form-section {
     display: flex;
     flex-direction: column;
-    padding: 1.25rem; 
+    padding: 1.7rem  !important; 
     width: 100%;
     background-color: white; 
     border-top-left-radius: 1.875rem; 
@@ -86,15 +86,15 @@
     margin-top: auto;
     position: relative; 
     z-index: 2; 
-    
-    
 }
 
 .form-title {
-    font-size: 1.8rem; 
-    font-weight:  semibold; 
-    line-height: 1; 
-    color: #27272a; 
+    font-size: 1.2rem; 
+    font-weight: 500;
+    line-height: 2.5rem; 
+    margin-left: 0.3rem;
+    color: #000000; 
+    margin-top: 0.5rem;
 }
 
 .login-form {
@@ -112,40 +112,103 @@
 }
 
 .label {
-    gap: 0.625rem; 
-    font-weight: medium; 
-    color: #27272a; 
-    width: 100%; /* Cambiar a 100% para pantallas pequeñas */
-}    
+    display: block; /* Hace que la etiqueta ocupe su propia línea */
+    font-weight: medium;
+    color: #27272a;
+    margin-bottom: 0.25rem; /* Reduce el espacio entre la etiqueta y el input */
+    font-size: 1rem; /* Ajusta el tamaño de la fuente si es necesario */
+    line-height: 1; /* Elimina los espacios adicionales verticales */
+    margin-left: 0.3rem;
+}
 
 .input, .password-container {
     display: flex;
-    flex: 1;
-    gap: 0.625rem; 
-    align-items: center;
-    padding: 0.75rem 1rem; 
-    margin-top: 0.5rem; 
+    align-items: center; /* Asegura que los íconos estén alineados con el input */
+    padding: 0.75rem 1rem;
+    margin-top: 0; /* Elimina márgenes adicionales por encima */
     color: #6b7280;
-    background-color: white; 
-    border: 1px solid #e5e7eb; 
-    border-radius: 0.375rem; 
-    width: 100%; /* Asegura que los campos ocupen todo el ancho */
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    width: 90%; /* Ajusta el ancho de los campos */
+    height: 3rem;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* Asegura que ocupe todo el contenedor */
+    padding: 10px; /* Espaciado interno consistente */
+    font-size: 1rem !important; /* Tamaño de texto igual */
+    border: 1px solid #ccc; /* Borde consistente */
+    border-radius: 8px; /* Bordes redondeados uniformes */
+    box-sizing: border-box; /* Incluye padding y borde en el cálculo del ancho */
+    background-color: #f9f9f9; /* Color de fondo consistente */
+    color: #333; /* Color de texto consistente */
+}
+
+/* Esta sección asegura que el contenedor de la contraseña y el input de usuario tengan un alineamiento vertical coherente */
+.password-container {
+    display: flex;
+    align-items: center;
+    position: relative; /* Para que el icono esté alineado dentro del campo */
+    padding: 0.75rem 1rem;
+    margin-top: 0;
+    color: #6b7280;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    width: 90%;
+    height: 3rem;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* Asegura que ocupe todo el contenedor */
+    padding: 10px; /* Espaciado interno consistente */
+    font-size: 1rem; /* Tamaño de texto igual */
+    border: 1px solid #ccc; /* Borde consistente */
+    border-radius: 8px; /* Bordes redondeados uniformes */
+    box-sizing: border-box; /* Incluye padding y borde en el cálculo del ancho */
+    background-color: #f9f9f9; /* Color de fondo consistente */
+    color: #333; /* Color de texto consistente */
 }
 
 .password-input {
     flex: 1;
-    background: transparent; 
-    border: none; 
-    outline: none; 
+    background: transparent;
+    border: none;
+    outline: none;
+    height: 100%; /* Igualar la altura del input */
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem; /* Ajusta la posición del icono al lado derecho */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0; /* Elimina padding extra */
+    height: 100%; /* Alinea verticalmente el icono */
+    display: flex;
+    align-items: center;
+}
+
+.eye-icon {
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .forgot-password {
     margin-top: 0.75rem; 
     font-weight: medium; 
-    color: #0ea5e9; 
+    color: #0072CE; 
 }
 
 .submit-button {
+    height: 3rem;
+    margin-top: 1rem;
+    font-size: 17px;
     display: flex;
     gap: 0.625rem; 
     justify-content: center;
