@@ -2,7 +2,7 @@ import { Component, AfterViewInit, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swiper from 'swiper/bundle';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import ApexCharts from 'apexcharts';
 import { HomepageService } from '../service/homepage.service';
 import { User } from '../../core/model/user';
@@ -131,7 +131,7 @@ export class HomePageComponent implements AfterViewInit {
       },
     });
     const swiper = new Swiper('.swiper-container', {
-      modules: [Navigation],
+      modules: [Navigation, Pagination],
       slidesPerView: 1,
       spaceBetween: 10,
       pagination: {

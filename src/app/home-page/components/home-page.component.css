@@ -22,6 +22,7 @@
 
 .header-section {
   margin-top: 3rem; 
+  margin-bottom: 1rem;
   width: 100%;
   color: white; 
   position: relative; 
@@ -214,30 +215,28 @@ button {
 }
 
 .swiper-container {
-  position: relative; 
+  position: relative;
   width: 100%;
+  overflow: hidden; /* Para evitar que los elementos fuera del contenedor sean visibles */
 }
 
 .swiper-wrapper {
-  display: flex; 
-  align-items: center; 
-  flex-direction: row;   
-
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.3s ease-in-out; /* Para que el desplazamiento sea suave */
+  width: 100%; /* Ajusta al ancho del contenedor */
 }
 
 .swiper-slide {
-  display: flex; 
-  justify-content: start; 
-  align-items: flex-start; 
-  flex: 0 0 auto; 
+  flex: 0 0 100%; /* Cada slide ocupa el 100% del ancho del contenedor */
+  max-width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
   border-radius: 10px;
   background-color: white;
   padding: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  min-width: 350px;;
-  margin-right: 1rem; 
   margin-bottom: 2rem;
 }
 
@@ -259,5 +258,3 @@ button {
 .swiper-pagination-bullet-active {
   opacity: 1; 
 }
-
-
