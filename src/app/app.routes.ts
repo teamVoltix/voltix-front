@@ -15,6 +15,7 @@ import { MeasurementDetailComponent } from './invoice-measurements/measurements/
 import { MeasurementCompareComponent } from './invoice-measurements/measurements/components/measurement-compare/measurement-compare.component';
 import { InvoiceDetailsComponent } from './invoice-measurements/invoice/components/invoice-details/invoice-details.component';
 import { InvoiceUploadComponent } from './invoice-measurements/invoice/components/invoice-upload/invoice-upload.component';
+import { ComparisonComponent } from './comparison/comparison.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -95,6 +96,12 @@ export const routes: Routes = [
     path: 'invoice-upload',
     title: 'Upload Invoice',
     component: InvoiceUploadComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'comparison/:comparisonId',
+    title: 'Comparison Details',
+    component: ComparisonComponent,
     canActivate: [authGuard],
   },
   {

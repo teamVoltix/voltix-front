@@ -25,6 +25,9 @@ export class InvoiceService {
   getInvoiceById(id: string): Observable<Invoice> {
     return this.http.get<Invoice>(this.url + 'api/invoices/' + id + '/');
   }
+  compareInvoice(payload: { invoice: string }) {
+    return this.http.post<any>(this.url + 'comparations/compare/', payload);
+  }
   profile(): Observable<User> {
     return this.http.get<User>(this.url + 'api/profile/');
   }

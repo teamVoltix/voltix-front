@@ -17,6 +17,9 @@ export class InvoiceDetailsComponent implements OnInit {
   public route = inject(ActivatedRoute);
   public router = inject(Router);
   public invoiceService = inject(InvoiceService);
+  public comparisonCompleted: boolean = false;
+  public comparisonId: number | null = null;
+
   user: User = {
     address: '',
     birth_date: '',
@@ -93,6 +96,54 @@ export class InvoiceDetailsComponent implements OnInit {
       },
     });
   }
+
+  // compareInvoice() {
+  //   const invoiceId = this.invoice_id();
+  //   if (!invoiceId) {
+  //     console.error('Invoice ID is not available.');
+  //     return;
+  //   }
+  
+  //   const payload = { invoice: invoiceId };
+  
+  //   this.invoiceService.compareInvoice(payload).subscribe({
+  //     next: (response) => {
+  //       console.log('Comparison Result:', response);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error during comparison:', error);
+  //     },
+  //   });
+  // }
+  
+  compareInvoice() {
+    const invoiceId = this.invoice_id();
+    if (!invoiceId) {
+      console.error('Invoice ID is not available.');
+      return;
+    }
+  
+    const payload = { invoice: invoiceId };
+  
+    this.invoiceService.compareInvoice(payload).subscribe({
+      next: (response) => {
+        console.log('Comparison Result:', response);
+  
+        // Navigate to the ComparisonComponent with the comparison ID
+        if (response?.comparison_id) {
+          this.router.navigate(['/comparison', response.comparison_id]);
+        } else {
+          console.error('Comparison ID not available in the response.');
+        }
+      },
+      error: (error) => {
+        console.error('Error during comparison:', error);
+      },
+    });
+  }
+  
+  
+
   //Cambiar vista a Imagen
   getImage() {
     this.invoicePage = false;

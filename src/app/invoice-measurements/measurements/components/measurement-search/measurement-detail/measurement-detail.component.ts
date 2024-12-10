@@ -85,19 +85,35 @@ export class MeasurementDetailComponent implements OnInit {
       : 'Ver comparación';
   }
 
+  // compareInvoice() {
+  //   this.measurementService.compareCurrentMeasurement(this.route).subscribe({
+  //     next: (response) => {
+  //       console.log('Comparison Result:', response);
+  //     },
+  //     error: (error) => {
+  //       this.openModalDataNotFound();
+  //       console.error('Error comparing:', error);
+  //     },
+  //   });
+  // }
+
   compareInvoice() {
-    if (this.measurement?.id) {
-      this.measurementService.compareInvoice(this.measurement?.id).subscribe({
-        next: (response) => {
-          console.log('Comparison Result:', response);
-        },
-        error: (error) => {
-          this.openModalDataNotFound();
-          console.error('Error comparing:', error);
-        },
-      });
+    const measurementId = this.route.snapshot.paramMap.get('measurementId'); // Extract measurement ID from route
+    if (!measurementId) {
+      console.error('Measurement ID not found in the route parameters.');
+      return;
     }
+  
+    this.measurementService.compareCurrentMeasurement(Number(measurementId)).subscribe({
+      next: (response) => {
+        console.log('Comparison Result:', response); // Log the result to the console
+      },
+      error: (error) => {
+        console.error('Error comparing:', error); // Log the error to the console
+      },
+    });
   }
+  
 
   goToComparisonDetail(id: number) {
     this.router.navigate([`measurement-compare/${id.toString()}`]);
