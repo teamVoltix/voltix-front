@@ -1,0 +1,50 @@
+/* Contenedor principal */
+.notifications-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Títulos */
+  .notifications-container h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: left;
+  }
+  
+  /* Lista de notificaciones */
+  .notifications-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Elementos de la lista */
+  .notifications-container ul li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 1em;
+    color: #555;
+  }
+  
+  /* Último elemento sin borde */
+  .notifications-container ul li:last-child {
+    border-bottom: none;
+  }
+  
+  /* Hover sobre los elementos */
+  .notifications-container ul li:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  /* Diferenciación entre secciones */
+  .section-divider {
+    margin: 20px 0;
+    border-top: 2px solid #eee;
+  }
+  

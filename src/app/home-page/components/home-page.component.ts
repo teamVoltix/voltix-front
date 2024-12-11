@@ -82,6 +82,11 @@ export class HomePageComponent implements AfterViewInit {
     this.router.navigate(['/measurement-search']);
   }
 
+  goToNotifications(): void {
+    console.log('Navigating to notifications...');
+    this.router.navigate(['/notifications']);
+  }
+  
   getLastSixMonthsFromDate(startDate: Date): string[] {
     const months = [
       'Ene',

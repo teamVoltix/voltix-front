@@ -1,62 +1,141 @@
 <div class="background">
-  <img src="/assets/images/rayoAzulLogin.svg" class="background-image" alt="Voltix Logo" />
-  
-  <section class="header-section flex items-center justify-between px-4 relative">
+  <img
+    src="/assets/images/rayoAzulLogin.svg"
+    class="background-image"
+    alt="Voltix Logo"
+  />
+
+  <section
+    class="header-section flex items-center justify-between px-4 relative"
+  >
     <div class="text-center">
-      <img src="/assets/images/VoltixLoginBlanco.svg" alt="Voltix logo" class="w-28">
+      <img
+        src="/assets/images/VoltixLoginBlanco.svg"
+        alt="Voltix logo"
+        class="w-28"
+      />
     </div>
-    
+
     <div class="user-container">
       <div class="user-avatar" (click)="toggleDropdown()">
-          <img [src]="user.photo ? user.photo : 'assets/avatar-default.png'"  alt="Avatar" class="avatar" />
+        <img
+          [src]="user.photo ? user.photo : 'assets/avatar-default.png'"
+          alt="Avatar"
+          class="avatar"
+        />
       </div>
-      
+
       <!-- Dropdown -->
-      <div class="dropdown" [ngClass]="{ 'hidden': !isDropdownOpen }">
-          <ul>
-            <li class="dropdown-item" (click)="closeDropdown()">
-              <img src="/assets/icons/close-x.svg" alt="Close Ico" class="closeX" />
-          </li> 
-              <li class="dropdown-item mb-4" (click)="goToProfile()"><img src="/assets/icons/user.svg" alt="User Ico" class="icon" />Mi perfil <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico" class="chevronRight" /></li>
-              <li class="dropdown-item my-4"><img src="/assets/icons/alerts.svg" alt="Alerts Ico" class="icon" />Notificaciones <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico" class="chevronRight" /></li>
-              <li class="dropdown-item my-4"><img src="/assets/icons/question-circle.svg" alt="Question Circle Ico" class="icon" />Ayuda <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico" class="chevronRight" /></li>
-              <hr />
-              <li class="dropdown-item my-4" (click)="logout()"><img src="/assets/icons/exit.svg" alt="Exit Ico" class="icon" />Cerrar Sesión <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico" class="chevronRight" /></li>
-          </ul>
+      <div class="dropdown" [ngClass]="{ hidden: !isDropdownOpen }">
+        <ul>
+          <li class="dropdown-item" (click)="closeDropdown()">
+            <img
+              src="/assets/icons/close-x.svg"
+              alt="Close Ico"
+              class="closeX"
+            />
+          </li>
+          <li class="dropdown-item mb-4" (click)="goToProfile()">
+            <img src="/assets/icons/user.svg" alt="User Ico" class="icon" /> 
+            Mi perfil
+            <img
+              src="/assets/icons/chevron-right.svg"
+              alt="Alerts Ico"
+              class="chevronRight"
+            />
+          </li>
+          
+          <li class="dropdown-item my-4" (click)="goToNotifications()">
+            <img src="/assets/icons/alerts.svg" alt="Alerts Ico" class="icon" />
+            Notificaciones
+            <img src="/assets/icons/chevron-right.svg" alt="Alerts Ico" class="chevronRight" />
+          </li>
+
+          <li class="dropdown-item my-4">
+            <img
+              src="/assets/icons/question-circle.svg"
+              alt="Question Circle Ico"
+              class="icon"
+            />Ayuda
+            <img
+              src="/assets/icons/chevron-right.svg"
+              alt="Alerts Ico"
+              class="chevronRight"
+            />
+          </li>
+          <hr />
+          <li class="dropdown-item my-4" (click)="logout()">
+            <img
+              src="/assets/icons/exit.svg"
+              alt="Exit Ico"
+              class="icon"
+            />Cerrar Sesión
+            <img
+              src="/assets/icons/chevron-right.svg"
+              alt="Alerts Ico"
+              class="chevronRight"
+            />
+          </li>
+        </ul>
       </div>
-    </div> 
-    
+    </div>
   </section>
   <div class="body-section">
     <!-- Bienvenida -->
     <section class="section">
       <h2 class="text-xl font-medium mb-2">¡Hola {{ user.fullname }}!</h2>
-    
+
       <div class="containerConsumo">
         <div class="flex items-center">
-          <img src="/assets/icons/homePageGraphicIco.svg" alt="Graph Ico" class="graphIco" />
+          <img
+            src="/assets/icons/homePageGraphicIco.svg"
+            alt="Graph Ico"
+            class="graphIco"
+          />
           <div class="ml-4">
             <p class="text-xs text-gray-500 mb-1">Tu último consumo</p>
-            <h3 class="text-xl font-semibold mb-1">{{ latestInvoiceKWh }} kWh</h3>
+            <h3 class="text-xl font-semibold mb-1">
+              {{ latestInvoiceKWh }} kWh
+            </h3>
             <p class="text-gray-500">{{ latestInvoiceMonth }}</p>
           </div>
         </div>
         <div class="consumo-mes flex items-center">
-          <p [ngClass]="changeColor" class="text-xs">{{ percentChange.toFixed(2) }}%</p>
-          <img *ngIf="changeDirection === 'up'" src="/assets/icons/arrowUpGreen.svg" alt="Arrow up" class="w-3 h-4" />
-          <img *ngIf="changeDirection === 'down'" src="/assets/icons/arrowDownRed.svg" alt="Arrow down" class="w-3 h-4" />
-      </div>
+          <p [ngClass]="changeColor" class="text-xs">
+            {{ percentChange.toFixed(2) }}%
+          </p>
+          <img
+            *ngIf="changeDirection === 'up'"
+            src="/assets/icons/arrowUpGreen.svg"
+            alt="Arrow up"
+            class="w-3 h-4"
+          />
+          <img
+            *ngIf="changeDirection === 'down'"
+            src="/assets/icons/arrowDownRed.svg"
+            alt="Arrow down"
+            class="w-3 h-4"
+          />
+        </div>
       </div>
 
       <!-- Botones -->
       <div class="center-boton">
         <div class="botones">
           <button (click)="goToAttachedInvoices()">
-            <img src="/assets/icons/ticketAlt.svg" alt="Ticket Icon" class="w-5 h-5" />
+            <img
+              src="/assets/icons/ticketAlt.svg"
+              alt="Ticket Icon"
+              class="w-5 h-5"
+            />
             <span>Facturas</span>
           </button>
-          <button (click)="goToMeasurementSearch()" >
-            <img src="/assets/icons/dashboardAlt.svg" alt="Velocity Icon" class="w-5 h-5" />
+          <button (click)="goToMeasurementSearch()">
+            <img
+              src="/assets/icons/dashboardAlt.svg"
+              alt="Velocity Icon"
+              class="w-5 h-5"
+            />
 
             <span>Medición</span>
           </button>
@@ -68,8 +147,9 @@
     <section class="p-4">
       <h2 class="text-xl font-medium mb-4">Gráfico mensual</h2>
       <div class="mt-4">
-        <div class="containerGraphic bg-white flex flex-col items-center justify-center rounded-lg relative">
-        </div>
+        <div
+          class="containerGraphic bg-white flex flex-col items-center justify-center rounded-lg relative"
+        ></div>
       </div>
     </section>
 
@@ -80,7 +160,11 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="flex items-center">
-              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <img
+                src="/assets/icons/light.svg"
+                alt="Light Ico"
+                class="lightIco"
+              />
               <div class="ml-4">
                 <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
                 <h3 class="text-xl font-semibold mb-1">Utiliza luces LED</h3>
@@ -90,30 +174,48 @@
           </div>
           <div class="swiper-slide">
             <div class="flex items-center">
-              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <img
+                src="/assets/icons/light.svg"
+                alt="Light Ico"
+                class="lightIco"
+              />
               <div class="ml-4">
                 <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
-                <h3 class="text-xl font-semibold mb-1">Ajusta la temperatura</h3>
+                <h3 class="text-xl font-semibold mb-1">
+                  Ajusta la temperatura
+                </h3>
                 <p class="text-gray-500">Bajar 1ºC ahorra hasta un 20%</p>
               </div>
             </div>
           </div>
           <div class="swiper-slide">
             <div class="flex items-center">
-              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <img
+                src="/assets/icons/light.svg"
+                alt="Light Ico"
+                class="lightIco"
+              />
               <div class="ml-4">
                 <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
-                <h3 class="text-xl font-semibold mb-1">Desenchufa los aparatos</h3>
+                <h3 class="text-xl font-semibold mb-1">
+                  Desenchufa los aparatos
+                </h3>
                 <p class="text-gray-500">Apagados consumen hasta el 75%</p>
               </div>
             </div>
           </div>
           <div class="swiper-slide">
             <div class="flex items-center">
-              <img src="/assets/icons/light.svg" alt="Light Ico" class="lightIco" />
+              <img
+                src="/assets/icons/light.svg"
+                alt="Light Ico"
+                class="lightIco"
+              />
               <div class="ml-4">
                 <p class="text-xs text-gray-500 mb-1">Reduce tu consumo</p>
-                <h3 class="text-xl font-semibold mb-1">Apaga las luces que no usas</h3>
+                <h3 class="text-xl font-semibold mb-1">
+                  Apaga las luces que no usas
+                </h3>
                 <p class="text-gray-500">Puedes ahorrar hasta un 5%</p>
               </div>
             </div>
@@ -127,7 +229,11 @@
     <!-- Botón de cargar factura -->
     <div class="text-center px-4 mb-4">
       <button (click)="goToUploadInvoice()" class="btn-upload">
-        <img src="/assets/icons/circlePlus.svg" alt="Ticket Icon" class="w-5 h-5" />
+        <img
+          src="/assets/icons/circlePlus.svg"
+          alt="Ticket Icon"
+          class="w-5 h-5"
+        />
         Cargar factura
       </button>
     </div>
