@@ -1,50 +1,113 @@
-/* Contenedor principal */
-.notifications-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Títulos */
-  .notifications-container h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    color: #333;
-    text-align: left;
-  }
-  
-  /* Lista de notificaciones */
-  .notifications-container ul {
-    list-style-type: none;
+/* Aseguramos que el fondo gris ocupe toda la pantalla */
+body {
+    margin: 0;
     padding: 0;
+    background-color: #F4F4F6; /* Fondo gris claro */
+    height: 100%; /* Asegura que el body ocupe toda la altura de la pantalla */
   }
   
-  /* Elementos de la lista */
-  .notifications-container ul li {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    font-size: 1em;
-    color: #555;
+  /* Contenedor principal de notificaciones */
+  .notifications-container {
+    background-color: #F4F4F6;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+    max-width: 600px; /* Limita el ancho */
+    margin: 0 auto; /* Centra el contenedor */
+    box-sizing: border-box; /* Incluye padding en el tamaño total */
+    min-height: 100%;
   }
   
-  /* Último elemento sin borde */
-  .notifications-container ul li:last-child {
-    border-bottom: none;
+  /* Título de las notificaciones (único título) */
+  .title-notifications {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
   }
   
-  /* Hover sobre los elementos */
-  .notifications-container ul li:hover {
-    background-color: #f1f1f1;
+  /* Icono de settings a la derecha del título */
+  .title-notifications .settings-icon {
+    font-size: 1.6rem; /* Ajustar tamaño del icono */
     cursor: pointer;
   }
   
-  /* Diferenciación entre secciones */
-  .section-divider {
-    margin: 20px 0;
-    border-top: 2px solid #eee;
+  /* Estilo de las listas de notificaciones */
+  .list-notification {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Estilo de cada elemento de la notificación */
+  .element-notification {
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd; /* Línea de separación sutil (gris claro) */
+  }
+  
+  /* Contenedor para la grilla con 2 columnas */
+  .notification-grid {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr; /* Primera columna más estrecha, segunda columna más ancha */
+    grid-template-rows: auto auto; /* Dos filas con altura automática */
+    gap: 10px; /* Espacio entre las columnas y filas */
+    align-items: start; /* Alinea el contenido al inicio de cada celda */
+  }
+  
+  /* Primera columna: Imagen/Ícono */
+  .notification-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Asegura que la imagen esté al principio */
+  }
+  
+  /* Estilo para las imágenes en las notificaciones */
+  .notification-icon {
+    width: 50px; /* Ajusta el tamaño de la imagen */
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px; /* Espacio debajo de la imagen */
+  }
+  
+  /* Fila vacía */
+  .empty-space {
+    flex-grow: 1; /* Hace que esta fila ocupe el espacio restante */
+  }
+  
+  /* Segunda columna: Título, Fecha y Mensaje */
+  .notification-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  /* Título y Fecha (Fila 1 en la segunda columna) */
+  .notification-title-date {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Título de la notificación */
+  .notification-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Fecha de llegada */
+  .notification-date {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  /* Mensaje de la notificación (Fila 2 en la segunda columna) */
+  .notification-message {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #333;
   }
   
