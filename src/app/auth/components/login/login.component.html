@@ -41,7 +41,7 @@
           <label for="password" class="label">Contraseña</label>
           <div class="password-container">
             <input
-              type="password"
+              [type]="passwordVisible ? 'text' : 'password'"
               id="password"
               placeholder="Ingresar contraseña"
               class="password-input"

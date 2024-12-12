@@ -99,6 +99,15 @@
 
 #button-invoices {
     background-color: white !important;
-    color: #005baa !important;
-    border: 1px solid #005baa !important;
+    color: #005BAA !important;
+    border: 1px solid #005BAA !important;
+    height: 3.3rem;
+    font-size: 16px;
+}
+
+#button-compare-1 {
+    background-color: #005BAA !important;
+    color: #f0f0f0 !important;
+    height: 3.3rem;
+    font-size: 16px;
 }
