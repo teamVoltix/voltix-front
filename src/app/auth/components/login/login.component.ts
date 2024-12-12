@@ -64,7 +64,7 @@ export class LoginComponent {
   // Alterna la visibilidad del campo de contraseña
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
-  }
+  }  
 
   // Actualiza el estado general de los campos
   actualizarEstadoCampos(): void {

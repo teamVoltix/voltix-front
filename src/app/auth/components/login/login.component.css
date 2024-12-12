@@ -1,4 +1,3 @@
-/* Estilos básicos para pantallas más grandes */
 .background {
     display: flex;
     flex-direction: column;
@@ -171,16 +170,23 @@
     color: #333; /* Color de texto consistente */
 }
 
-.password-input {
+.password-container:focus-within {
+    border: 1px solid #0072ce; /* Mismo color azul que el borde del DNI */
+    box-shadow: 0 0 0 2px rgba(0, 114, 206, 0.2); /* Opcional, sombra para énfasis */
+    outline: none; /* Elimina el borde del contenedor predeterminado */
+  }
+  
+  .password-input {
     flex: 1;
     background: transparent;
     border: none;
-    outline: none;
+    outline: none; /* Elimina el borde azul interno del input */
     height: 100%; /* Igualar la altura del input */
     font-size: 1rem;
     margin: 0;
     padding: 0;
-}
+    box-shadow: none; /* Asegura que no haya sombras */
+  }  
 
 .toggle-password {
     position: absolute;
