@@ -1,50 +1,49 @@
 <div class="notifications-container">
-    <h2 class="title-notifications">
-      Notificaciones
-      <span class="settings-icon"><i class="fas fa-gear"></i></span>
-    </h2>
-    
-    <ul class="list-notification">
-      <li *ngFor="let notification of notifications" class="element-notification">
-        <!-- Contenedor con dos columnas (grilla) -->
-        <div class="notification-grid">
-          <!-- Primera columna: Imagen/Ícono -->
-          <div class="notification-column">
-            <div class="notification-image">
+  <h2 class="title-notifications">
+    Notificaciones
+    <span class="settings-icon"><i class="fas fa-gear"></i></span>
+  </h2>
+  
+  <ul class="list-notification">
+    <li *ngFor="let notification of notifications" class="element-notification">
+      <!-- Contenedor con dos columnas (grilla) -->
+      <div class="notification-grid">
+        <!-- Primera columna: Imagen/Ícono -->
+        <div class="notification-column">
+          <div class="notification-image">
+            <ng-container *ngIf="notification.notification_type === 'alerta'">
+              <img class="notification-icon" src="assets/images/icon-alerta.png" alt="Alerta Icon" />
+            </ng-container>
+            <ng-container *ngIf="notification.notification_type === 'recordatorio'">
+              <img class="notification-icon" src="assets/images/icon-recordatorio.png" alt="Recordatorio Icon" />
+            </ng-container>
+          </div>
+          <!-- Fila vacía -->
+          <div class="empty-space"></div> 
+        </div>
+
+        <!-- Segunda columna: Título, Fecha y Mensaje -->
+        <div class="notification-details">
+          <!-- Fila 1: Título y Fecha -->
+          <div class="notification-title-date">
+            <div class="notification-title">
               <ng-container *ngIf="notification.notification_type === 'alerta'">
-                <img class="notification-icon" src="assets/images/icon-alerta.png" alt="Alerta Icon" />
+                ¡Atención! Factura con discrepancia.
               </ng-container>
               <ng-container *ngIf="notification.notification_type === 'recordatorio'">
-                <img class="notification-icon" src="assets/images/icon-recordatorio.png" alt="Recordatorio Icon" />
+                ¡Recordatorio! Se encontró una factura con discrepancia.
               </ng-container>
             </div>
-            <!-- Fila vacía -->
-            <div class="empty-space"></div> 
+            <div class="notification-date">
+              {{ notification.created_at | date: 'dd/MM/yyyy' }} <!-- Asegúrate de que la propiedad sea 'created_at' -->
+            </div>
           </div>
-  
-          <!-- Segunda columna: Título, Fecha y Mensaje -->
-          <div class="notification-details">
-            <!-- Fila 1: Título y Fecha -->
-            <div class="notification-title-date">
-              <div class="notification-title">
-                <ng-container *ngIf="notification.notification_type === 'alerta'">
-                  ¡Atención! Factura con discrepancia.
-                </ng-container>
-                <ng-container *ngIf="notification.notification_type === 'recordatorio'">
-                  ¡Recordatorio! Se encontró una factura con discrepancia.
-                </ng-container>
-              </div>
-              <div class="notification-date">
-                {{ notification.timestamp | date: 'dd/MM/yyyy' }}
-              </div>
-            </div>
-            <!-- Fila 2: Mensaje -->
-            <div class="notification-message">
-              {{ notification.message }}
-            </div>
+          <!-- Fila 2: Mensaje -->
+          <div class="notification-message">
+            {{ notification.message }}
           </div>
         </div>
-      </li>
-    </ul>
-  </div>
-  
+      </div>
+    </li>
+  </ul>
+</div>
