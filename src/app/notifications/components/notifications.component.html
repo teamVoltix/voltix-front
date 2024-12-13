@@ -1,5 +1,38 @@
+<nav class="navbar flex overflow-hidden flex-col w-full icons z-10">
+  <div class="flex overflow-hidden gap-10 justify-between items-center px-4 py-1 w-full">
+    @if(showBackArrow){
+    <img class="w-6 h-6 min-w-6 min-h-6 rotate-180" src="assets/icons/backButton.svg" alt="flecha volver atrás" id="button-back"
+      (click)="goToMeasurementSearch()">
+    }
+    <div
+      class="principal-container flex overflow-hidden gap-1.5 justify-center items-center self-stretch px-2 py-1.5 my-auto min-h-[44px]">
+      <button 
+      class="custom-button" 
+      routerLink="/home">
+      <img 
+        src="assets/icons/backButton.svg" 
+        class="button-icon" 
+        alt="Back" />        
+    </button>
+    <img
+    src="assets/images/VoltixLoginBlanco.svg"
+    class="navbar-logo"
+    alt="Company logo"
+    [routerLink]="['/home']"
+    />
+    </div>
+    <div class="photo-container flex gap-2 items-center self-stretch my-auto w-11">
+      <button type="button" class="flex overflow-hidden gap-1.5 justify-center items-center self-stretch my-auto w-11 min-h-[44px]"
+        aria-label="User profile">
+        <img [src]="user.photo ? user.photo : 'assets/avatar-default.png'" 
+          class="object-contain self-stretch my-auto w-8 rounded-full aspect-square" alt="User profile picture" />
+      </button>
+    </div>
+  </div>
+</nav>
+
 <div class="notifications-container">
-  <h2 class="title-notifications">
+  <h2 class="title-notifications mt-2">
     Notificaciones
     <span class="settings-icon"><i class="fas fa-gear"></i></span>
   </h2>

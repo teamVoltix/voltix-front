@@ -1,6 +1,5 @@
 .header {
-    background-color: #0072ce;
-       
+    background-color: #0072ce;  
 }
 
 .ray {
@@ -8,13 +7,12 @@
     right: -8%;  
     z-index: 1;      
     width: 40%;         
-    
 }
 
 .icons {
     z-index: 2; 
 }
-/* Aplica el redondeo siempre */
+
 .tab-button {
     flex: 1;
     padding: 1rem 0;
@@ -29,7 +27,6 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  /* Botón activo: solo cambia el fondo y el color */
   .tab-button.active {
     background-color: #f4f4f6;
     color: #0058a3;
@@ -40,4 +37,3 @@
     margin-top: 10px;
     margin-left: 15px;
   }
-  

@@ -1,113 +1,138 @@
 /* Aseguramos que el fondo gris ocupe toda la pantalla */
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #F4F4F6; /* Fondo gris claro */
-    height: 100%; /* Asegura que el body ocupe toda la altura de la pantalla */
-  }
-  
-  /* Contenedor principal de notificaciones */
-  .notifications-container {
-    background-color: #F4F4F6;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
-    max-width: 600px; /* Limita el ancho */
-    margin: 0 auto; /* Centra el contenedor */
-    box-sizing: border-box; /* Incluye padding en el tamaño total */
-    min-height: 100%;
-  }
-  
-  /* Título de las notificaciones (único título) */
-  .title-notifications {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-  
-  /* Icono de settings a la derecha del título */
-  .title-notifications .settings-icon {
-    font-size: 1.6rem; /* Ajustar tamaño del icono */
-    cursor: pointer;
-  }
-  
-  /* Estilo de las listas de notificaciones */
-  .list-notification {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Estilo de cada elemento de la notificación */
-  .element-notification {
-    padding: 15px 0;
-    border-bottom: 1px solid #ddd; /* Línea de separación sutil (gris claro) */
-  }
-  
-  /* Contenedor para la grilla con 2 columnas */
-  .notification-grid {
-    display: grid;
-    grid-template-columns: 0.5fr 3fr; /* Primera columna más estrecha, segunda columna más ancha */
-    grid-template-rows: auto auto; /* Dos filas con altura automática */
-    gap: 10px; /* Espacio entre las columnas y filas */
-    align-items: start; /* Alinea el contenido al inicio de cada celda */
-  }
-  
-  /* Primera columna: Imagen/Ícono */
-  .notification-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Asegura que la imagen esté al principio */
-  }
-  
-  /* Estilo para las imágenes en las notificaciones */
-  .notification-icon {
-    width: 50px; /* Ajusta el tamaño de la imagen */
-    height: 50px;
-    object-fit: contain;
-    margin-bottom: 10px; /* Espacio debajo de la imagen */
-  }
-  
-  /* Fila vacía */
-  .empty-space {
-    flex-grow: 1; /* Hace que esta fila ocupe el espacio restante */
-  }
-  
-  /* Segunda columna: Título, Fecha y Mensaje */
-  .notification-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-  
-  /* Título y Fecha (Fila 1 en la segunda columna) */
-  .notification-title-date {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Título de la notificación */
-  .notification-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* Fecha de llegada */
-  .notification-date {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 5px;
-  }
-  
-  /* Mensaje de la notificación (Fila 2 en la segunda columna) */
-  .notification-message {
-    font-size: 1rem;
-    margin-top: 10px;
-    color: #333;
-  }
-  
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f6; /* Fondo gris claro */
+  height: 100%; /* Asegura que el body ocupe toda la altura de la pantalla */
+}
+
+/* Contenedor principal de notificaciones */
+.notifications-container {
+  background-color: #f4f4f6;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+  max-width: 600px; /* Limita el ancho */
+  margin: 0 auto; /* Centra el contenedor */
+  box-sizing: border-box; /* Incluye padding en el tamaño total */
+  min-height: 100%;
+}
+
+.navbar {
+  background-color: #0072ce !important;
+  height: 7rem;
+}
+
+.navbar-logo {
+  display: block; /* Asegura que se trate como un bloque */
+  margin: 0 auto; /* Centra el logo horizontalmente */
+  max-width: 130px; /* Aumenta el tamaño máximo del logo */
+  width: 100%; /* Asegura que el logo sea responsive */
+  object-fit: contain; /* Mantiene las proporciones */
+  aspect-ratio: 4; /* Mantiene la proporción */
+}
+
+.principal-container {
+  display: flex;
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.photo-container {
+  margin-top: 3.5rem;
+}
+
+/* Título de las notificaciones (único título) */
+.title-notifications {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Icono de settings a la derecha del título */
+.title-notifications .settings-icon {
+  font-size: 1.6rem; /* Ajustar tamaño del icono */
+  cursor: pointer;
+}
+
+/* Estilo de las listas de notificaciones */
+.list-notification {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo de cada elemento de la notificación */
+.element-notification {
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd; /* Línea de separación sutil (gris claro) */
+}
+
+/* Contenedor para la grilla con 2 columnas */
+.notification-grid {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr; /* Primera columna más estrecha, segunda columna más ancha */
+  grid-template-rows: auto auto; /* Dos filas con altura automática */
+  gap: 10px; /* Espacio entre las columnas y filas */
+  align-items: start; /* Alinea el contenido al inicio de cada celda */
+}
+
+/* Primera columna: Imagen/Ícono */
+.notification-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Asegura que la imagen esté al principio */
+}
+
+/* Estilo para las imágenes en las notificaciones */
+.notification-icon {
+  width: 50px; /* Ajusta el tamaño de la imagen */
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 10px; /* Espacio debajo de la imagen */
+}
+
+/* Fila vacía */
+.empty-space {
+  flex-grow: 1; /* Hace que esta fila ocupe el espacio restante */
+}
+
+/* Segunda columna: Título, Fecha y Mensaje */
+.notification-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* Título y Fecha (Fila 1 en la segunda columna) */
+.notification-title-date {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título de la notificación */
+.notification-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Fecha de llegada */
+.notification-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Mensaje de la notificación (Fila 2 en la segunda columna) */
+.notification-message {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #333;
+}
