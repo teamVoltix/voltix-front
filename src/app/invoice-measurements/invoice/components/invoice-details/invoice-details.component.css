@@ -6,6 +6,13 @@
     flex-direction: column;
     justify-content:space-between;
 }
+.cont {
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    height: auto; /* Ajusta según el contenido */
+    background-color: #fafafc; /* Color gris */
+    display: flex;
+    flex-direction: column; /* Asegura que el contenido se apile correctamente */
+}
 .navbar{
     display: flex;
     width: 95%;
@@ -23,6 +30,18 @@
     justify-content: space-around;
     align-self: flex-end;
 }
+
+input {
+    width: 100%;
+    background-color: #f3f4f6 !important; /* Fondo gris claro */
+    color: #111 !important; /* Texto oscuro */
+    border: 1px solid #e5e7eb !important; /* Borde neutro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 12px 20px; /* Espaciado interno */
+    margin-bottom: 14px; /* Espaciado entre inputs */
+    font-size: 1rem; /* Tamaño del texto */
+  }
+
 .button{
     width: 40%;
     height: 50px;
@@ -40,11 +59,12 @@
     height: 34px;
     border-radius: 50%;
 }
+
 #button-back {
     color: #f7f9fa !important;
     margin-top: 10px;
     margin-left: 15px;
-  }
+}
   
 /* dropdown */
 
@@ -108,6 +128,10 @@
     border: 1px solid #005BAA !important;
     height: 3.3rem;
     font-size: 16px;
+    width: 90%;
+    display: block; /* Hace que el botón sea un bloque */
+    margin: 0 auto; /* Centra horizontalmente */
+    margin-top: 0.5rem;
 }
 
 #button-compare-1 {
@@ -115,4 +139,7 @@
     color: #f0f0f0 !important;
     height: 3.3rem;
     font-size: 16px;
+    width: 90%;
+    display: block; /* Hace que el botón sea un bloque */
+    margin: 0 auto; /* Centra horizontalmente */
 }
