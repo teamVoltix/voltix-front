@@ -40,7 +40,12 @@
     height: 34px;
     border-radius: 50%;
 }
-
+#button-back {
+    color: #f7f9fa !important;
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+  
 /* dropdown */
 
 .dropdown {

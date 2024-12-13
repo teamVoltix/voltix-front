@@ -21,6 +21,12 @@ input[type="checkbox"]:focus {
   align-self: center;
   margin-top: 15px;
 }
+#button-back {
+  color: #f7f9fa !important;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
 .select {
   display: flex;
   width: 100%;

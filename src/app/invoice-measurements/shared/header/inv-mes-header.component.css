@@ -35,4 +35,9 @@
     color: #0058a3;
   }
   
+  #button-back {
+    color: #f7f9fa !important;
+    margin-top: 10px;
+    margin-left: 15px;
+  }
   
