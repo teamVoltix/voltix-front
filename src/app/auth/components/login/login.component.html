@@ -54,12 +54,12 @@
               (click)="togglePasswordVisibility()"
             >
               <img
-                src="assets/icons/eye-alt.svg"
+                [src]="passwordVisible ? 'assets/icons/eye-alt.svg' : 'assets/icons/eye-slash.svg'"
                 alt="Toggle Password Visibility"
                 class="eye-icon"
               />
             </button>
-          </div>
+          </div>          
           @if (camposIncompletos) {
           <div class="error-message text-sm">
             Todos los campos son obligatorios

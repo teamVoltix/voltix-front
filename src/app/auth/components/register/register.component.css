@@ -22,32 +22,52 @@
 }
 
 .header-section {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2.5rem; 
-    margin-left: 1.25rem; 
-    width: 100%;
-    font-size: 1.875rem; 
-    font-weight: bold;
-    line-height: 2.5rem; 
-    color: white; 
-    max-width: 19rem; 
-    position: relative; 
-    z-index: 2;   
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente los elementos */
+  align-items: flex-start; /* Alinea los elementos al inicio horizontalmente */
+  margin-left: 2rem;
+  height: 150px; /* Ajusta la altura si es necesario */
+  z-index: 2;
 }
 
 .title-section {
-    display: flex;
-    flex-direction: column;
-    margin-top: 0.5rem; 
-    width: 100%;
-    font-size: 1.5rem; 
-    font-weight: 500;
-    line-height: 2.5rem; 
-    color: white; 
-    max-width: 19rem; 
-    z-index: 2;   
+  display: flex;
+  flex-direction: column;
+  margin: 0 1.25rem; /* Márgenes laterales */
+  margin-bottom: 25px; /* Elimina la separación extra debajo */
+  margin-top: auto; /* Deja que esté más cerca del formulario */
+  text-align: left; /* Alinea el texto a la izquierda */
+  width: 100%; /* Ocupa el ancho disponible */
+  z-index: 2;
 }
+
+.greet {
+  font-size: 30px; /* Tamaño del texto */
+  font-weight: semibold;
+  color: white;
+  line-height: 2rem; /* Ajusta el espaciado entre líneas */
+  margin-top: 0.5rem; /* Separación desde el logo */
+  margin-bottom: 10px; /* Espaciado con el formulario */
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  padding: 1.15rem; /* Ajusta el padding */
+  padding-top: 0.5rem;
+  height: auto;
+  width: 100%;
+  background-color: white;
+  border-top-left-radius: 1.875rem;
+  border-top-right-radius: 1.875rem;
+  margin-top: 0; /* Reduce la separación superior con la sección de título */
+  position: relative;
+  z-index: 2;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
 
 .title-form {
   font-size: 1.2rem; 
@@ -57,6 +77,7 @@
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 .custom-button {
     margin: -10px; 
     padding-bottom: 1.25rem; 
@@ -66,31 +87,10 @@
     object-fit: contain;
     max-width: 100%;
     aspect-ratio: 3.95; 
-    width: 174px; 
+    width: 190px; 
+    margin-left: 1rem;
+    margin-bottom: 7.5rem;
 }    
-
-.greet {
-    margin-top: 2rem;
-    margin-bottom: 1rem; 
-}
-
-.form-section {
-    display: flex;
-    flex-direction: column;
-    padding: 1.15rem !important; 
-    padding-top: 0.5rem;
-    height: auto;
-    width: 100%;
-    background-color: white; 
-    border-top-left-radius: 1.875rem; 
-    border-top-right-radius: 1.875rem; 
-    margin-top: auto;
-    position: relative; 
-    z-index: 2; 
-    overflow-y: auto; 
-    max-height: calc(100vh - 200px);
-    
-}
 
 input:focus {
     outline: none; 

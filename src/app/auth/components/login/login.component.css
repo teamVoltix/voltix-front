@@ -48,12 +48,13 @@
     height: auto;
     width: 400%;
     aspect-ratio: 3.95; 
-    width: 174px; 
+    width: 154px; 
+    margin-top: 6rem;
+    margin-left: 1rem;
 }    
 
 .greet {
-    font-weight: bold;
-    
+    font-weight: semibold;
     color: white;
     z-index: 2;
     position: relative;
@@ -62,11 +63,9 @@
     margin-top: 2.5rem; 
     margin-left: 1.25rem; 
     width: 100%;
-    font-size: 4rem; 
-    padding-bottom: 40px;
+    font-size: 30px; 
+    margin-bottom: 24px;
     line-height: 5rem; 
-     
-    
 }
 
 /* Formulario responsivo */
