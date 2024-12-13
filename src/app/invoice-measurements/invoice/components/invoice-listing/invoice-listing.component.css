@@ -12,7 +12,12 @@ input[type="text"] {
     background-color: #e8e9ed;
     border-radius: 8px;
 }
-
+#button-back {
+    color: #f7f9fa !important;
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+  
 .selected-invoice {
     background-color: #f0f7ff;
     /* Fondo para facturas seleccionadas */

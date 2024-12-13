@@ -9,9 +9,14 @@
       align-items: center;
       width: 100%;
   }
-  
+  #button-back {
+    color: #f7f9fa !important;
+    margin-top: 10px;
+    margin-left: 15px;
+  }
   .back {
       align-self: flex-start;
+      color: #f7f9fa !important;
   }
   
   .profile-header {
