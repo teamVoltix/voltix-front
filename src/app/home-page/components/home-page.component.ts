@@ -206,24 +206,34 @@ export class HomePageComponent implements AfterViewInit {
     const monthlyConsumption: number[] = Array(6).fill(0);
     const latestInvoicesByMonth: { [key: string]: Invoice } = {};
   
+    console.log(invoices);
+
     invoices.forEach((invoice) => {
       const billingEnd = new Date(invoice.billing_period_end);
       const monthDiff = (now.getFullYear() - billingEnd.getFullYear()) * 12 + now.getMonth() - billingEnd.getMonth();
   
+      console.log(`Invoice ID: ${invoice.id}, Billing End: ${billingEnd}, Month Diff: ${monthDiff}`);
+
       if (monthDiff >= 0 && monthDiff < 6) {
         const monthKey = billingEnd.toISOString().slice(0, 7); 
 
+        console.log(`Processing Month Key: ${monthKey}, Current Invoice ID: ${invoice.id}`);
+           
         if (!latestInvoicesByMonth[monthKey] || invoice.id > latestInvoicesByMonth[monthKey].id) {
           latestInvoicesByMonth[monthKey] = invoice;
         }
       }
     });
   
+    console.log("Latest Invoices by Month:", latestInvoicesByMonth);
+
     Object.values(latestInvoicesByMonth).forEach((invoice) => {
       const consumption = parseFloat(invoice.data.detalles_consumo.consumo_total);
       const billingEnd = new Date(invoice.billing_period_end);
       const monthDiff = (now.getFullYear() - billingEnd.getFullYear()) * 12 + now.getMonth() - billingEnd.getMonth();
   
+      console.log(`Invoice Consumption: ${consumption}, Month Diff: ${monthDiff}`);
+
       if (!isNaN(consumption)) {
         monthlyConsumption[5 - monthDiff] += consumption;
       } else {
