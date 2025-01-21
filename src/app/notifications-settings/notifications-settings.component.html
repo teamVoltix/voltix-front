@@ -1,0 +1,65 @@
+<nav class="navbar flex overflow-hidden flex-col w-full icons z-10">
+  <div
+    class="flex overflow-hidden gap-10 justify-between items-center px-4 py-1 w-full"
+  >
+    <div
+      class="principal-container flex overflow-hidden gap-1.5 justify-center items-center self-stretch px-2 py-1.5 my-auto min-h-[44px]"
+    >
+      <button class="custom-button" routerLink="/notifications">
+        <img src="assets/icons/backButton.svg" class="button-icon" alt="Back" />
+      </button>
+      <img
+        src="assets/images/VoltixLoginBlanco.svg"
+        class="navbar-logo"
+        alt="Company logo"
+        [routerLink]="['/notifications']"
+      />
+    </div>
+    <div
+      class="photo-container flex gap-2 items-center self-stretch my-auto w-11"
+    >
+      <button
+        type="button"
+        class="flex overflow-hidden gap-1.5 justify-center items-center self-stretch my-auto w-11 min-h-[44px]"
+        aria-label="User profile"
+      >
+        <img
+          [src]="user.photo ? user.photo : 'assets/avatar-default.png'"
+          class="object-contain self-stretch my-auto w-8 rounded-full aspect-square"
+          alt="User profile picture"
+        />
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="notifications-container">
+    <h2 class="title-notifications mt-2">Notificaciones</h2>
+  
+    <h4 class="notifications-text-msg mt-2 mb-3">
+      Elija las comunicaciones que le gustaría recibir por este canal.
+    </h4>
+    <hr class="divider" />
+    
+    <p class="notifications-alerts">
+      Alertas inmediatas ante la detección de discrepancias entre facturas
+      cargadas y los datos internos del sistema.
+      <span class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="toggle-alerts" />
+          <span class="slider"></span>
+        </label>
+      </span>
+    </p>
+    <hr class="divider" />
+    
+    <p class="notifications-reminders">
+      Recordatorios sobre discrepancias detectadas sin visualizar.
+      <span class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="toggle-reminders" />
+          <span class="slider"></span>
+        </label>
+      </span>
+    </p>
+  </div>
