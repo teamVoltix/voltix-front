@@ -1,0 +1,125 @@
+/* Aseguramos que el fondo gris ocupe toda la pantalla */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f6; /* Fondo gris claro */
+  height: 100%; /* Asegura que el body ocupe toda la altura de la pantalla */
+}
+
+/* Contenedor principal de notificaciones */
+.notifications-container {
+  background-color: #f4f4f6;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+  max-width: 600px; /* Limita el ancho */
+  margin: 0 auto; /* Centra el contenedor */
+  box-sizing: border-box; /* Incluye padding en el tamaño total */
+  min-height: 100vh;
+}
+
+.navbar {
+  background-color: #0072ce !important;
+  height: 7rem;
+}
+
+.navbar-logo {
+  display: block; /* Asegura que se trate como un bloque */
+  margin: 0 auto; /* Centra el logo horizontalmente */
+  max-width: 130px; /* Aumenta el tamaño máximo del logo */
+  width: 100%; /* Asegura que el logo sea responsive */
+  object-fit: contain; /* Mantiene las proporciones */
+  aspect-ratio: 4; /* Mantiene la proporción */
+}
+
+.principal-container {
+  display: flex;
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.photo-container {
+  margin-top: 3.5rem;
+}
+
+/* Título de las notificaciones (único título) */
+.title-notifications {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.notifications-alerts{
+  font-size: 0.9rem;
+  margin-top: 13px;
+  margin-bottom: 13px;
+}
+
+.notifications-reminders{
+  font-size: 0.9rem;
+  margin-top: 13px;
+}
+
+.notifications-alerts,
+.notifications-reminders {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  margin-left: 55px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 25px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #3558f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(25px);
+}

@@ -17,6 +17,7 @@ import { InvoiceDetailsComponent } from './invoice-measurements/invoice/componen
 import { InvoiceUploadComponent } from './invoice-measurements/invoice/components/invoice-upload/invoice-upload.component';
 import { ComparisonComponent } from './comparison/comparison.component';
 import { NotificationsComponent } from './notifications/components/notifications.component';
+import { NotificationsSettingsComponent } from './notifications-settings/notifications-settings.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -110,6 +111,10 @@ export const routes: Routes = [
     title: 'Notificaciones',
     component: NotificationsComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'notification-settings',
+    component: NotificationsSettingsComponent,
   },
   {
     path: '**',
