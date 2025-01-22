@@ -12,13 +12,24 @@ export class NotificationService {
 
   constructor() {}
 
-  // Obtener todas las notificaciones generales
-  getGeneralNotifications(): Observable<any[]> {
-    return this.http.get<any[]>(this.url + 'api/notifications/general/settings/');
-  }
-
   // Obtener las notificaciones del servicio
   getServiceNotifications(): Observable<any[]> {
     return this.http.get<any[]>(this.url + 'api/notifications/service/');
   }
+  
+  // Obtener configuracion de notificaciones
+  getGeneralNotifications(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + 'api/notifications/settings/');
+  }
+
+  // Get all general notification settings for the user
+  getNotificationSettings(): Observable<any> {
+    return this.http.get<any>(`${this.url}api/notifications/settings/`);
+  }
+
+  // Update notification settings for the user
+  updateNotificationSettings(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.url}api/notifications/settings/update/`, payload);
+  }
+
 }

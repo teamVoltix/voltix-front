@@ -33,33 +33,69 @@
   </div>
 </nav>
 
-<div class="notifications-container">
-    <h2 class="title-notifications mt-2">Notificaciones</h2>
-  
-    <h4 class="notifications-text-msg mt-2 mb-3">
-      Elija las comunicaciones que le gustaría recibir por este canal.
-    </h4>
-    <hr class="divider" />
-    
+<!-- <div class="notifications-container">
+  <h2 class="title-notifications mt-2">Notificaciones</h2>
+
+  <form [formGroup]="notificationForm">
     <p class="notifications-alerts">
       Alertas inmediatas ante la detección de discrepancias entre facturas
       cargadas y los datos internos del sistema.
       <span class="toggle-container">
         <label class="switch">
-          <input type="checkbox" id="toggle-alerts" />
+          <input type="checkbox" formControlName="enable_alerts" />
           <span class="slider"></span>
         </label>
       </span>
     </p>
-    <hr class="divider" />
-    
+
+    <p class="notifications-recommendations">
+      Recomendaciones accionables para reducir el consumo energético.
+      <span class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" formControlName="enable_recommendations" />
+          <span class="slider"></span>
+        </label>
+      </span>
+    </p>
+
     <p class="notifications-reminders">
       Recordatorios sobre discrepancias detectadas sin visualizar.
       <span class="toggle-container">
         <label class="switch">
-          <input type="checkbox" id="toggle-reminders" />
+          <input type="checkbox" formControlName="enable_reminders" />
           <span class="slider"></span>
         </label>
       </span>
     </p>
-  </div>
+  </form>
+</div> -->
+<div class="notifications-container">
+  <h2 class="title-notifications mt-2">Notificaciones</h2>
+
+  <form [formGroup]="notificationForm">
+    <p class="notifications-alerts">
+      Alertas inmediatas ante la detección de discrepancias entre facturas cargadas y los datos internos del sistema.
+      <app-toggle-switch
+        [isChecked]="notificationForm.get('enable_alerts')?.value"
+        (toggleChange)="onToggleChange('enable_alerts', $event)"
+      ></app-toggle-switch>
+    </p>
+
+    <p class="notifications-recommendations">
+      Recomendaciones accionables para reducir el consumo energético.
+      <app-toggle-switch
+        [isChecked]="notificationForm.get('enable_recommendations')?.value"
+        (toggleChange)="onToggleChange('enable_recommendations', $event)"
+      ></app-toggle-switch>
+    </p>
+
+    <p class="notifications-reminders">
+      Recordatorios sobre discrepancias detectadas sin visualizar.
+      <app-toggle-switch
+        [isChecked]="notificationForm.get('enable_reminders')?.value"
+        (toggleChange)="onToggleChange('enable_reminders', $event)"
+      ></app-toggle-switch>
+    </p>
+  </form>
+</div>
+
