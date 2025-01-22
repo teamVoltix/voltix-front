@@ -33,7 +33,7 @@
   </div>
 </nav>
 
-<div class="notifications-container">
+<!-- <div class="notifications-container">
   <h2 class="title-notifications mt-2">Notificaciones</h2>
 
   <form [formGroup]="notificationForm">
@@ -66,6 +66,35 @@
           <span class="slider"></span>
         </label>
       </span>
+    </p>
+  </form>
+</div> -->
+<div class="notifications-container">
+  <h2 class="title-notifications mt-2">Notificaciones</h2>
+
+  <form [formGroup]="notificationForm">
+    <p class="notifications-alerts">
+      Alertas inmediatas ante la detección de discrepancias entre facturas cargadas y los datos internos del sistema.
+      <app-toggle-switch
+        [isChecked]="notificationForm.get('enable_alerts')?.value"
+        (toggleChange)="onToggleChange('enable_alerts', $event)"
+      ></app-toggle-switch>
+    </p>
+
+    <p class="notifications-recommendations">
+      Recomendaciones accionables para reducir el consumo energético.
+      <app-toggle-switch
+        [isChecked]="notificationForm.get('enable_recommendations')?.value"
+        (toggleChange)="onToggleChange('enable_recommendations', $event)"
+      ></app-toggle-switch>
+    </p>
+
+    <p class="notifications-reminders">
+      Recordatorios sobre discrepancias detectadas sin visualizar.
+      <app-toggle-switch
+        [isChecked]="notificationForm.get('enable_reminders')?.value"
+        (toggleChange)="onToggleChange('enable_reminders', $event)"
+      ></app-toggle-switch>
     </p>
   </form>
 </div>

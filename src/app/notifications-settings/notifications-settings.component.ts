@@ -6,11 +6,12 @@ import { User } from '../core/model/user'; // Ajusta esta ruta si es necesario
 import { NotificationService } from '../notifications/service/notification.service';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToggleSwitchComponent } from '../components/toggle-switch/toggle-switch.component';
 
 @Component({
   selector: 'app-notifications-settings',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, ToggleSwitchComponent],
   templateUrl: './notifications-settings.component.html',
   styleUrls: ['./notifications-settings.component.css'],
 })
@@ -96,6 +97,13 @@ export class NotificationsSettingsComponent implements OnInit, OnDestroy {
     this.notificationSettings = { ...formValues };
     console.log('Updated local JSON:', this.notificationSettings);
   }
+
+  onToggleChange(settingKey: string, value: boolean): void {
+    this.notificationForm.get(settingKey)?.setValue(value, { emitEvent: false }); // Update form control without triggering valueChanges
+    this.notificationSettings[settingKey] = value;
+    console.log(`Setting ${settingKey} updated to:`, value);
+  }
+  
 
 
   saveSettingsToBackend(): void {
