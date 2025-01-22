@@ -18,6 +18,8 @@ import { InvoiceUploadComponent } from './invoice-measurements/invoice/component
 import { ComparisonComponent } from './comparison/comparison.component';
 import { NotificationsComponent } from './notifications/components/notifications.component';
 import { NotificationsSettingsComponent } from './notifications-settings/notifications-settings.component';
+import { saveSettingsGuard } from './guards/save-settings.guard';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -115,6 +117,7 @@ export const routes: Routes = [
   {
     path: 'notification-settings',
     component: NotificationsSettingsComponent,
+    canDeactivate: [authGuard, saveSettingsGuard],
   },
   {
     path: '**',
