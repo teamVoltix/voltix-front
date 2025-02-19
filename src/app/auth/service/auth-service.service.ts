@@ -80,4 +80,10 @@ export class AuthService {
       }
     );
   }
+
+  getUserId(): string {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log('User in localStorage:', user);
+    return user?.id || '';
+  }  
 }

@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { User } from '../../../core/model/user';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../auth/service/auth-service.service';
+import { DatePipe } from '@angular/common';
 import {
   FormGroup,
   FormBuilder,
@@ -16,8 +18,10 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css',
+  styleUrls: ['./profile.component.css'],
+  providers: [DatePipe]
 })
+
 export class ProfileComponent implements OnInit {
   user: User = {
     address: '',
@@ -46,10 +50,14 @@ export class ProfileComponent implements OnInit {
   public modalPasswordOpen = false;
   file: File | null = null;
 
-  private service = inject(ProfileService);
-  private router = inject(Router);
-
-  constructor(private fb: FormBuilder) {
+  // Inyección estándar en el constructor
+  constructor(
+    private fb: FormBuilder,
+    private service: ProfileService,
+    private router: Router,
+    private authService: AuthService, // Ahora se inyecta en el constructor
+    private datePipe: DatePipe 
+  ) {
     this.profileForm = this.fb.group({
       phone_number: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
@@ -81,8 +89,12 @@ export class ProfileComponent implements OnInit {
       photo: [null],
     });
   }
-  formatDate(date: string): string {
-    return new Date(date).toLocaleDateString();
+
+  ngOnInit(): void {
+    this.service.profile().subscribe((data) => {
+      this.user = data;
+      this.originalUser = { ...data };
+    });
   }
 
   enable(phone_number: string, address: string, birth_date: string): void {
@@ -93,7 +105,6 @@ export class ProfileComponent implements OnInit {
     this.save = true;
   }
 
-  //Deshabilitar campos y guardar datos
   disable(phone_number: string, address: string, birth_date: string): void {
     this.profileForm.get(phone_number)?.disable();
     this.profileForm.get(address)?.disable();
@@ -101,12 +112,6 @@ export class ProfileComponent implements OnInit {
 
     this.edit = true;
     this.save = false;
-  }
-  ngOnInit(): void {
-    this.service.profile().subscribe((data) => {
-      this.user = data;
-      this.originalUser = { ...data };
-    });
   }
   saveUser() {
     const updatedUser: Partial<User> = {};
@@ -137,6 +142,10 @@ export class ProfileComponent implements OnInit {
         console.error('Error:', error);
       },
     });
+  }
+
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || ''; // Formato de fecha dd/MM/yyyy
   }
 
   onSubmit() {
@@ -202,11 +211,10 @@ export class ProfileComponent implements OnInit {
   }
 
   passwordsMatch(group: FormGroup) {
-    const newPassword = group.get('newPassword')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
+    const newPassword = group.get('new_password')?.value;
+    const confirmPassword = group.get('confirm_new_password')?.value;
     return newPassword === confirmPassword ? null : { passwordMismatch: true };
   }
-
   getPhonePlaceholder(): string {
     return this.user.phone_number ? this.user.phone_number : '';
   }
@@ -220,6 +228,72 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  deleteAccount(): void {
+    // Obtener el ID del usuario desde el servicio de autenticación
+    const userId = this.authService.getUserId(); 
+  
+    // Verificar si el userId es válido
+    if (!userId) {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se ha encontrado el ID del usuario. Intenta iniciar sesión nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+      });
+      return;  // Detener la ejecución si no hay un ID válido
+    }
+  
+    // Convertir el userId a número si es necesario
+    const userIdNumber = Number(userId);  // Conversión de string a number
+  
+    // Verificar si la conversión fue exitosa
+    if (isNaN(userIdNumber)) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El ID de usuario no es válido.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+      });
+      return;
+    }
+  
+    // Confirmación antes de eliminar la cuenta
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Dispondrás de 30 días para recuperar tu cuenta antes de que sea eliminada definitivamente',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Llamar al servicio de eliminación pasando el ID convertido a número
+        this.service.deleteUserAccount(userIdNumber).subscribe({
+          next: () => {
+            // Mostrar mensaje de éxito
+            Swal.fire({
+              title: 'Cuenta eliminada',
+              text: 'Tu cuenta ha sido eliminada con éxito. Si deseas reactivarla, inicia sesión en los próximos 30 días.',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            });
+            // Redirigir al login o página de inicio
+            this.router.navigate(['/login']);
+          },
+          error: (error) => {
+            console.error('Error al eliminar la cuenta:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al eliminar la cuenta. Intenta nuevamente.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+            });
+          },
+        });
+      }
+    });
+  }  
+  
   showSuccessAlert() {
     Swal.fire({
       title: 'Actualizado correctamente',
