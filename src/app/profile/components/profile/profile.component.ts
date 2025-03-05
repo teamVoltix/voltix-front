@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 
 export class ProfileComponent implements OnInit {
   user: User = {
+    user_id: 0,
     address: '',
     birth_date: '',
     phone_number: '',
