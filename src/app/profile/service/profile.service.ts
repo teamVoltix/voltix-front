@@ -49,4 +49,8 @@ export class ProfileService {
       formData
     );
   }
+
+  deleteUserAccount(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}api/auth/users/delete/${id}/`);
+  }  
 }

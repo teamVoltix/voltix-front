@@ -5,7 +5,7 @@ import {
   RegisterUser,
   User,
 } from '../../core/model/user';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { StateService } from '../../core/state/state.service';
@@ -22,19 +22,30 @@ export class AuthService {
     return this.http.post<LoginResponse>(
       this.url + 'api/auth/login/',
       credentials
+    ).pipe(
+      tap(response => {
+        if (response.user_id) {
+          localStorage.setItem('user', JSON.stringify({ id: response.user_id, fullname: response.fullname }));
+        }        
+      })
     );
   }
 
   register(userData: RegisterUser): Observable<RegisterUser> {
     return this.http.post<RegisterUser>(
-      /* this.url + 'api/auth/register/', */
       this.url + 'api/auth/email-verification/register/',
       userData
     );
   }
 
   profile(): Observable<User> {
-    return this.http.get<User>(this.url + 'api/profile/');
+    return this.http.get<User>(this.url + 'api/profile/').pipe(
+      tap(user => {
+        if (user && user.user_id) {
+          localStorage.setItem('user', JSON.stringify({ id: user.user_id, fullname: user.fullname }));
+        }
+      })
+    );
   }
 
   isAuthenticated(): boolean {
@@ -44,26 +55,19 @@ export class AuthService {
   sendVerificationCode(email: string) {
     return this.http.post<any>(
       this.url + 'api/auth/email-verification/request/',
-      {
-        email,
-      }
+      { email }
     );
   }
 
   verifyCode(email: string, code: string) {
     return this.http.post<any>(
       this.url + 'api/auth/email-verification/validate/',
-      {
-        email,
-        code,
-      }
+      { email, code }
     );
   }
 
   recoverPassword(email: string) {
-    return this.http.post<any>(this.url + 'api/auth/password/reset/', {
-      email,
-    });
+    return this.http.post<any>(this.url + 'api/auth/password/reset/', { email });
   }
 
   newPassword(
@@ -74,10 +78,13 @@ export class AuthService {
   ) {
     return this.http.post<any>(
       `${this.url}api/auth/password/reset/${uidb64}/${token}/`,
-      {
-        new_password,
-        confirm_password,
-      }
+      { new_password, confirm_password }
     );
+  }
+
+  getUserId(): number | null {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log('User in localStorage:', user);
+    return user?.id ? Number(user.id) : null;
   }
 }

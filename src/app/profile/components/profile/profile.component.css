@@ -106,7 +106,7 @@
       color: #ffffff;
       transition: background-color 0.3s, transform 0.3s;
   }
-  
+
   .editar:hover {
       background-color: #005bb5;
   }
@@ -124,7 +124,7 @@
       color: #005BAA;
       transition: background-color 0.3s, transform 0.3s;
   }
-  
+
   .cerrar:hover {
       background-color: #d9e6ff;
   }
@@ -132,3 +132,21 @@
   .cerrar:active {
       transform: scale(0.95);
   }
+
+.eliminarCuenta {
+    width: 100%;
+    height: 52px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #b8261c;
+    color: #b8261c;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.eliminarCuenta:hover {
+    background-color: #d9e6ff;
+}
+
+.eliminarCuenta:active {
+    transform: scale(0.95);
+}
